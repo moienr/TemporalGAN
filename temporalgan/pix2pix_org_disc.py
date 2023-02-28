@@ -12,6 +12,8 @@ class Discriminator(nn.Module):
         number of input channels (e.g. if RGB in_channels = 3)
     `features` : list
         number of layers in each hiddel layer as a list
+    
+
     """
     def __init__(self, in_channels=3,out_channels=1, features=[64, 128, 256, 512]):
         super().__init__()
@@ -37,6 +39,7 @@ class Discriminator(nn.Module):
         """
         The Discriminator model takes, the Fake(generated) image and the Real Image and outputs a `30x30` patch (if input is 256x256) 
         of vlues which 1 corresponds to real and 0 to fake.
+        This is called a PatchGAN.
 
         Parameters
         ----------
@@ -56,3 +59,5 @@ def test():
 
 if __name__ == "__main__": # testing the model
     test()
+    
+
