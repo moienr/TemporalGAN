@@ -1,6 +1,9 @@
 import torch
 import torch.nn as nn
 
+# CNN block to be used in the Discriminator
+
+
 class CNNBlock(nn.Module):
     """
     A CNN block consisting of a convolutional layer, optional instance normalization,
