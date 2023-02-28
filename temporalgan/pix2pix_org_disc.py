@@ -47,9 +47,12 @@ class Discriminator(nn.Module):
         return self.model(x)
 
 
-if __name__ == "__main__": # testing the model
+def test():
     x = torch.randn((1,3,256,256))
     y = torch.randn((1,1,256,256))
     model = Discriminator()
     preds = model(x,y)
     print(preds.shape)
+
+if __name__ == "__main__": # testing the model
+    test()
