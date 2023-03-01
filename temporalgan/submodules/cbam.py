@@ -71,9 +71,61 @@ class ChannelAttention(nn.Module):
 
         return refined_feats
 
+class SpatialAttention(nn.Module):
+    """
+    This class defines a spatial attention module that enhances the informative regions of an input feature map
+    by generating a spatial attention map that is multiplied with the input feature map.
+    """
+    def __init__(self, kernel_size=7):
+        super().__init__()
+
+        self.conv = nn.Conv2d(2, 1, kernel_size, padding=3, bias=False)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x1 = torch.mean(x, dim=1, keepdim=True)
+        x2, _ = torch.max(x, dim=1, keepdim=True)
+
+        feats = torch.cat([x1, x2], dim=1)
+        feats = self.conv(feats)
+        feats = self.sigmoid(feats)
+        refined_feats = x * feats
+
+        return refined_feats
+
+
+
+class CBAM(nn.Module):
+    def __init__(self, channel):
+        super().__init__()
+
+        self.ca = ChannelAttention(channel)
+        self.sa = SpatialAttention()
+
+    def forward(self, x):
+        x = self.ca(x)
+        x = self.sa(x)
+        return x
+
+
+
+
 
 if __name__ == '__main__':
+    print('Testing Channel Attention Module...')
     x = torch.randn(1, 12, 128, 128)
     ca = ChannelAttention(12)
     y = ca(x)
+    print(y.shape)
+    
+    print('Testing Spatial Attention Module...')
+    x = torch.randn(1, 12, 128, 128)
+    sa = SpatialAttention()
+    y = sa(x)
+    print(y.shape)
+    
+    print('Testing CBAM Module...')
+    x = torch.randn((8, 32, 128, 128))
+    module = CBAM(32)
+    y = module(x)
     print(y.shape)
