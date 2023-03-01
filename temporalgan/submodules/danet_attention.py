@@ -1,6 +1,6 @@
 import torch
 from torch.nn import Module, Conv2d, Parameter, Softmax
-
+from torchinfo import summary
 """ Adapted from DANet: Dual Attention Network for Scene Segmentation 
 Ref: https://arxiv.org/abs/1809.02983
 by Zilong Huang, Ping Luo, Chen Change Loy, Xiaoou Tang
@@ -90,12 +90,17 @@ class CAM_Module(Module):
     
 if __name__ == '__main__':
     print('Testing Position Attention Module...')
-    n_channels = 98
+    n_channels = 64
     x = torch.randn(1, n_channels, 128, 128)
     pam = PAM_Module(n_channels)
     y = pam(x)
     print(y.shape)
+    summary(pam, input_size=(1,n_channels, 128, 128), device='cpu',col_names=["input_size", "output_size", "num_params"],
+        col_width=20,
+        row_settings=["var_names"])
+    
     print('Testing Channel Attention Module...')
     cam = CAM_Module(n_channels)
     z = cam(x)
     print(z.shape)
+    
