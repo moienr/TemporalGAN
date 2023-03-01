@@ -90,11 +90,12 @@ class CAM_Module(Module):
     
 if __name__ == '__main__':
     print('Testing Position Attention Module...')
-    x = torch.randn(1, 8, 128, 128)
-    pam = PAM_Module(8)
+    n_channels = 98
+    x = torch.randn(1, n_channels, 128, 128)
+    pam = PAM_Module(n_channels)
     y = pam(x)
     print(y.shape)
     print('Testing Channel Attention Module...')
-    cam = CAM_Module(64)
+    cam = CAM_Module(n_channels)
     z = cam(x)
     print(z.shape)
