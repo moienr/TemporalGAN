@@ -1,11 +1,5 @@
-import numpy as np
 import torch
-import math
-from torch.nn import Module, Sequential, Conv2d, ReLU,AdaptiveMaxPool2d, AdaptiveAvgPool2d, \
-    NLLLoss, BCELoss, CrossEntropyLoss, AvgPool2d, MaxPool2d, Parameter, Linear, Sigmoid, Softmax, Dropout, Embedding
-from torch.nn import functional as F
-from torch.autograd import Variable
-torch_ver = torch.__version__[:3]
+from torch.nn import Module, Conv2d, Parameter, Softmax
 
 """ Adapted from DANet: Dual Attention Network for Scene Segmentation 
 Ref: https://arxiv.org/abs/1809.02983
