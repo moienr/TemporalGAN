@@ -96,13 +96,14 @@ class SpatialAttention(nn.Module):
 
 
 class CBAM(nn.Module):
+    """ This class defines a CBAM module that combines channel attention and spatial attention."""
     def __init__(self, channel):
         super().__init__()
 
         self.ca = ChannelAttention(channel)
         self.sa = SpatialAttention()
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.ca(x)
         x = self.sa(x)
         return x
