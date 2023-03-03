@@ -1,14 +1,12 @@
+"""TemporalGAN Generator Version 1
+In this version I use a dual stream for encoding part, which fuses the Sentiel2_T1 with Sentinel1_T2.
+We use no Attetention module.
+
+"""
+
 import torch
 import torch.nn as nn
 from submodules.gen_cnn_block import Block
-
-"""TemporalGAN Generator Version 1
-In this version I use a dual stream for encoding part, which fuses the Sentiel2_T1 with Sentinel1_T2.
-The attention mechanism is this way:
-For the Spatial Attention, I will use Postion Attention Moduel (PAM) from DANet, I use in for the Skip Connections.
-For the Temporal Attention, I will use the Squeeze and Excitation (SE) Module from CBAM. And will apply it to the buttleneck layer.
-
-"""
 
 class Generator(nn.Module):
     """
@@ -24,20 +22,20 @@ class Generator(nn.Module):
         # Initial downsampling layer
         self.initial_down = nn.Sequential(
             nn.Conv2d(in_channels, features, 4, 2, 1, padding_mode="reflect"),
-            nn.LeakyReLU(0.2))
+            nn.LeakyReLU(0.2)) #128
         
-        # Downsample blocks
-        self.down1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False)
-        self.down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False)
-        self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False)
-        self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False)
-        self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False)
-        self.down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False)
+        # Downsample blocks 
+        self.down1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 64
+        self.down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
+        self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
+        self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
+        self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4
+        self.down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2
         
         # Bottleneck layer (no downsampling)
         self.bottleneck = nn.Sequential(
             nn.Conv2d(features * 8, features * 8, 4, 2, 1), nn.ReLU()
-            )
+            ) 
         # Upsample blocks
         self.up1 = Block(features * 8, features * 8, down=False, act="relu", use_dropout=True)
         self.up2 = Block(features * 8 * 2, features * 8, down=False, act="relu", use_dropout=True)
