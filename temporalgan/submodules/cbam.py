@@ -10,21 +10,25 @@ class ChannelAttention(nn.Module):
     scores. Finally, the importance scores are multiplied with the input features to emphasize important
     channels and suppress irrelevant channels.
 
-    Args:
-    ---
-        `n_channels` (int): Number of input channels.
-        `ratio` (int): Reduction ratio for the intermediate MLP layer (default: 4).
 
-    Input:
-    ---
-        `x` (tensor): Input feature map of shape (batch_size, n_channels, height, width).
-
-    Output:
-    ---
-        `refined_feats` (tensor): Refined feature map after applying channel attention, of shape
-                                (batch_size, n_channels, height, width).
     """
     def __init__(self, n_channels:int, ratio=4):
+        """ Channel Attention module that learns to focus on important channels of input features.
+        
+        Args:
+        ----
+            `n_channels` (int): Number of input channels.
+            `ratio` (int): Reduction ratio for the intermediate MLP layer (default: 4).
+
+        Input:
+        ---
+            `x` (tensor): Input feature map of shape (batch_size, n_channels, height, width).
+
+        Output:
+        ---
+            `refined_feats` (tensor): Refined feature map after applying channel attention, of shape
+                                    (batch_size, n_channels, height, width).
+        """
         super().__init__()
 
         # Global average pooling layer
