@@ -64,12 +64,17 @@ class Generator(nn.Module):
         return self.final_up(torch.cat([up7, d1], 1))
 
 
-def test():
-    x = torch.randn((32, 14, 256, 256))
-    model = Generator(in_channels=14, features=64)
+def test(summary=False):
+    x = torch.randn((32, 7, 256, 256))
+    model = Generator(in_channels=7, features=64)
     preds = model(x)
     print(preds.shape)
 
+    if summary:
+        from torchinfo import summary
+        summary(model, input_size=[(16, 7, 256, 256)], device='cpu',col_names=["input_size", "output_size", "num_params"],
+        col_width=20,
+        row_settings=["var_names"])
 
 if __name__ == "__main__":
-    test()
+    test(summary=True)
