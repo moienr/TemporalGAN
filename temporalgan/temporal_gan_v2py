@@ -30,24 +30,24 @@ class Generator(nn.Module):
         super().__init__()
         # Initial downsampling layer for S2
         self.s2_initial_down = nn.Sequential(
-            nn.Conv2d(s2_in_channels, features, 3, 1, 1, padding_mode="reflect"),
-            nn.LeakyReLU(0.2)) #256
+            nn.Conv2d(s2_in_channels, features, 4, 2, 1, padding_mode="reflect"),
+            nn.LeakyReLU(0.2)) #128
         
         # Initial downsampling layer for S1
         self.s1_initial_down = nn.Sequential(
-            nn.Conv2d(s1_in_channels, features, 3, 1, 1, padding_mode="reflect"),
-            nn.LeakyReLU(0.2)) #256
+            nn.Conv2d(s1_in_channels, features, 4, 2, 1, padding_mode="reflect"),
+            nn.LeakyReLU(0.2)) #128
         
         # Downsample blocks 
-        self.down1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False)     # 128
-        self.down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 64
-        self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
-        self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8 
-        self.down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
+        self.down1 = Block(features    , features * 2, down=True, act="leaky", use_dropout=False) # 64
+        self.down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
+        self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
+        self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
+        self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4
+        self.down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 1024
         
         # Channel Attention Module
-        #self.ca = ChannelAttention(features * 8 * 2) # The *2 is because we fuse the two streams.
+        self.ca = ChannelAttention(features * 8 * 2) # The *2 is because we fuse the two streams.
         
         # Bottleneck layer (no downsampling)
         self.bottleneck = nn.Sequential(
@@ -59,11 +59,11 @@ class Generator(nn.Module):
         self.up4 = Block(features * 8 * 3, features * 8, down=False, act="relu", use_dropout=False)
         self.up5 = Block(features * 8 * 3, features * 4, down=False, act="relu", use_dropout=False)
         self.up6 = Block(features * 4 * 3, features * 2, down=False, act="relu", use_dropout=False)
-        self.up7 = Block(features * 2 * 3, features * 1, down=False, act="relu", use_dropout=False)
+        self.up7 = Block(features * 2 * 3, features    , down=False, act="relu", use_dropout=False)
 
         # Final upsampling layer
         self.final_up = nn.Sequential(
-            nn.Conv2d(features * 3, out_channels, kernel_size=3, stride=1, padding=1), # changed TransposedConv2d to Conv2d since we don't need upsampling anymore.
+            nn.ConvTranspose2d(features * 3, out_channels, kernel_size=4, stride=2, padding=1),
             nn.Tanh(),
         )
 
@@ -87,11 +87,12 @@ class Generator(nn.Module):
         # Now we fuse the two streams
         d7 = torch.cat([d7_s2, d7_s1], 1)
         # Channel Attention
-        #d7 = self.ca(d7) # Channel Attention to learn the importance of each stream, before fusing them.
+        d7 = self.ca(d7) # Channel Attention to learn the importance of each stream, before fusing them.
         # Bottleneck
         bottleneck = self.bottleneck(d7)
         # Now we do the decoding part
         up1 = self.up1(bottleneck)
+        print(bottleneck.shape)
         up2 = self.up2(torch.cat([up1, d7], 1))
         up3 = self.up3(torch.cat([up2, d6_s2, d6_s1], 1))
         up4 = self.up4(torch.cat([up3, d5_s2, d5_s1], 1))
@@ -103,12 +104,14 @@ class Generator(nn.Module):
 
 
 def test(summary=False):
+    # setting device on GPU if available, else CPU
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
-    s2 = torch.randn((16, 7, 256, 256))
-    s1 = torch.randn((16, 1, 256, 256))
+    s2 = torch.randn((16, 7, 256, 256)).to(device)
+    s1 = torch.randn((16, 1, 256, 256)).to(device)
     
     model = Generator(s2_in_channels=7, s1_in_channels=1, features=64)
-
+    model.to(device)
     preds = model(s2,s1)
     print(preds.shape)
     if summary:
@@ -118,5 +121,5 @@ def test(summary=False):
         row_settings=["var_names"])
 
 if __name__ == "__main__":
-    test(summary=True)
+    test(summary=False)
     
