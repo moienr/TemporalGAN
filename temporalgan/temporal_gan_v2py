@@ -1,0 +1,12 @@
+import torch
+import torch.nn as nn
+from submodules.gen_cnn_block import Block
+
+"""TemporalGAN Generator Version 1
+In this version I use a dual stream for encoding part, which fuses the Sentiel2_T1 with Sentinel1_T2.
+The attention mechanism is this way:
+For the Spatial Attention, I will use Postion Attention Moduel (PAM) from DANet, I use in for the Skip Connections.
+For the Temporal Attention, I will use the Squeeze and Excitation (SE) Module from CBAM. And will apply it to the buttleneck layer.
+
+"""
+
