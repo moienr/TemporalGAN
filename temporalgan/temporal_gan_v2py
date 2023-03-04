@@ -51,7 +51,6 @@ class Generator(nn.Module):
         
         # Channel Attention Module
         self.ca = ChannelAttention(features * 8 * 2) # The *2 is because we fuse the two streams.
-        
         # Bottleneck layer (no downsampling)
         self.bottleneck = nn.Sequential(
         nn.Conv2d(features * 8 * 2, features * 8, 4, 2, 1), nn.ReLU()) # The *2 is because we fuse the two streams.
