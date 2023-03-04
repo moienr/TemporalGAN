@@ -117,7 +117,7 @@ def test(summary=False):
     print(preds.shape)
     if summary:
         from torchinfo import summary
-        summary(model, input_size=[(1, 7, 256, 256),(1, 1, 256, 256)], device='cpu',col_names=["input_size", "output_size", "num_params"],
+        summary(model, input_size=[(1, 7, 256, 256),(1, 1, 256, 256)], device=device,col_names=["input_size", "output_size", "num_params"],
         col_width=20,
         row_settings=["var_names"])
 
