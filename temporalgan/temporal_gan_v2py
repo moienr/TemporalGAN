@@ -13,7 +13,7 @@ For the attention we use
 import torch
 import torch.nn as nn
 from submodules.gen_cnn_block import Block
-from submodules.cbam import ChannelAttention
+from submodules.cbam import ChannelAttention, CBAM
 from submodules.scam import PAM_Module
 
 class Generator(nn.Module):
@@ -47,7 +47,9 @@ class Generator(nn.Module):
         self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
         self.pam3 = PAM_Module(features * 8) # input from the down3 layer / output goes to the down4 layer
         self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
+        self.cbam4 = CBAM(features * 8) # input from the down4 layer / output goes to the down5 layer
         self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4
+        self.cbam5 = CBAM(features * 8) # input from the down5 layer / output goes to the down6 layer
         self.down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 512
         
         # Channel Attention Module
@@ -96,8 +98,9 @@ class Generator(nn.Module):
         # Now we do the decoding part
         up1 = self.up1(bottleneck)
         up2 = self.up2(torch.cat([up1, d7], 1))
-        up3 = self.up3(torch.cat([up2, d6_s2, d6_s1], 1))
-        up4 = self.up4(torch.cat([up3, d5_s2, d5_s1], 1))
+        # Concatenate the upsampled layer, with the CBAM of the corresponding downsampled layer, for up3 and up4.
+        up3 = self.up3(torch.cat([up2, self.cbam5(d6_s2), self.cbam5(d6_s1)], 1))
+        up4 = self.up4(torch.cat([up3, self.cbam4(d5_s2), self.cbam4(d5_s1)], 1))
         up5 = self.up5(torch.cat([up4, d4_s2, d4_s1], 1))
         up6 = self.up6(torch.cat([up5, d3_s2, d3_s1], 1))
         up7 = self.up7(torch.cat([up6, d2_s2, d2_s1], 1))
