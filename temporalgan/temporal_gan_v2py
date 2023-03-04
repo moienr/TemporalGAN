@@ -4,8 +4,8 @@ Attention
 --------
 For the attention we use
     * The Squeeze and Excitation from CBAM module before the fusion of the two streams(before the bottleneck).
-    * The Position Attention Module(PAM) for the 128x128 feature map.
-
+    * The Position Attention Module(PAM) for the 128x128, 64x64, 32x32, and 16x16 layers.
+    * CBAM for the 8x8, 4x4 layers, but only for the skip connection, the normal data gets donwsampled.
 
 
 """
@@ -86,6 +86,7 @@ class Generator(nn.Module):
         d2_s1 = self.pam1(self.down1(d1_s1))
         d3_s1 = self.pam2(self.down2(d2_s1))
         d4_s1 = self.pam3(self.down3(d3_s1))
+        # No Spatial Attention Module for the last two layers, when downsampling, but we send their CBAM to be concatenated with the upsampled layers.
         d5_s1 = self.down4(d4_s1)
         d6_s1 = self.down5(d5_s1)
         d7_s1 = self.down6(d6_s1)
