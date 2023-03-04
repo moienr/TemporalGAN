@@ -14,7 +14,7 @@ import torch
 import torch.nn as nn
 from submodules.gen_cnn_block import Block
 from submodules.cbam import ChannelAttention, CBAM
-from submodules.scam import PAM_Module
+from submodules.scam import PAM
 
 class Generator(nn.Module):
     """
@@ -39,13 +39,13 @@ class Generator(nn.Module):
             nn.LeakyReLU(0.2)) #128
         
         # Downsample blocks 
-        self.pam_init  = PAM_Module(features) # input from the initial_down layer / output goes to the down1 layer
+        self.pam_init  = PAM(features) # input from the initial_down layer / output goes to the down1 layer
         self.down1 = Block(features    , features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.pam1 = PAM_Module(features * 2) # input from the down1 layer / output goes to the down2 layer
+        self.pam1 = PAM(features * 2) # input from the down1 layer / output goes to the down2 layer
         self.down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
-        self.pam2 = PAM_Module(features * 4) # input from the down2 layer / output goes to the down3 layer
+        self.pam2 = PAM(features * 4) # input from the down2 layer / output goes to the down3 layer
         self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.pam3 = PAM_Module(features * 8) # input from the down3 layer / output goes to the down4 layer
+        self.pam3 = PAM(features * 8) # input from the down3 layer / output goes to the down4 layer
         self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
         self.cbam4 = CBAM(features * 8) # input from the down4 layer / output goes to the down5 layer
         self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4
