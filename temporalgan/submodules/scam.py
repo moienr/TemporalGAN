@@ -69,12 +69,15 @@ class PAM(Module):
         # getting the height and width of the input tensor
         b, c, h, w = x.size()
         # value error if the input tesnor's height and width are not devisible by downsampling factor
-        if h % self.downsample != 0 or w % self.downsample != 0:
-            raise ValueError("Height and width must be divisible by downsample factor.")
+        if self.downsample:
+            if h % self.downsample != 0 or w % self.downsample != 0:
+                raise ValueError("Height and width must be divisible by downsample factor.")
         
         if self.downsample:
             # downsample the input tensor to the size of (b, c, h/2, w/2)
             x_down = self.pool(x)
+        else:
+            x_down = x
         
         m_batchsize, C, height, width = x_down.size()
         proj_query = self.query_conv(x_down).view(m_batchsize, -1, width*height).permute(0, 2, 1)
@@ -85,7 +88,7 @@ class PAM(Module):
         out = torch.bmm(proj_value, attention.permute(0, 2, 1))
         out = out.view(m_batchsize, C, height, width)
         
-        if self.upsample:
+        if self.downsample: # if the input tensor was downsampled, upsample the output tensor to the original size
             out = self.upsample(out)
             
         out = self.gamma*out + x
@@ -133,8 +136,8 @@ def test(summary=False,gpu=False):
     
     print('Testing Position Attention Module...')
     n_channels = 16
-    x = torch.randn(1, n_channels, 512, 512).to(device)
-    pam = PAM(n_channels, downsample=4)
+    x = torch.randn(1, n_channels, 128, 128).to(device)
+    pam = PAM(n_channels, downsample=None)
     pam = pam.to(device)
     y = pam(x)
     print(y.shape)
