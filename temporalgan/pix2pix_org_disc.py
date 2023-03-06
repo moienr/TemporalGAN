@@ -50,14 +50,21 @@ class Discriminator(nn.Module):
         return self.model(x)
 
 
-def test():
-    x = torch.randn((1,3,256,256))
+def test(summary = False):
+    x = torch.randn((1,8,256,256))
     y = torch.randn((1,1,256,256))
-    model = Discriminator()
+    model = Discriminator(in_channels=8,out_channels=1)
     preds = model(x,y)
     print(preds.shape)
+    
+    if summary:
+        from torchinfo import summary
+        summary(model, input_size=[(1, 8, 256, 256),(1, 1, 256, 256)], device="cpu",col_names=["input_size", "output_size", "num_params"],
+        col_width=20,
+        row_settings=["var_names"])
+
 
 if __name__ == "__main__": # testing the model
-    test()
+    test(summary=True)
     
 
