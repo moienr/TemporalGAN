@@ -4,7 +4,7 @@ from submodules.disc_cnn_block import CNNBlock
 
 class Discriminator(nn.Module):
     """
-    The Class that creates the Discriminator Model Object.
+    The dual stream Discriminator that has not attention module.
 
     Attributes
     ----------
