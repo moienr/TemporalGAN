@@ -24,13 +24,13 @@ class Discriminator(nn.Module):
             layers.append(
                 CNNBlock(in_channels,
                         feature,
-                        stride = 1 if feature==features[-1] else 2, # Stride in the last layer must be 1.
+                        stride = 1 if feature==features[-1] else 2,  # Stride in the last layer must be 1. this will turn a 32x32 into a 31x31
                         norm = False if feature == features[0] else True # we don't want batch/instance norm in the first layer.
                         ))
             in_channels = feature # setting the in_channels to the last layer created
 
         layers.append(
-            nn.Conv2d(in_channels,1,4,stride=1, padding=1, padding_mode='reflect') # A the last layer to turn 512 channels into 1
+            nn.Conv2d(in_channels,1,4,stride=1, padding=1, padding_mode='reflect') # A the last layer to turn 512 channels into 1 and the 31x31 into 30x30
         )
 
         self.model = nn.Sequential(*layers)
