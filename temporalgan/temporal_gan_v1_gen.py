@@ -30,13 +30,21 @@ class Generator(nn.Module):
             nn.Conv2d(s1_in_channels, features, 4, 2, 1, padding_mode="reflect"),
             nn.LeakyReLU(0.2)) #128
         
-        # Downsample blocks 
-        self.down1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
-        self.down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
-        self.down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 
-        self.down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 1024
+        # Downsample blocks of Senitel-2
+        self.down1_s2 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 64
+        self.down2_s2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
+        self.down3_s2 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
+        self.down4_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
+        self.down5_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 
+        self.down6_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 1024
+        
+        # Downsample blocks of Senitel-1
+        self.down1_s1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 64
+        self.down2_s1 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
+        self.down3_s1 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
+        self.down4_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
+        self.down5_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 
+        self.down6_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 1024
         
         # Bottleneck layer (no downsampling)
         self.bottleneck = nn.Sequential(
@@ -59,20 +67,20 @@ class Generator(nn.Module):
     def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
         # First we do the encoding part for the Sentinel2
         d1_s2 = self.s2_initial_down(s2)
-        d2_s2 = self.down1(d1_s2)
-        d3_s2 = self.down2(d2_s2)
-        d4_s2 = self.down3(d3_s2)
-        d5_s2 = self.down4(d4_s2)
-        d6_s2 = self.down5(d5_s2)
-        d7_s2 = self.down6(d6_s2)
+        d2_s2 = self.down1_s2(d1_s2)
+        d3_s2 = self.down2_s2(d2_s2)
+        d4_s2 = self.down3_s2(d3_s2)
+        d5_s2 = self.down4_s2(d4_s2)
+        d6_s2 = self.down5_s2(d5_s2)
+        d7_s2 = self.down6_s2(d6_s2)
         # Now we do the same for the Sentinel1
         d1_s1 = self.s1_initial_down(s1)
-        d2_s1 = self.down1(d1_s1)
-        d3_s1 = self.down2(d2_s1)
-        d4_s1 = self.down3(d3_s1)
-        d5_s1 = self.down4(d4_s1)
-        d6_s1 = self.down5(d5_s1)
-        d7_s1 = self.down6(d6_s1)
+        d2_s1 = self.down1_s1(d1_s1)
+        d3_s1 = self.down2_s1(d2_s1)
+        d4_s1 = self.down3_s1(d3_s1)
+        d5_s1 = self.down4_s1(d4_s1)
+        d6_s1 = self.down5_s1(d5_s1)
+        d7_s1 = self.down6_s1(d6_s1)
         # Now we fuse the two streams
         d7 = torch.cat([d7_s2, d7_s1], 1)
         # Bottleneck
