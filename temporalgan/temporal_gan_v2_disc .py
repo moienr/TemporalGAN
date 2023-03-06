@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 from submodules.disc_cnn_block import CNNBlock
+from submodules.cbam import CBAM, ChannelAttention, SpatialAttention
+from submodules.scam import PAM
 
 class Discriminator(nn.Module):
     """
@@ -33,6 +35,10 @@ class Discriminator(nn.Module):
         
         self.s2_init_cov = CNNBlock(s2_in_channels, features[0], stride=2, norm=False) # we don't want batch/instance norm in the first layer.
         self.s1_init_cov = CNNBlock(s1_in_channels, features[0], stride=2, norm=False) # we don't want batch/instance norm in the first layer.
+        # Spatial Attention for input
+        self.s2_pam_init = PAM(features[0])
+        self.s1_pam_init = PAM(features[0])
+        
         
         # encoder of S2
         layers = []
@@ -64,6 +70,9 @@ class Discriminator(nn.Module):
             
         self.middle_s1 = nn.Sequential(*layers)
         
+        # CBAM before fusion
+        self.fusion_cbam = CBAM(in_channels*2)
+        
         # A the last layer to turn 512 channels into 1 and the 31x31 into 30x30 | the *2 is because we are concatenating the S2 and S1
         self.fuse_conv = nn.Conv2d(in_channels*2, 1, 4, stride=1, padding=1, padding_mode='reflect') 
 
@@ -84,13 +93,14 @@ class Discriminator(nn.Module):
         s2_in = torch.cat([s2_in, s1_out], dim=1) # Concatenating the output of the generator with the real s2 image
         s1_in = torch.cat([s1_in, s1_out], dim=1) # Concatenating the output of the generator with the real s1 image
         
-        s2_in = self.s2_init_cov(s2_in)
-        s1_in = self.s1_init_cov(s1_in)
+        s2_in = self.s2_pam_init(self.s2_init_cov(s2_in))
+        s1_in = self.s1_pam_init(self.s1_init_cov(s1_in))
         
         s2_in = self.middle_s2(s2_in)
         s1_in = self.middle_s1(s1_in)
         
         concat = torch.cat([s2_in, s1_in], dim=1) # Concatenating the output of the two streams.
+        concat = self.fusion_cbam(concat) # Applying CBAM before the last layer
         
         return self.fuse_conv(concat)
 
@@ -118,6 +128,6 @@ def test(summary=False, gpu=False):
 
 
 if __name__ == "__main__": # testing the model
-    test(summary=True)
+    test(summary=True,gpu=True)
     
 
