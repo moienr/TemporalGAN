@@ -24,6 +24,7 @@
 
 import ee
 import geemap
+from utils import *
 # if __name__ != '__main__':
 #     try:
 #         ee.Initialize()
@@ -294,3 +295,55 @@ def radiometric_correction(image: ee.Image , sr_bands_list = ['SR_B1','SR_B2','S
     sr_bands = image.select(sr_bands_list).multiply(2.75e-05).add(-0.2)
     image = image.addBands(sr_bands, None, True)
     return image
+
+
+def sen1_print(s1_collection):
+    '''
+    prints the important properites of sentienel 1 data collection
+    '''
+    print('orbitProperties_pass :',s1_collection.aggregate_array('orbitProperties_pass').getInfo())
+    print('resolution           :',s1_collection.aggregate_array('resolution').getInfo())
+    print('resolution_meters    :',s1_collection.aggregate_array('resolution_meters').getInfo())
+    print('platform_number      :',s1_collection.aggregate_array('platform_number').getInfo())
+    print('productType          :',s1_collection.aggregate_array('productType').getInfo())
+    print('orbitNumber_start    :',s1_collection.aggregate_array('orbitNumber_start').getInfo())
+    print('orbitNumber_stop     :',s1_collection.aggregate_array('orbitNumber_stop').getInfo())
+    print('Polarisation         :',s1_collection.aggregate_array('transmitterReceiverPolarisation').getInfo())
+    print('system:band_names    :',s1_collection.aggregate_array('system:band_names').getInfo())
+    
+    print('instrumentMode       :',s1_collection.aggregate_array('instrumentMode').getInfo())
+    print('Date                 :',milsec2date(s1_collection.aggregate_array('system:time_start').getInfo()))
+    print('relativeOrbitN_stop  :',s1_collection.aggregate_array('relativeOrbitNumber_stop').getInfo())
+    print('relativeOrbitN_start :',s1_collection.aggregate_array('relativeOrbitNumber_start').getInfo())
+    print('cycleNumber          :',s1_collection.aggregate_array('cycleNumber').getInfo())
+  
+  
+def sen2_print(s2_collection):
+    '''
+    prints the important properites of sentienel 2 data collection
+    '''
+    print('CLOUDY_PIXEL_PERCENTAGE  :',s2_collection.aggregate_array('CLOUDY_PIXEL_PERCENTAGE').getInfo()) 
+    print('CLOUD_SHADOW_PERCENTAGE  :',s2_collection.aggregate_array('CLOUD_SHADOW_PERCENTAGE').getInfo()) 
+    print('VEGETATION_PERCENTAGE    :',s2_collection.aggregate_array('VEGETATION_PERCENTAGE').getInfo())
+    print('NOT_VEGETATED_PERCENTAGE :',s2_collection.aggregate_array('NOT_VEGETATED_PERCENTAGE').getInfo())
+
+    print('SENSOR_QUCLOUD_COVERAGE_ASSESSMENTALITY :',s2_collection.aggregate_array('CLOUD_COVERAGE_ASSESSMENT').getInfo())
+    print('GENERATION_TIME          :',s2_collection.aggregate_array('GENERATION_TIME').getInfo())
+    print('SENSING_ORBIT_NUMBER     :',s2_collection.aggregate_array('SENSING_ORBIT_NUMBER').getInfo())
+    print('NODATA_PIXEL_PERCENTAGE  :',s2_collection.aggregate_array('NODATA_PIXEL_PERCENTAGE').getInfo())
+    print('DATATAKE_TYPE            :',s2_collection.aggregate_array('DATATAKE_TYPE').getInfo())
+    print('SENSING_ORBIT_NUMBER     :',s2_collection.aggregate_array('SENSING_ORBIT_NUMBER').getInfo())
+    print('SNOW_ICE_PERCENTAGE      :',s2_collection.aggregate_array('SNOW_ICE_PERCENTAGE').getInfo())
+    print('THIN_CIRRUS_PERCENTAGE   :',s2_collection.aggregate_array('THIN_CIRRUS_PERCENTAGE').getInfo())
+    print('WATER_PERCENTAGE         :',s2_collection.aggregate_array('WATER_PERCENTAGE').getInfo())
+    print('Date                     :',milsec2date(s2_collection.aggregate_array('system:time_start').getInfo()))
+    print('system:band_names        :',s2_collection.aggregate_array('system:band_names').getInfo())
+
+
+def is_col_empty(im_collection):
+  '''if collection is empty returns `True`, if has vlues returns `False`'''
+  dates = im_collection.size().getInfo()
+  if dates:
+    return False
+  else:
+    return True

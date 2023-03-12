@@ -62,6 +62,13 @@ def test_function(function,shape=False, *args, **kwargs):
     except Exception as e:
         print('Test failed!')
         print(e)
+        
+
+def mean_date(dates: list) -> str:
+    '''the input is list in millisecound format and returns a date in gee sting format '''
+    mil_mean = round(sum(dates) / len(dates))
+    dates_mean = milsec2date([mil_mean])
+    return dates_mean[0]
 
 
 class TextColors:

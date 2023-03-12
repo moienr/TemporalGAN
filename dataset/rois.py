@@ -233,8 +233,9 @@ class ROIS:
         yield from vars(self).items()
 
 
-rois = ROIS()
+
 
 if __name__ == "__main__":
+    rois = ROIS()
     for name, roi in rois:
         print(roi)
