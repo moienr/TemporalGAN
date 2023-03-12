@@ -86,11 +86,7 @@ def get_cloud_mask(img: ee.Image, pixel_quality_band='QA60',
         `img` (ee.Image): An ee.Image object containing a pixel quality band. (e.g. 'QA60' of Sentine 2 )
         `pixel_quality_band` (str, optional): Name of the pixel quality band. Default is 'QA60'. (e.g. 'QA60' of Sentinel 2)
         `cloud_bit` (int, optional): Bit position of the cloud bit. Default is 3.
-        `cloud_shadow_bit` (int, optional): Bit position of the cloud shadow bit. Default is 4.
-        `cloud_confidence_bit` (int, optional): Bit position of the cloud confidence bit. Default is 8.
-        `cloud_shadow_confidence_bit` (int, optional): Bit position of the cloud shadow confidence bit. Default is 10.
-        
-        * Refrence for Defualt Values: https://developers.google.com/earth-engine/datasets/catalog/LANDSAT_LC08_C02_T1_L2#bands
+        `ciruss_bit` (int, optional): Bit position of the cloud shadow bit. Default is 4.
 
     Returns:
         tuple: A tuple containing the cloud mask, cloud shadow mask, and the combined mask. (ee.Image, ee.Image, ee.Image)
@@ -100,6 +96,24 @@ def get_cloud_mask(img: ee.Image, pixel_quality_band='QA60',
     cloud = qa.bitwiseAnd(1 << cloud_bit)
     cirrus = qa.bitwiseAnd(1 << cirrus_bit)
     return cloud, cirrus, cloud.Or(cirrus)
+
+
+def get_cloud_mask_form_scl(image: ee.Image) -> ee.Image:
+    """
+    This function takes a Sentinel-2 Level 2A Earth Engine image as input and returns the mask for clouds and cloud shadows.
+
+    Args:
+        image: Sentinel-2 Level 2A Earth Engine image to be processed.
+
+    Returns:
+        A binary mask indicating the presence of clouds and cloud shadows in the input image. The mask is of the same dimensions as the input image, with a value of 1 indicating the presence of clouds or cloud shadows and 0 indicating their absence.
+
+    Note:
+        The Sentinel-2 Cloud Mask is generated from the Scene Classification Layer (SCL), which is included in the Level 2A product. The function uses the SCL band to identify the pixels classified as clouds or cloud shadows based on their SCL values. In particular, a pixel is classified as a cloud if its SCL value is 3, and as a cloud shadow if its SCL value is 9.
+    """
+    scl = image.select('SCL')
+    mask = scl.eq(3).Or(scl.eq(9))
+    return mask
 
 
 # Snow/Ice mask
@@ -146,7 +160,7 @@ def get_mean_ndvi(image, bands: List[str] = ['SR_B5', 'SR_B4']):
 
 
 # Function to get the Ratio of ones to total pixels
-def get_mask_ones_ratio(mask:ee.Image, scale = 30, in_percentage = True):
+def get_mask_ones_ratio(mask:ee.Image, scale = 100, in_percentage = True, rescale_attempts = 5):
     """
     Function to get the percentage or the ratio of ones to total pixels in an Earth Engine image mask.
 
@@ -155,6 +169,7 @@ def get_mask_ones_ratio(mask:ee.Image, scale = 30, in_percentage = True):
         `mask` (ee.Image): An Earth Engine image mask.
         `scale` (int, optional): The scale to use for reducing the image. Defaults to 30.
         `in_percentage` (bool, optional): Whether to return the ratio or the percentage. Defaults to True.
+        `rescale_attempts` (int, optional): Number of times to rescale the mask if reducer raised a too many pixel error.
 
     Returns:
     --------
@@ -162,16 +177,24 @@ def get_mask_ones_ratio(mask:ee.Image, scale = 30, in_percentage = True):
     """
     # Compute the number of ones and total number of pixels in the mask
     #band_name = mask.bandNames().getInfo()[0]
-    stats = mask.reduceRegion(
-        reducer=ee.Reducer.sum().combine(
-            reducer2=ee.Reducer.count(),
-            sharedInputs=True
-        ),
-        geometry=mask.geometry(),
-        scale=scale,
-        maxPixels=1e9
-    )
-
+    
+    for i in range(rescale_attempts):
+        try:
+            stats = mask.reduceRegion(
+                reducer=ee.Reducer.sum().combine(
+                    reducer2=ee.Reducer.count(),
+                    sharedInputs=True
+                ),
+                geometry=mask.geometry(),
+                scale=scale,
+                maxPixels=1e9)
+            
+            stats.getInfo() # Calling getInfo() executes the computation, ee won't excute the code unless its called, so if we don't do this there will be no error to catch.
+            break
+        except:
+            scale = scale * 10
+            print(f"Scale was too Small -> Rescaling mask to {scale}m ")
+            
     # Extract the number of ones and total number of pixels from the result
     ones = stats.get(stats.keys().get(1))
     total = stats.get(stats.keys().get(0))
@@ -185,7 +208,7 @@ def get_mask_ones_ratio(mask:ee.Image, scale = 30, in_percentage = True):
 
 
 # Function to get the Ratio of Nulls to total pixels that an roi could have
-def get_not_nulls_ratio(image:ee.Image, roi:ee.Geometry ,scale = 30, in_percentage = True) -> ee.Number:
+def get_not_nulls_ratio(image:ee.Image, roi:ee.Geometry ,scale = 100, in_percentage = True, rescale_attempts = 5) -> ee.Number:
     """
         Calculates the ratio of not null null values to total pixels that an ROI (Region of Interest) could have for a given image.
         
@@ -204,7 +227,7 @@ def get_not_nulls_ratio(image:ee.Image, roi:ee.Geometry ,scale = 30, in_percenta
     # th clip is really important since, mask() method goes over boundries.
     mask = image.mask().select(0).clip(roi)
     # Return the ratio
-    return get_mask_ones_ratio(mask, scale = scale, in_percentage = in_percentage)
+    return get_mask_ones_ratio(mask, scale = scale, in_percentage = in_percentage, rescale_attempts = rescale_attempts)
 
 
 
@@ -347,3 +370,58 @@ def is_col_empty(im_collection):
     return False
   else:
     return True
+
+
+def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 90,scale = 100 , optimum_pix_num = 10000):
+    '''
+    the input is an image collection that has beed filterd by date and boundry
+
+    Returns
+    ---
+    *  `True`  if the ratio of image to whole area is bigger that acceptance rate
+    *  `False` the collection is empy or the ratio of image to whole area is smaller that acceptance rate
+    '''
+    if is_col_empty(imgecollection): # first we check if collection is not empty
+        print('Collection was empty!')
+        return False
+
+
+    img = imgecollection.mosaic().clip(roi).select(ref_band_name) # convertin image to mosaic and clip it by roi
+
+    ratio = get_not_nulls_ratio(img,roi,scale=scale).getInfo()
+
+    print(f'Mosiac Covers {ratio} percent of the roi.')
+    #print(f'Image Pixels = {img_pix_int} / All Pixels = {msk_pix_int}')
+    if ratio >= acceptance_rate: 
+        print('Mosaic Coverege Accepted')
+        return True
+    else:
+        print('Mosaic Coverege Not Accepted')
+        return False
+
+
+
+
+
+def gee_list_item_remover(img_collection,img_indcies_list:list):
+    '''
+    the inputs are an image collection, and a list of indices of items to be remove
+    and the output is a the image collection whitouth those items
+    '''
+
+    print('collection size before removing snowy dates: ',img_collection.size().getInfo())
+
+    img_col_list = img_collection.toList(img_collection.size()) # converting imgcollection to gee list
+    img_indcies_list.sort(reverse=True) # we sort the list dscening, bevuse our only option is to remove them one by one 
+    #and if we remove for example index 0, then idex 1 becomes 0 and index 2 becomes 1 and so on,
+    #to prevent this from happening we start removing form the largest index.
+    for indx in img_indcies_list:
+        print('image with index:',indx,' removed')
+        img_col_list =img_col_list.splice(indx,1) # https://developers.google.com/earth-engine/apidocs/ee-list-splice
+
+    removed_col =ee.ImageCollection(img_col_list) # convert the gee list back to imgcollection
+    print('collection size after removing snowy dates: ',removed_col.size().getInfo())
+    return removed_col
+
+
+

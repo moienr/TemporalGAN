@@ -116,6 +116,98 @@ class TextColors:
     UNDERLINE = '\033[4m'
 
 
+from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
+
+def month_add(date:str,months_to_add = 1) -> str:
+    ''' date should be string in `'2020-02-01' format`
+    
+    Usage
+        `day_add('2020-12-30',days_to_add = 2)`
+    
+    '''
+    date_time_obj = datetime.strptime(date, '%Y-%m-%d')
+    new_date_time_obj= date_time_obj + relativedelta(months=+months_to_add)
+    new_date_str = new_date_time_obj.strftime('%Y-%m-%d')
+    return new_date_str
+
+
+def day_add(date:str,days_to_add = 2) -> str:
+    ''' date should be string in `'2020-02-01' format`
+    
+    Usage:
+        `month_add('2020-12-01',months_to_add = -1)`
+    
+    '''
+    date_time_obj = datetime.strptime(date, '%Y-%m-%d')
+    new_date_time_obj= date_time_obj + relativedelta(days=+days_to_add)
+    new_date_str = new_date_time_obj.strftime('%Y-%m-%d')
+    return new_date_str
+
+
+def day_buffer(days_list: list,no_duplicate=True)->list:
+    """
+    Returns a list of dates that includes the input dates plus a buffer of
+    dates up to 2 days before and 2 days after each input date.
+
+    Args:
+        days_list (list): A list of dates in the format "YYYY-MM-DD".
+        no_duplicate (bool, optional): If True, removes any duplicate dates
+            from the output list. Defaults to True.
+
+    Returns:
+        list: A list of dates in the format "YYYY-MM-DD".
+        
+    
+    Usage:
+    ```
+    dummy_dates = ['2020-06-06','2020-06-02','2020-06-12']
+    x =day_buffer(dummy_dates)
+    x.sort()
+    ---
+    output: ['2020-06-04', '2020-06-05', '2020-06-06', '2020-06-07', '2020-06-08', '2020-05-31', '2020-06-01', '2020-06-02', '2020-06-03', '2020-06-10', '2020-06-11', '2020-06-12', '2020-06-13', '2020-06-14']
+    
+    ```
+    """
+    
+    f0 = lambda x: day_add(x,days_to_add = 0)
+    fp1 = lambda x: day_add(x,days_to_add = 1)
+    fp2 = lambda x: day_add(x,days_to_add = 2)
+    fm1 = lambda x: day_add(x,days_to_add = -1)
+    fm2 = lambda x: day_add(x,days_to_add = -2)
+
+    bufferd = [f(x) for x in days_list for f in (fm2,fm1,f0,fp1,fp2)]
+    if no_duplicate:
+        bufferd_no_duplicate = list(dict.fromkeys(bufferd))
+        return bufferd_no_duplicate
+    else:
+        return bufferd
+    
+    
+
+def list_intersection(in_list,ref_list):
+    '''checks if the Items in the `in_list` are  in `ref_list`
+    
+    Returns
+    ---
+    index of items 
+    
+    Usage
+    -----
+    ```
+    list_1 = ['2020-06-02','2020-06-07','2020-06-06','2020-06-07','2020-06-12'] # for example this is sen1 images
+    list_2 = ['2020-06-07','2020-06-12'] # this could be snowy images
+    list_intersection(list_1,list_2)
+    ----
+    ouput: [1, 3, 4]
+    ```
+    '''
+    intersect_list = [i for i,x in enumerate(in_list) if x in ref_list] # https://stackoverflow.com/questions/5419204/index-of-duplicates-items-in-a-python-list
+    return intersect_list
+
+
+
+
 if __name__ == '__main__':
     #test_function(get_square_roi, 40.02, -105.25, roi_size=1920)
     #test_function(correct_image_shape,True,  np.random.rand(3, 256, 256))
