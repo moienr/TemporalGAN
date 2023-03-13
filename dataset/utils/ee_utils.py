@@ -337,20 +337,23 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
                                                      'resolution','resolution_meters','platform_number',
                                                      'productType','orbitNumber_start','orbitNumber_stop',
                                                      'transmitterReceiverPolarisation','system:band_names','instrumentMode',
-                                                     'relativeOrbitNumber_stop','relativeOrbitNumber_start','cycleNumber'],first_is_t_in_millis= True, df_instead_of_print = True):
+                                                     'relativeOrbitNumber_stop','relativeOrbitNumber_start','cycleNumber'],
+                                                    first_is_t_in_millis= True, df_instead_of_print = True):
     """
     A function that prints the properties EarthEngine Image.
 
     Parameters:
     -----------
-    s1_collection : ee.ImageCollection
+    `ImageCollection` : ee.ImageCollection
         The Sentinel-1 image collection whose properties are to be printed.
-    propertie_name_list : list of str, optional (default=['system:time_start', 'orbitProperties_pass', 'resolution', 'resolution_meters', 'platform_number', 'productType', 'orbitNumber_start', 'orbitNumber_stop', 'transmitterReceiverPolarisation', 'system:band_names', 'instrumentMode', 'relativeOrbitNumber_stop', 'relativeOrbitNumber_start', 'cycleNumber'])
+    `propertie_name_list` : list of str, optional (default=['system:time_start', 'orbitProperties_pass', 'resolution', 'resolution_meters', 'platform_number', 'productType', 'orbitNumber_start', 'orbitNumber_stop', 'transmitterReceiverPolarisation', 'system:band_names', 'instrumentMode', 'relativeOrbitNumber_stop', 'relativeOrbitNumber_start', 'cycleNumber'])
         A list of property names to be printed for each image in the collection.
-    first_is_t_in_millis : bool, optional (default=True)
+    `first_is_t_in_millis` : bool, optional (default=True)
         A flag indicating whether the first property in `property_name_list` represents a timestamp in milliseconds.
         If True, the timestamp will be converted to a human-readable date string before being printed.
-
+    `df_instead_of_print` : bool, optional (default=True)
+        A flag indicating whether the properties should be printed or returned as a pandas DataFrame. use df when it is the only function in the cell that
+        prints something. Otherwise, the order of the prints will be messed up.
     Returns:
     --------
     None
@@ -386,10 +389,11 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
         df = pd.DataFrame(properties_list)
         df.insert(0, 'Property', propertie_name_list)
         styled_df = df.style.set_properties(**{'text-align': 'left'})
+        styled_df = styled_df.set_table_styles([dict(selector='th', props=[('text-align', 'left')])])
         return styled_df
 
 # Wrapping ee_property_printer() to print the properties of Sentinel-1 and Sentinel-2 image collections
-sen1_print = lambda s1_collection: ee_property_printer(s1_collection)
+sen1_print = lambda s1_collection: ee_property_printer(s1_collection,df)
 sen2_print = lambda s2_collection: ee_property_printer(s2_collection, propertie_name_list=['system:time_start','roi_cloud_cover', 'CLOUDY_PIXEL_PERCENTAGE',
                                                                                   'CLOUD_SHADOW_PERCENTAGE', 'VEGETATION_PERCENTAGE',
                                                                                   'NOT_VEGETATED_PERCENTAGE', 'CLOUD_COVERAGE_ASSESSMENT',
