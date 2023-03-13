@@ -214,3 +214,5 @@ if __name__ == '__main__':
     df = read_csv('D:\\python\\SoilNet\\dataset\\utils\\test.csv')
     print(df)
     
+    
+    
