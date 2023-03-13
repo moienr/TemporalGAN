@@ -160,7 +160,7 @@ def get_mean_ndvi(image, bands: List[str] = ['SR_B5', 'SR_B4']):
 
 
 # Function to get the Ratio of ones to total pixels
-def get_mask_ones_ratio(mask:ee.Image, scale = 100, in_percentage = True, rescale_attempts = 5):
+def get_mask_ones_ratio(mask:ee.Image, scale = 100, in_percentage = True):
     """
     Function to get the percentage or the ratio of ones to total pixels in an Earth Engine image mask.
 
@@ -178,26 +178,24 @@ def get_mask_ones_ratio(mask:ee.Image, scale = 100, in_percentage = True, rescal
     # Compute the number of ones and total number of pixels in the mask
     #band_name = mask.bandNames().getInfo()[0]
     
-    for i in range(rescale_attempts):
-        try:
-            stats = mask.reduceRegion(
-                reducer=ee.Reducer.sum().combine(
-                    reducer2=ee.Reducer.count(),
-                    sharedInputs=True
-                ),
-                geometry=mask.geometry(),
-                scale=scale,
-                maxPixels=1e9)
-            
-            stats.getInfo() # Calling getInfo() executes the computation, ee won't excute the code unless its called, so if we don't do this there will be no error to catch.
-            break
-        except:
-            scale = scale * 10
-            print(f"Scale was too Small -> Rescaling mask to {scale}m ")
-            
+
+
+    stats = mask.reduceRegion(
+        reducer=ee.Reducer.sum().combine(
+            reducer2=ee.Reducer.count(),
+            sharedInputs=True
+        ),
+        geometry=mask.geometry(),
+        scale=scale,
+        maxPixels=1e9,
+        bestEffort=True
+        )
+
+
     # Extract the number of ones and total number of pixels from the result
     ones = stats.get(stats.keys().get(1))
     total = stats.get(stats.keys().get(0))
+    
 
     # Compute the ratio of ones to total pixels
     ratio = ee.Number(ones).divide(total)
