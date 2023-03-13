@@ -384,10 +384,10 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
         
 # Wrapping ee_property_printer() to print the properties of Sentinel-1 and Sentinel-2 image collections
 sen1_print = lambda s1_collection: ee_property_printer(s1_collection)
-sen2_print = lambda s2_collection: sen1_print(s2_collection, propertie_name_list=['system:time_start', 'CLOUDY_PIXEL_PERCENTAGE',
+sen2_print = lambda s2_collection: ee_property_printer(s2_collection, propertie_name_list=['system:time_start','roi_cloud_cover', 'CLOUDY_PIXEL_PERCENTAGE',
                                                                                   'CLOUD_SHADOW_PERCENTAGE', 'VEGETATION_PERCENTAGE',
                                                                                   'NOT_VEGETATED_PERCENTAGE', 'CLOUD_COVERAGE_ASSESSMENT',
-                                                                                  'GENERATION_TIME', 'SENSING_ORBIT_NUMBER', '',
+                                                                                  'GENERATION_TIME', 'SENSING_ORBIT_NUMBER',
                                                                                   'NODATA_PIXEL_PERCENTAGE','DATATAKE_TYPE',
                                                                                   'SENSING_ORBIT_NUMBER','SNOW_ICE_PERCENTAGE',
                                                                                   'THIN_CIRRUS_PERCENTAGE','WATER_PERCENTAGE',
@@ -457,3 +457,42 @@ def gee_list_item_remover(img_collection,img_indcies_list:list):
 
 
 
+
+## To Linear and back again!
+#as was said in the `Woodhouse pg. 324` we cannot averasge over `db` values.
+#so we convert the data into `linear` scale, then we use `.mean()` method
+
+#1 #https://gis.stackexchange.com/questions/424225/convert-sentinel-1-images-data-from-db-to-linear   #some how functions don't work but gives a good idea #used code in 'data_extractro_foliom' to translate to py
+#2 #https://gis.stackexchange.com/questions/419849/google-earth-engine-python-expression-syntax       #correct way of writing the functions in python
+#3 #https://developers.google.com/earth-engine/apidocs/ee-image-addbands
+#4 #https://developers.google.com/earth-engine/apidocs/ee-image-expression
+
+# adds band `VV_lin` to the images, code in link #1 doesn't work beucase it uses name `VV` and sets the replace in #3 to True which then overwrites the band we created with original `VV` !
+def toLinear(db:ee.Image):
+    """
+    Adds a band named 'VV_lin' to the input image collection where the values of the band 'VV' are converted to linear scale using the formula pow(10, db / 10).
+    
+    Args:
+        `db`: An ee.ImageCollection object with a 'VV' band in dB scale.
+    
+    Returns:
+        An ee.Image object with an additional band named 'VV_lin'.
+    """
+    lin = db.expression('pow(10, db / 10)', {'db': db.select('VV')}).rename('VV_lin')
+    return db.addBands(lin)
+
+# reads the added band `VV_linear` and converts it to db scale, we use this after we averaged over linear values.
+def toDb(linear:ee.Image, input_band_name:str = 'VV_lin'):
+    """
+    Converts the linear `VV_lin` band of the input image collection `linear` to decibels using the formula 10 * log10(linear).
+    The resulting band is named `VV_db`.
+    
+    Args:
+        `linear`: An Earth Engine image collection with a band named 'VV_lin' in linear scale.
+        `input_band_name`: The name of the linear band to convert to decibels. Default is 'VV_lin'.
+    
+    Returns:
+        An Earth Engine image with an added band named 'VV_db' in decibels.
+    """
+    lin = linear.expression('10 * log10(linear)', {'linear': linear.select(input_band_name)}).rename('VV_db')
+    return linear.addBands(lin)
