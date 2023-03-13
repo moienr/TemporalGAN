@@ -403,7 +403,7 @@ def is_col_empty(im_collection):
     return True
 
 
-def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 90,scale = 100 , optimum_pix_num = 10000, verbose = True):
+def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 85,scale = 100, verbose = True):
     '''
     the input is an image collection that has beed filterd by date and boundry
 
