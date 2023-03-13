@@ -24,7 +24,7 @@
 
 import ee
 import geemap
-from utils import *
+from utils.utils import *
 # if __name__ != '__main__':
 #     try:
 #         ee.Initialize()
@@ -206,7 +206,7 @@ def get_mask_ones_ratio(mask:ee.Image, scale = 100, in_percentage = True):
 
 
 # Function to get the Ratio of Nulls to total pixels that an roi could have
-def get_not_nulls_ratio(image:ee.Image, roi:ee.Geometry ,scale = 100, in_percentage = True, rescale_attempts = 5) -> ee.Number:
+def get_not_nulls_ratio(image:ee.Image, roi:ee.Geometry ,scale = 100, in_percentage = True) -> ee.Number:
     """
         Calculates the ratio of not null null values to total pixels that an ROI (Region of Interest) could have for a given image.
         
@@ -225,7 +225,7 @@ def get_not_nulls_ratio(image:ee.Image, roi:ee.Geometry ,scale = 100, in_percent
     # th clip is really important since, mask() method goes over boundries.
     mask = image.mask().select(0).clip(roi)
     # Return the ratio
-    return get_mask_ones_ratio(mask, scale = scale, in_percentage = in_percentage, rescale_attempts = rescale_attempts)
+    return get_mask_ones_ratio(mask, scale = scale, in_percentage = in_percentage)
 
 
 
@@ -318,48 +318,81 @@ def radiometric_correction(image: ee.Image , sr_bands_list = ['SR_B1','SR_B2','S
     return image
 
 
-def sen1_print(s1_collection):
-    '''
-    prints the important properites of sentienel 1 data collection
-    '''
-    print('orbitProperties_pass :',s1_collection.aggregate_array('orbitProperties_pass').getInfo())
-    print('resolution           :',s1_collection.aggregate_array('resolution').getInfo())
-    print('resolution_meters    :',s1_collection.aggregate_array('resolution_meters').getInfo())
-    print('platform_number      :',s1_collection.aggregate_array('platform_number').getInfo())
-    print('productType          :',s1_collection.aggregate_array('productType').getInfo())
-    print('orbitNumber_start    :',s1_collection.aggregate_array('orbitNumber_start').getInfo())
-    print('orbitNumber_stop     :',s1_collection.aggregate_array('orbitNumber_stop').getInfo())
-    print('Polarisation         :',s1_collection.aggregate_array('transmitterReceiverPolarisation').getInfo())
-    print('system:band_names    :',s1_collection.aggregate_array('system:band_names').getInfo())
+def millis_to_date_string(millis: ee.Number) -> ee.String:
+    """
+    Converts a millisecond timestamp to a formatted date string.
+
+    Args:
+        millis: A millisecond timestamp.
+
+    Returns:
+        A formatted date string in the format 'YYYY-MM-dd'.
+    """
+    date = ee.Date(millis)
+    return date.format('YYYY-MM-dd')
+
+# In Prevoius version we were using .getInfo() every line, which is not efficient, now we are doing everything on server-side
+# then in after the list is ready, we call getInfo() and we print it
+def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start','orbitProperties_pass',
+                                                     'resolution','resolution_meters','platform_number',
+                                                     'productType','orbitNumber_start','orbitNumber_stop',
+                                                     'transmitterReceiverPolarisation','system:band_names','instrumentMode',
+                                                     'relativeOrbitNumber_stop','relativeOrbitNumber_start','cycleNumber'],first_is_t_in_millis= True):
+    """
+    A function that prints the properties EarthEngine Image.
+
+    Parameters:
+    -----------
+    s1_collection : ee.ImageCollection
+        The Sentinel-1 image collection whose properties are to be printed.
+    propertie_name_list : list of str, optional (default=['system:time_start', 'orbitProperties_pass', 'resolution', 'resolution_meters', 'platform_number', 'productType', 'orbitNumber_start', 'orbitNumber_stop', 'transmitterReceiverPolarisation', 'system:band_names', 'instrumentMode', 'relativeOrbitNumber_stop', 'relativeOrbitNumber_start', 'cycleNumber'])
+        A list of property names to be printed for each image in the collection.
+    first_is_t_in_millis : bool, optional (default=True)
+        A flag indicating whether the first property in `property_name_list` represents a timestamp in milliseconds.
+        If True, the timestamp will be converted to a human-readable date string before being printed.
+
+    Returns:
+    --------
+    None
+
+    Example:
+    --------
+    >>> collection = ee.ImageCollection('COPERNICUS/S1_GRD').filterDate('2019-01-01', '2019-01-31').filterBounds(geometry)
+    >>> sen1_print(collection, propertie_name_list=['system:time_start', 'relativeOrbitNumber_start', 'transmitterReceiverPolarisation'], first_is_t_in_millis=True)
+    system:time_start -> [datetime.datetime(2019, 1, 1, 5, 42, 36, 196000), datetime.datetime(2019, 1, 1, 5, 42, 51, 427000), ...]
+    relativeOrbitNumber_start -> [17, 35, ...]
+    transmitterReceiverPolarisation -> ['VV', 'VV', ...]
+    """
+
+    if first_is_t_in_millis:
+            agg_list = [s1_collection.aggregate_array(propertie_name_list[0]).map(millis_to_date_string)]
+    else:
+        agg_list = [s1_collection.aggregate_array(propertie_name_list[0])]
+        
+    for propertie_name in propertie_name_list[1:]:
+        agg_list.append(s1_collection.aggregate_array(propertie_name))
+        
+    ee_list =ee.List(agg_list)
     
-    print('instrumentMode       :',s1_collection.aggregate_array('instrumentMode').getInfo())
-    print('Date                 :',milsec2date(s1_collection.aggregate_array('system:time_start').getInfo()))
-    print('relativeOrbitN_stop  :',s1_collection.aggregate_array('relativeOrbitNumber_stop').getInfo())
-    print('relativeOrbitN_start :',s1_collection.aggregate_array('relativeOrbitNumber_start').getInfo())
-    print('cycleNumber          :',s1_collection.aggregate_array('cycleNumber').getInfo())
+    # this is only to make the output look nice
+    max_len = max(len(s) for s in propertie_name_list)  # Find the length of the longest string in the list
+    formatted_lst = [f"{s:<{max_len}}".replace(" ", "-") for s in propertie_name_list]  # Add spaces to each string to make them the same length
+    
+    properties_list = ee_list.getInfo()
+    for name, element in zip(formatted_lst,properties_list):
+        print(name, "-> ", element,sep="")
+        
+# Wrapping ee_property_printer() to print the properties of Sentinel-1 and Sentinel-2 image collections
+sen1_print = lambda s1_collection: ee_property_printer(s1_collection)
+sen2_print = lambda s2_collection: sen1_print(s2_collection, propertie_name_list=['system:time_start', 'CLOUDY_PIXEL_PERCENTAGE',
+                                                                                  'CLOUD_SHADOW_PERCENTAGE', 'VEGETATION_PERCENTAGE',
+                                                                                  'NOT_VEGETATED_PERCENTAGE', 'CLOUD_COVERAGE_ASSESSMENT',
+                                                                                  'GENERATION_TIME', 'SENSING_ORBIT_NUMBER', '',
+                                                                                  'NODATA_PIXEL_PERCENTAGE','DATATAKE_TYPE',
+                                                                                  'SENSING_ORBIT_NUMBER','SNOW_ICE_PERCENTAGE',
+                                                                                  'THIN_CIRRUS_PERCENTAGE','WATER_PERCENTAGE',
+                                                                                  'system:band_names'], first_is_t_in_millis=True)
   
-  
-def sen2_print(s2_collection):
-    '''
-    prints the important properites of sentienel 2 data collection
-    '''
-    print('CLOUDY_PIXEL_PERCENTAGE  :',s2_collection.aggregate_array('CLOUDY_PIXEL_PERCENTAGE').getInfo()) 
-    print('CLOUD_SHADOW_PERCENTAGE  :',s2_collection.aggregate_array('CLOUD_SHADOW_PERCENTAGE').getInfo()) 
-    print('VEGETATION_PERCENTAGE    :',s2_collection.aggregate_array('VEGETATION_PERCENTAGE').getInfo())
-    print('NOT_VEGETATED_PERCENTAGE :',s2_collection.aggregate_array('NOT_VEGETATED_PERCENTAGE').getInfo())
-
-    print('SENSOR_QUCLOUD_COVERAGE_ASSESSMENTALITY :',s2_collection.aggregate_array('CLOUD_COVERAGE_ASSESSMENT').getInfo())
-    print('GENERATION_TIME          :',s2_collection.aggregate_array('GENERATION_TIME').getInfo())
-    print('SENSING_ORBIT_NUMBER     :',s2_collection.aggregate_array('SENSING_ORBIT_NUMBER').getInfo())
-    print('NODATA_PIXEL_PERCENTAGE  :',s2_collection.aggregate_array('NODATA_PIXEL_PERCENTAGE').getInfo())
-    print('DATATAKE_TYPE            :',s2_collection.aggregate_array('DATATAKE_TYPE').getInfo())
-    print('SENSING_ORBIT_NUMBER     :',s2_collection.aggregate_array('SENSING_ORBIT_NUMBER').getInfo())
-    print('SNOW_ICE_PERCENTAGE      :',s2_collection.aggregate_array('SNOW_ICE_PERCENTAGE').getInfo())
-    print('THIN_CIRRUS_PERCENTAGE   :',s2_collection.aggregate_array('THIN_CIRRUS_PERCENTAGE').getInfo())
-    print('WATER_PERCENTAGE         :',s2_collection.aggregate_array('WATER_PERCENTAGE').getInfo())
-    print('Date                     :',milsec2date(s2_collection.aggregate_array('system:time_start').getInfo()))
-    print('system:band_names        :',s2_collection.aggregate_array('system:band_names').getInfo())
-
 
 def is_col_empty(im_collection):
   '''if collection is empty returns `True`, if has vlues returns `False`'''
@@ -370,7 +403,7 @@ def is_col_empty(im_collection):
     return True
 
 
-def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 90,scale = 100 , optimum_pix_num = 10000):
+def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 90,scale = 100 , optimum_pix_num = 10000, verbose = True):
     '''
     the input is an image collection that has beed filterd by date and boundry
 
@@ -388,7 +421,8 @@ def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate 
 
     ratio = get_not_nulls_ratio(img,roi,scale=scale).getInfo()
 
-    print(f'Mosiac Covers {ratio} percent of the roi.')
+    if verbose:
+        print(f'Mosiac Covers {ratio} percent of the roi.')
     #print(f'Image Pixels = {img_pix_int} / All Pixels = {msk_pix_int}')
     if ratio >= acceptance_rate: 
         print('Mosaic Coverege Accepted')
