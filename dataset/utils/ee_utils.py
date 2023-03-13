@@ -337,7 +337,7 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
                                                      'resolution','resolution_meters','platform_number',
                                                      'productType','orbitNumber_start','orbitNumber_stop',
                                                      'transmitterReceiverPolarisation','system:band_names','instrumentMode',
-                                                     'relativeOrbitNumber_stop','relativeOrbitNumber_start','cycleNumber'],first_is_t_in_millis= True):
+                                                     'relativeOrbitNumber_stop','relativeOrbitNumber_start','cycleNumber'],first_is_t_in_millis= True, df_instead_of_print = True):
     """
     A function that prints the properties EarthEngine Image.
 
@@ -379,9 +379,15 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
     formatted_lst = [f"{s:<{max_len}}".replace(" ", "-") for s in propertie_name_list]  # Add spaces to each string to make them the same length
     
     properties_list = ee_list.getInfo()
-    for name, element in zip(formatted_lst,properties_list):
-        print(name, "-> ", element,sep="")
-        
+    if not df_instead_of_print:
+        for name, element in zip(formatted_lst,properties_list):
+            print(name, "-> ", element,sep="")
+    if df_instead_of_print:    
+        df = pd.DataFrame(properties_list)
+        df.insert(0, 'Property', propertie_name_list)
+        styled_df = df.style.set_properties(**{'text-align': 'left'})
+        return styled_df
+
 # Wrapping ee_property_printer() to print the properties of Sentinel-1 and Sentinel-2 image collections
 sen1_print = lambda s1_collection: ee_property_printer(s1_collection)
 sen2_print = lambda s2_collection: ee_property_printer(s2_collection, propertie_name_list=['system:time_start','roi_cloud_cover', 'CLOUDY_PIXEL_PERCENTAGE',
