@@ -679,3 +679,82 @@ def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',ch
   s2_col = get_s2(date,roi,max_cloud,max_snow)
   s1_col = get_s1(s2_col,roi,max_snow,priority_path,check_second_priority_path,month_span=month_span,retry_days=retry_days)
   return s2_col,s1_col
+
+
+
+def find_most_repeated_element(ee_list: ee.List) -> ee.List:
+    """
+    Given an Earth Engine List, this function finds the element(s) that is/are the most repeated.
+
+    Args
+    ----
+    `ee_list`: An Earth Engine List containing elements.
+
+    Returns
+    -------
+    ee.List: An Earth Engine List containing the element(s) with the highest count of occurrences.
+    
+    Usage
+    -----
+    ```
+    rel_list = s1_col.aggregate_array('relativeOrbitNumber_start')
+    x = find_most_repeated_element(rel_list)
+    ----
+    x: ee.List([110,8]) # The most repeated elements are 110 and 8
+    ```
+    
+    """
+    # Get the distinct elements in the list
+    distinct_elements = ee_list.distinct()
+
+    # Map over the distinct elements and count their occurrences in the list
+    def count_occurrences(element):
+        count = ee_list.filter(ee.Filter.eq('item', element)).size()
+        return ee.Feature(None, {'element': element, 'count': count})
+
+    occurrences = distinct_elements.map(count_occurrences)
+    occurrences = ee.FeatureCollection(occurrences)
+    # Sort the occurrences by count in descending order
+    sorted_occurrences = occurrences.sort('count', False)
+
+    # Get the element(s) with the highest count
+    max_count = sorted_occurrences.first().get('count')
+    most_repeated_elements = sorted_occurrences.filter(ee.Filter.eq('count', max_count)).aggregate_array('element')
+
+    return most_repeated_elements
+
+
+
+def get_band_average(image:ee.Image, band_name:str)-> ee.Number:
+    """
+    Computes the average value of a given band in an Earth Engine image within the image's bounding box.
+
+    Args
+    ----
+        image: An Earth Engine image.
+        band_name: A string specifying the name of the band of interest.
+
+    Returns
+    -------
+        The average value of the specified band within the image's bounding box as a float.
+        
+    Usage
+    -----
+    ```
+    sen1_img = sen1_col.mean().clip(roi)
+    get_band_average(sen1_img,'angle')
+    ----
+    ee.Number(31.777401400973883)
+    ```
+    """
+    # Get the band of interest
+    band = image.select(band_name)
+
+    # Get the image's bounding box
+    bbox = image.geometry().bounds()
+
+    # Compute the mean of the band within the bounding box
+    band_mean = band.reduceRegion(reducer=ee.Reducer.mean(),scale = 100, geometry=bbox, maxPixels=1e9)
+
+    # Return the mean value as a float
+    return band_mean.get(band_name)
