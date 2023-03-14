@@ -573,112 +573,116 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False):
     
 
 def s1_col_func(start_date,end_date,roi,path,single_scene=False):
-  if single_scene:
-    s1_collection = ee.ImageCollection('COPERNICUS/S1_GRD') \
-        .filterDate(start_date, end_date) \
-        .filterBounds(roi) \
-        .filter(ee.Filter.eq('resolution','H')) \
-        .filter(ee.Filter.eq('instrumentMode','IW'))\
-        .filter(ee.Filter.contains('.geo', roi)) \
-        .filterMetadata('orbitProperties_pass', 'equals', path) 
-  else:
-    s1_collection = ee.ImageCollection('COPERNICUS/S1_GRD') \
-        .filterDate(start_date, end_date) \
-        .filterBounds(roi) \
-        .filter(ee.Filter.eq('resolution','H')) \
-        .filter(ee.Filter.eq('instrumentMode','IW'))\
-        .filterMetadata('orbitProperties_pass', 'equals', path) 
+    if single_scene:
+        s1_collection = ee.ImageCollection('COPERNICUS/S1_GRD') \
+          .filterDate(start_date, end_date) \
+          .filterBounds(roi) \
+          .filter(ee.Filter.eq('resolution','H')) \
+          .filter(ee.Filter.eq('instrumentMode','IW'))\
+          .filter(ee.Filter.contains('.geo', roi)) \
+          .filterMetadata('orbitProperties_pass', 'equals', path) 
+    else:
+        s1_collection = ee.ImageCollection('COPERNICUS/S1_GRD') \
+          .filterDate(start_date, end_date) \
+          .filterBounds(roi) \
+          .filter(ee.Filter.eq('resolution','H')) \
+          .filter(ee.Filter.eq('instrumentMode','IW'))\
+          .filterMetadata('orbitProperties_pass', 'equals', path) 
 
-  return s1_collection
+    return s1_collection
 
 
 
-def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',check_second_priority_path = True,month_span = 1,retry_days = 0):
-  '''
-  Inputs
-  ---
-  * s2_collection
-  * roi
-  * max_snow: images with more snow thatn `max_snow` are considered as snowy 
-  * priority_path: whether to first check for Ascending or Dscending Data
-  * check_second_priority_path: whether to check the other path as well
-  * retry_days: Increasing the date span by how many days in case of empty collection
+def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',check_second_priority_path = True,month_span = 1,retry_days = 0,snow_removal=False):
+    '''
+    Inputs
+    ---
+    * s2_collection
+    * roi
+    * max_snow: images with more snow thatn `max_snow` are considered as snowy 
+    * priority_path: whether to first check for Ascending or Dscending Data
+    * check_second_priority_path: whether to check the other path as well
+    * retry_days: Increasing the date span by how many days in case of empty collection
+    
+    '''
+    print('◍◍Finding S1')
+    # if ASC is prioriy then DESC is the second prioriy and vice versa
+    if priority_path == 'ASCENDING':
+        second_priority = 'DESCENDING'
+    else:
+        second_priority = 'ASCENDING'
+
+
+    mean_s2_date = mean_date(s2_collection.aggregate_array('system:time_start').getInfo()) #find the average date of S2 collection which will be the center of our S1 collection
+    print('mean date: ', mean_s2_date)
+
+    start_date = month_add(mean_s2_date,months_to_add =-1 * month_span) # 1 month before center date
+    end_date   = month_add(mean_s2_date,months_to_add = month_span) # 1 month after  center date
   
-  '''
-  print('◍◍Finding S1')
-  # if ASC is prioriy then DESC is the second prioriy and vice versa
-  if priority_path == 'ASCENDING':
-    second_priority = 'DESCENDING'
-  else:
-    second_priority = 'ASCENDING'
+    # in case of failure in the first atemmpet the reucrse will activate and increase the date span
+    if retry_days !=0:
+        start_date = day_add(start_date,days_to_add = -retry_days)
+        end_date   = day_add(end_date,days_to_add =  retry_days)
+    print('final date range: ',start_date,end_date)
 
+    if snow_removal:
+        # S2 collection in the S1 Collection range to find the snowy days
+        s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
+                    .filterDate(start_date, end_date) \
+                    .filter(ee.Filter.greaterThan('SNOW_ICE_PERCENTAGE',max_snow)) \
+                    .filterBounds(roi) #finding all the images in the two month range that are snowy
 
-  mean_s2_date = mean_date(s2_collection.aggregate_array('system:time_start').getInfo()) #find the average date of S2 collection which will be the center of our S1 collection
-  print('mean date: ', mean_s2_date)
-
-  start_date = month_add(mean_s2_date,months_to_add =-1 * month_span) # 1 month before center date
-  end_date   = month_add(mean_s2_date,months_to_add = month_span) # 1 month after  center date
+        # if an image is snowy we consider 2 days before and after it as snowy becuase S2 temporal resouliton is 5 days
+        # the collection should be s2 and not the s2_collection, in the last version I made this mistake which resualted in wrong snowy dates.
+        snowy_days = milsec2date(s2.aggregate_array('system:time_start').getInfo(),no_duplicate=True)
+        print('Snowy days       : ',snowy_days)
+        snowy_days_buffered = day_buffer(snowy_days)
+        print('Snowy days Buffed: ',snowy_days_buffered)
   
-  # in case of failure in the first atemmpet the reucrse will activate and increase the date span
-  if retry_days !=0:
-    start_date = day_add(start_date,days_to_add = -retry_days)
-    end_date   = day_add(end_date,days_to_add =  retry_days)
-  print('final date range: ',start_date,end_date)
+    #====================================================================================================
 
-  # S2 collection in the S1 Collection range to find the snowy days
-  s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
-                  .filterDate(start_date, end_date) \
-                  .filter(ee.Filter.greaterThan('SNOW_ICE_PERCENTAGE',max_snow)) \
-                  .filterBounds(roi) #finding all the images in the two month range that are snowy
-
-  # if an image is snowy we consider 2 days before and after it as snowy becuase S2 temporal resouliton is 5 days
-  # the collection should be s2 and not the s2_collection, in the last version I made this mistake which resualted in wrong snowy dates.
-  snowy_days = milsec2date(s2.aggregate_array('system:time_start').getInfo(),no_duplicate=True)
-  print('Snowy days       : ',snowy_days)
-  snowy_days_buffered = day_buffer(snowy_days)
-  print('Snowy days Buffed: ',snowy_days_buffered)
-  #====================================================================================================
-
-  ## First we check if theres and Priority_path data that covers the whole area with a singe scene
-  print(f'◍checking for {priority_path} single scene')
-  s1_collection = s1_col_func(start_date,end_date,roi,path = priority_path,single_scene=True)
+    ## First we check if theres and Priority_path data that covers the whole area with a singe scene
+    print(f'◍checking for {priority_path} single scene')
+    s1_collection = s1_col_func(start_date,end_date,roi,path = priority_path,single_scene=True)
 
 
-  ## if not,  we check if theres and Descending data that covers the whole area
-  if is_col_empty(s1_collection) and check_second_priority_path:
-    print(f'◍{priority_path} singe scene was not fount, checking {second_priority} single scene ...')
-    s1_collection = s1_col_func(start_date,end_date,roi,path = second_priority,single_scene=True)
+    ## if not,  we check if theres and Descending data that covers the whole area
+    if is_col_empty(s1_collection) and check_second_priority_path:
+        print(f'◍{priority_path} singe scene was not fount, checking {second_priority} single scene ...')
+        s1_collection = s1_col_func(start_date,end_date,roi,path = second_priority,single_scene=True)
 
-  if is_col_empty(s1_collection):
-    print(f'◍No single scene was fount, checking {priority_path} mosaic ...')
-    s1_collection = s1_col_func(start_date,end_date,roi,path = priority_path,single_scene=False)
+    if is_col_empty(s1_collection):
+        print(f'◍No single scene was fount, checking {priority_path} mosaic ...')
+        s1_collection = s1_col_func(start_date,end_date,roi,path = priority_path,single_scene=False)
 
 
-  if (is_col_empty(s1_collection) or not mosaic_covers_roi(s1_collection,roi,ref_band_name = 'VV')) and check_second_priority_path:
-    print(f'◍{priority_path} and {second_priority} singe scene was not fount, {priority_path} mosaic was not found,  checking {second_priority}  mosaic ...')
-    s1_collection = s1_collection = s1_col_func(start_date,end_date,roi,path = second_priority,single_scene=False)
+    if (is_col_empty(s1_collection) or not mosaic_covers_roi(s1_collection,roi,ref_band_name = 'VV')) and check_second_priority_path:
+        print(f'◍{priority_path} and {second_priority} singe scene was not fount, {priority_path} mosaic was not found,  checking {second_priority}  mosaic ...')
+        s1_collection = s1_collection = s1_col_func(start_date,end_date,roi,path = second_priority,single_scene=False)
       
-  if is_col_empty(s1_collection) or not mosaic_covers_roi(s1_collection,roi,ref_band_name = 'VV', verbose=False):
-    print('◍No S1 dataset was found!')
-    if not check_second_priority_path: print('◍check_second_priority_path was set to True and check range was buffed by 5 days')
+    if is_col_empty(s1_collection) or not mosaic_covers_roi(s1_collection,roi,ref_band_name = 'VV', verbose=False):
+        print('◍No S1 dataset was found!')
+        if not check_second_priority_path: print('◍check_second_priority_path was set to True and check range was buffed by 5 days')
 
-    return get_s1(s2_collection,roi,max_snow = max_snow+2,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days+5 ,month_span = month_span) # if the check only primiray didn't work for the first time,
-    #probabily won't work, so we set check_second_priority_path to True
-  else:
+        return get_s1(s2_collection,roi,max_snow = max_snow+2,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days+5 ,month_span = month_span) # if the check only primiray didn't work for the first time,
+        
+    else: #probabily won't work, so we set check_second_priority_path to True
+        if snow_removal:
+            s1_date_list = milsec2date(s1_collection.aggregate_array('system:time_start').getInfo(),no_duplicate=False)
+            s1_snowy_dates = list_intersection(s1_date_list,snowy_days_buffered)
 
-    s1_date_list = milsec2date(s1_collection.aggregate_array('system:time_start').getInfo(),no_duplicate=False)
-    s1_snowy_dates = list_intersection(s1_date_list,snowy_days_buffered)
-
-    s1_snow_removed_col = gee_list_item_remover(s1_collection,s1_snowy_dates)
-    print('◍Collection Found!')
-    return s1_snow_removed_col
+            s1_snow_removed_col = gee_list_item_remover(s1_collection,s1_snowy_dates)
+            print('◍Collection Found!')
+            return s1_snow_removed_col
+        else:
+            return s1_collection
 
 
 
 def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',check_second_priority_path = True,month_span = 1,max_cloud = 5,max_snow = 5,retry_days = 0 ):
-  s2_col = get_s2(date,roi,max_cloud,max_snow)
-  s1_col = get_s1(s2_col,roi,max_snow,priority_path,check_second_priority_path,month_span=month_span,retry_days=retry_days)
-  return s2_col,s1_col
+    s2_col = get_s2(date,roi,max_cloud,max_snow)
+    s1_col = get_s1(s2_col,roi,max_snow,priority_path,check_second_priority_path,month_span=month_span,retry_days=retry_days)
+    return s2_col,s1_col
 
 
 
@@ -758,3 +762,5 @@ def get_band_average(image:ee.Image, band_name:str)-> ee.Number:
 
     # Return the mean value as a float
     return band_mean.get(band_name)
+
+
