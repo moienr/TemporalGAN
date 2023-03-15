@@ -803,3 +803,32 @@ def collection_splitter(collection, property_name:str, property_list:ee.List):
     col_list = property_list.map(lambda x: collection.filter(ee.Filter.eq(property_name, x)))
     return col_list
     
+    
+def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False) -> ee.Number:
+    """
+    Get the relative orbit number of the best Sentinel-1 orbit based on the number of times it appears in the input collection 
+    and the average incidence angle of the images in that orbit.
+
+    Args:
+    -----
+        `s1_col`: The input Sentinel-1 image collection.
+        `clip_roi`: The region of interest to clip the images to. Defaults to None.
+        `choose_smallest`: A boolean indicating whether to choose the smallest (True) or largest (False) average incidence angle.
+                          Defaults to False.
+                          
+        * it is important to use roi, when calculating local average, otherwise the average will be calculated over the whole image.
+            for expample when calculating `angle` band, the average will be calculated over the whole image, and not over the roi, and will
+            result for the same value around `38` for all the `S1` images. 
+
+
+    Returns:
+    --------
+        The relative orbit number of the best Sentinel-1 orbit based on the number of times it appears in the input collection 
+        and the average incidence angle of the images in that orbit.
+    """
+    rel_list = s1_col.aggregate_array('relativeOrbitNumber_start')
+    most_list = find_most_repeated_element(rel_list)
+    s1_col_filtered = s1_col.filter(ee.Filter.inList('relativeOrbitNumber_start',most_list))
+    s1_col_with_avg_angle = s1_col_filtered.map(lambda img: img.set('avg_angle',get_band_average(img,'angle',clip_roi)))
+    return s1_col_with_avg_angle.sort('avg_angle',choose_smallest).first().get('relativeOrbitNumber_start')
+    
