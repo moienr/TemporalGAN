@@ -509,11 +509,18 @@ def toDb(linear:ee.Image, input_band_name:str = 'VV_lin'):
 
 
 
-def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False):
+def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check_snow = False):
     ''' 
     Inputs
     ---
-    the date range two string element tupplein gee format  like `('2020-02-01','2020-03-01')`
+    `date_range` : the date range two string element tupple in gee format  like `('2020-02-01','2020-03-01')`
+    `roi` : the region of interest, can be a `ee.Geometry` or `ee.Feature` or `ee.FeatureCollection`
+    `max_cloud` : the maximum cloud cover percentage, default is 10
+    `max_snow` : the maximum snow cover percentage, default is 5
+    `scl` : if True, the function will find the Cloud Cover based on SCL band, if False, it will use the QA60 band, default is False
+    `check_snow` : if True, the function will filter the collection by snow cover, if False, it will not, default is False
+        don't use it for cloudy summer images - it has a high false positive rate.
+    
 
     Algorithm
     ---
@@ -533,9 +540,11 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False):
     #first atempt
     s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
                         .filterDate(date_range[0], date_range[1]) \
-                        .filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) \
                         .filterBounds(roi) \
                         .filter(ee.Filter.contains('.geo', roi)) #this line checks if the scene completly covers the roi, which mean roi is in the scene
+    
+    if check_snow:
+        s2 = s2.filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) 
     
     if scl:
         s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
@@ -556,7 +565,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False):
             s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
         else:                                    
             s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask(img)[2])))
-        s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',5)) 
+        s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',max_cloud)) 
         
         
         if mosaic_covers_roi(s2,roi,ref_band_name = 'B2'):
@@ -593,7 +602,9 @@ def s1_col_func(start_date,end_date,roi,path,single_scene=False):
 
 
 
-def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',check_second_priority_path = True,month_span = 1,retry_days = 0,snow_removal=False):
+def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
+           check_second_priority_path = True,month_span = 1,retry_days = 0,
+           snow_removal=False, best_orbit = True):
     '''
     Inputs
     ---
@@ -673,15 +684,72 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',check_sec
 
             s1_snow_removed_col = gee_list_item_remover(s1_collection,s1_snowy_dates)
             print('◍Collection Found!')
+            
+            if best_orbit:
+                s1_snow_removed_col = s1_snow_removed_col.filter(ee.Filter.eq('relativeOrbitNumber_start', get_best_sen1_orbit(s1_snow_removed_col,roi)))
             return s1_snow_removed_col
         else:
+            if best_orbit:
+                s1_collection = s1_collection.filter(ee.Filter.eq('relativeOrbitNumber_start', get_best_sen1_orbit(s1_collection,roi)))
             return s1_collection
 
 
 
-def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',check_second_priority_path = True,month_span = 1,max_cloud = 5,max_snow = 5,retry_days = 0 ):
+def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',
+         check_second_priority_path = True,month_span = 1,max_cloud = 5,max_snow = 5,
+         retry_days = 0, best_orbit = True, snow_removal = False):
+    """
+    Returns Sentinel-2 and Sentinel-1 image collections filtered by specified parameters.
+
+    Parameters:
+    -----------
+    `roi` : ee.Geometry
+        The region of interest to filter the image collections by.
+
+    `date` : tuple, optional
+        A tuple containing two strings representing the start and end dates in 'yyyy-mm-dd' format.
+        Default is ('yyyy-mm-dd', 'yyyy-mm-dd').
+
+    `priority_path` : str, optional
+        The priority path to filter the Sentinel-1 image collection by.
+        Default is 'ASCENDING'.
+
+    `check_second_priority_path` : bool, optional
+        A flag to determine whether to check the second priority path for Sentinel-1 images.
+        Default is True. if True, when First priority path is not found, the second priority path will be checked.
+
+    `month_span` : int, optional
+        The number of months from the mean date of S2 Collection to search for Sentinel-1 images.
+        Default is 1.
+
+    `max_cloud` : int, optional
+        The maximum cloud cover percentage to filter Sentinel-2 images by.
+        Default is 5.
+
+    `max_snow` : int, optional
+        The maximum snow cover percentage to filter Sentinel-1 and Sentinel-2 images by.
+        Default is 5.
+
+    `retry_days` : int, optional
+        The number of days to retry fetching Sentinel-1 images in case of failure.
+        Default is 0.
+    
+    `best_orbit` : bool, optional
+        A flag to determine whether to reutrn all the orbits or only the best orbit.
+        Default is True. set it false on rois that have a low coverage.
+    `snow_removal` : bool, optional
+        A flag to determine whether to remove snowy images from the Sentinel-1 image collection.
+        - don't use it on sumemer images, it has a lot of false positives.
+
+    Returns:
+    --------
+    tuple
+        A tuple containing the filtered Sentinel-2 and Sentinel-1 image collections.
+    
+    """
     s2_col = get_s2(date,roi,max_cloud,max_snow)
-    s1_col = get_s1(s2_col,roi,max_snow,priority_path,check_second_priority_path,month_span=month_span,retry_days=retry_days)
+    s1_col = get_s1(s2_col, roi, max_snow, priority_path, check_second_priority_path, month_span=month_span, retry_days=retry_days,
+                    best_orbit = best_orbit, snow_removal = snow_removal)
     return s2_col,s1_col
 
 
@@ -814,6 +882,7 @@ def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False) ->
         `s1_col`: The input Sentinel-1 image collection.
         `clip_roi`: The region of interest to clip the images to. Defaults to None.
         `choose_smallest`: A boolean indicating whether to choose the smallest (True) or largest (False) average incidence angle.
+                            in SAR images, the larger the incidence angle, the better the range resolution. (although it is all resampled to 10m)
                           Defaults to False.
                           
         * it is important to use roi, when calculating local average, otherwise the average will be calculated over the whole image.
