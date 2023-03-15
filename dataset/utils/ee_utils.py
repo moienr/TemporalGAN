@@ -729,7 +729,7 @@ def find_most_repeated_element(ee_list: ee.List) -> ee.List:
 
 
 
-def get_band_average(image:ee.Image, band_name:str)-> ee.Number:
+def get_band_average(image:ee.Image, band_name:str, roi=None)-> ee.Number:
     """
     Computes the average value of a given band in an Earth Engine image within the image's bounding box.
 
@@ -737,7 +737,7 @@ def get_band_average(image:ee.Image, band_name:str)-> ee.Number:
     ----
         image: An Earth Engine image.
         band_name: A string specifying the name of the band of interest.
-
+        roi: An Earth Engine geometry specifying the region of interest. If not specified, the image's bounding box will be used.
     Returns
     -------
         The average value of the specified band within the image's bounding box as a float.
@@ -750,9 +750,16 @@ def get_band_average(image:ee.Image, band_name:str)-> ee.Number:
     ----
     ee.Number(31.777401400973883)
     ```
+    Or:
+    
+    ```
+    sen1_col_with_angle = sen1_col.map(lambda img: img.set('avg_angle',get_band_average(img,'angle',roi)))
+    ```
     """
     # Get the band of interest
     band = image.select(band_name)
+    if roi:
+        band = band.clip(roi)
 
     # Get the image's bounding box
     bbox = image.geometry().bounds()
@@ -764,3 +771,35 @@ def get_band_average(image:ee.Image, band_name:str)-> ee.Number:
     return band_mean.get(band_name)
 
 
+def collection_splitter(collection, property_name:str, property_list:ee.List):
+    """
+    Split an image collection into multiple image collections based on a list of property values.
+    
+    Note:
+    -----
+        you have to convert the resulting ComputedObject to an ImageCollection on each get call, to use aggregate_array, etc.
+        
+    ```
+    col_list = collection_splitter(collection, property_name, property_list)
+    col = ImageCollection(col_list.get(0)) # This is necessary to use aggregate_array, etc.
+    col.aggregate_array('property_name')
+    ```
+
+    Args:
+    -----
+        `collection`: The image collection to split.
+        `property_name`: The name of the property to filter by.
+        `property_list`: The list of property values to filter by.
+
+    Returns:
+    --------
+        A list of image collections, where each image collection contains images with the specified property value.
+            
+        
+    """
+    
+    
+    # Map the filter function over each property value in the list, and convert the resulting ComputedObject to an ImageCollection.
+    col_list = property_list.map(lambda x: collection.filter(ee.Filter.eq(property_name, x)))
+    return col_list
+    
