@@ -144,6 +144,7 @@ class TextColors:
         PURPLE = '\033[1;35m'
         CYAN = '\033[1;36m'
         WHITE = '\033[1;37m'
+        ORANGE ='\033[38;2;255;165;0m'
 
     class UNDERLINEs:
         BLACK = '\033[4;30m'
@@ -205,6 +206,17 @@ class TextColors:
         PURPLE = '\033[1;45m'
         CYAN = '\033[1;46m'
         WHITE = '\033[1;47m'
+        ORANGE = '\033[48;2;255;165;0m\033[1m'
+    
+    class BLACK_TEXT_WIHT_BACKGROUNDs:
+        BLACK = '\033[40m'
+        RED = '\033[41m'
+        GREEN = '\033[42m'
+        YELLOW = '\033[43m'
+        BLUE = '\033[44m'
+        PURPLE = '\033[45m'
+        CYAN = '\033[46m'
+        WHITE = '\033[47m'
         
         
 from datetime import date, datetime
