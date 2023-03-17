@@ -133,6 +133,7 @@ class TextColors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+    SLIME = '\033[38;2;165;165;0m'
     
     
     class BOLDs:
@@ -145,6 +146,7 @@ class TextColors:
         CYAN = '\033[1;36m'
         WHITE = '\033[1;37m'
         ORANGE ='\033[38;2;255;165;0m'
+
 
     class UNDERLINEs:
         BLACK = '\033[4;30m'
@@ -207,6 +209,8 @@ class TextColors:
         CYAN = '\033[1;46m'
         WHITE = '\033[1;47m'
         ORANGE = '\033[48;2;255;165;0m\033[1m'
+        S1 ='\033[48;2;100;50;50m'
+        S2 = '\033[48;2;50;50;100m'
     
     class BLACK_TEXT_WIHT_BACKGROUNDs:
         BLACK = '\033[40m'

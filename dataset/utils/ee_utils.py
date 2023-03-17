@@ -579,7 +579,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
     the function reutrns an GEE `image collection`
     
     '''
-    print(tc.BOLD_BAKGROUNDs.BLUE,'◍◍Finding S2',tc.ENDC)
+    print(tc.BOLD_BAKGROUNDs.S2,'◍◍Finding S2',tc.ENDC)
     #first atempt
     s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
                         .filterDate(date_range[0], date_range[1]) \
@@ -661,7 +661,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     
     '''
     OPTIM_DATES = 8 # number of dates that are enough for despackling
-    print(tc.BOLD_BAKGROUNDs.ORANGE,'◍◍Finding S1',tc.ENDC)
+    print(tc.BOLD_BAKGROUNDs.S1,'◍◍Finding S1',tc.ENDC)
     # if ASC is prioriy then DESC is the second prioriy and vice versa
     if priority_path == 'ASCENDING':
         second_priority = 'DESCENDING'
@@ -679,7 +679,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     if retry_days !=0:
         start_date = day_add(start_date,days_to_add = -retry_days)
         end_date   = day_add(end_date,days_to_add =  retry_days)
-    print('final date range: ',start_date,end_date)
+    print('final date range: ',tc.SLIME,start_date,end_date,tc.ENDC)
 
     if snow_removal:
         # S2 collection in the S1 Collection range to find the snowy days
