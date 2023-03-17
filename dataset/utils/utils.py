@@ -205,6 +205,9 @@ def list_intersection(in_list,ref_list):
     intersect_list = [i for i,x in enumerate(in_list) if x in ref_list] # https://stackoverflow.com/questions/5419204/index-of-duplicates-items-in-a-python-list
     return intersect_list
 
+def dict_to_int(dic):
+    pix_num = list(dic.items())[0][1] 
+    return pix_num
 
 
 
