@@ -123,8 +123,91 @@ class TextColors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+    
+    
+    class BOLDs:
+        BLACK = '\033[1;30m'
+        RED = '\033[1;31m'
+        GREEN = '\033[1;32m'
+        YELLOW = '\033[1;33m'
+        BLUE = '\033[1;34m'
+        PURPLE = '\033[1;35m'
+        CYAN = '\033[1;36m'
+        WHITE = '\033[1;37m'
 
+    class UNDERLINEs:
+        BLACK = '\033[4;30m'
+        RED = '\033[4;31m'
+        GREEN = '\033[4;32m'
+        YELLOW = '\033[4;33m'
+        BLUE = '\033[4;34m'
+        PURPLE = '\033[4;35m'
+        CYAN = '\033[4;36m'
+        WHITE = '\033[4;37m'
+    
+    class BACKGROUNDs:
+        BLACK = '\033[40m'
+        RED = '\033[41m'
+        GREEN = '\033[42m'
+        YELLOW = '\033[43m'
+        BLUE = '\033[44m'
+        PURPLE = '\033[45m'
+        CYAN = '\033[46m'
+        WHITE = '\033[47m'
+        DEFAULT = '\033[49m'
+    
+    class HIGHLIGHTs:
+        BLACK = '\033[30m'
+        RED = '\033[31m'
+        GREEN = '\033[32m'
+        YELLOW = '\033[33m'
+        BLUE = '\033[34m'
+        PURPLE = '\033[35m'
+        CYAN = '\033[36m'
+        WHITE = '\033[37m'
+        DEFAULT = '\033[39m'
+    
+    class HIGH_INTENSITYs:
+        BLACK = '\033[0;90m'
+        RED = '\033[0;91m'
+        GREEN = '\033[0;92m'
+        YELLOW = '\033[0;93m'
+        BLUE = '\033[0;94m'
+        PURPLE = '\033[0;95m'
+        CYAN = '\033[0;96m'
+        WHITE = '\033[0;97m'
+    
+    class BOLD_HIGH_INTENSITYs:
+        BLACK = '\033[1;90m'
+        RED = '\033[1;91m'
+        GREEN = '\033[1;92m'
+        YELLOW = '\033[1;93m'
+        BLUE = '\033[1;94m'
+        PURPLE = '\033[1;95m'
+        CYAN = '\033[1;96m'
+        WHITE = '\033[1;97m'
+        
+    class HIGH_INTENSITY_BACKGROUNDs:
+        BLACK = '\033[0;100m'
+        RED = '\033[0;101m'
+        GREEN = '\033[0;102m'
+        YELLOW = '\033[0;103m'
+        BLUE = '\033[0;104m'
+        PURPLE = '\033[0;105m'
+        CYAN = '\033[0;106m'
+        WHITE = '\033[0;107m'
 
+    class BOLD_BAKGROUNDs:
+        BLACK = '\033[1;40m'
+        RED = '\033[1;41m'
+        GREEN = '\033[1;42m'
+        YELLOW = '\033[1;43m'
+        BLUE = '\033[1;44m'
+        PURPLE = '\033[1;45m'
+        CYAN = '\033[1;46m'
+        WHITE = '\033[1;47m'
+        
+        
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
