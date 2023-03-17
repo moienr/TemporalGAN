@@ -659,6 +659,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     * retry_days: Increasing the date span by how many days in case of empty collection
     
     '''
+    OPTIM_DATES = 8 # number of dates that are enough for despackling
     print('◍◍Finding S1')
     # if ASC is prioriy then DESC is the second prioriy and vice versa
     if priority_path == 'ASCENDING':
@@ -668,7 +669,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
 
 
     mean_s2_date = mean_date(s2_collection.aggregate_array('system:time_start').getInfo()) #find the average date of S2 collection which will be the center of our S1 collection
-    print('mean date: ', mean_s2_date)
+    print('mean s2 date: ', mean_s2_date)
 
     start_date = month_add(mean_s2_date,months_to_add =-1 * month_span) # 1 month before center date
     end_date   = month_add(mean_s2_date,months_to_add = month_span) # 1 month after  center date
@@ -734,7 +735,20 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
         else:
             if best_orbit:
                 s1_collection = s1_collection.filter(ee.Filter.eq('relativeOrbitNumber_start', get_best_sen1_orbit(s1_collection,roi)))
-            return s1_collection
+            # What to return: if the collection is less than 8 
+            col_size = s1_collection.size().getInfo()
+            if col_size < OPTIM_DATES:    
+                if date_diffrence(start_date,end_date) >= 100 and best_orbit:
+                    return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days ,month_span = month_span,snow_removal=snow_removal, best_orbit=False)
+                elif date_diffrence(start_date,end_date) < 100:
+                    return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days + 15 ,month_span = month_span,snow_removal=snow_removal, best_orbit=best_orbit)
+                else:
+                    print(f'◍Nothing Else we can do, returning the collection with {col_size} images')
+                    return s1_collection
+            else:
+                print('◍Collection Found!')
+                return s1_collection
+
 
 
 
