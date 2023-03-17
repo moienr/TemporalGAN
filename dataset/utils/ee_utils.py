@@ -612,7 +612,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
         
         
         if mosaic_covers_roi_v2(s2,roi,ref_band_name = 'B2'):
-            print(f'◍Image Mosaic found in date range of {date_range[0]} to {date_range[1]}')
+            print(tc.OKGREEN,f'◍Image Mosaic found in date range of {date_range[0]} to {date_range[1]}',tc.ENDC)
             return s2
         else:
             new_date_0 = month_add(date_range[0])
@@ -620,7 +620,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
             print(' 🔺 Month Range shifted ', f'new range: {new_date_0} -to- {new_date_1}')
             return get_s2((new_date_0,new_date_1),roi,max_cloud)
     else:
-        print('◍Single scene coverege was fount!')
+        print(tc.OKGREEN,'◍Single scene coverege was found!',tc.ENDC)
         return s2
     
     
@@ -661,7 +661,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     
     '''
     OPTIM_DATES = 8 # number of dates that are enough for despackling
-    print(tc.BOLD_BAKGROUNDs.BLUE,'◍◍Finding S1',tc.ENDC)
+    print(tc.BOLD_BAKGROUNDs.ORANGE,'◍◍Finding S1',tc.ENDC)
     # if ASC is prioriy then DESC is the second prioriy and vice versa
     if priority_path == 'ASCENDING':
         second_priority = 'DESCENDING'
@@ -739,12 +739,12 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
             # What to return: if the collection is less than 8 
             col_size = s1_collection.size().getInfo()
             if col_size < OPTIM_DATES:
-                "Low number of images, we will retry: "    
+                print(tc.WARNING,"Low number of images, we will retry: ",tc.ENDC)  
                 if date_diffrence(start_date,end_date) >= 100 and best_orbit:
-                    print(tc.WARNING,"  More than 100days, Setting best_orbit to False",tc.ENDC)
+                    print("  RETRY: ALready more than 100days, Setting best_orbit to False")
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days ,month_span = month_span,snow_removal=snow_removal, best_orbit=False)
                 elif date_diffrence(start_date,end_date) < 100:
-                    print(tc.WARNING,"  Expanding date range by 100 days:",tc.ENDC)
+                    print("  RETRY: Expanding date range by 15 days")
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days + 15 ,month_span = month_span,snow_removal=snow_removal, best_orbit=best_orbit)
                 else:
                     print(tc.FAIL,f'◍Nothing Else we can do, returning the collection with {col_size} images',tc.FAIL)
