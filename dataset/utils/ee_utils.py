@@ -732,7 +732,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
             
             if best_orbit:
                 s1_snow_removed_col = s1_snow_removed_col.filter(ee.Filter.eq('relativeOrbitNumber_start', get_best_sen1_orbit(s1_snow_removed_col,roi)))
-            return s1_snow_removed_col
+            return s1_snow_removed_col #TODO: Do the smae filtering like we did in the else part
         else:
             if best_orbit:
                 s1_collection = s1_collection.filter(ee.Filter.eq('relativeOrbitNumber_start', get_best_sen1_orbit(s1_collection,roi)))
