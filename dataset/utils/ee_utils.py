@@ -25,6 +25,7 @@
 import ee
 import geemap
 from utils.utils import *
+from utils.utils import TextColors as tc
 # if __name__ != '__main__':
 #     try:
 #         ee.Initialize()
@@ -578,7 +579,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
     the function reutrns an GEE `image collection`
     
     '''
-    print('◍◍Finding S2')
+    print(tc.BOLD_BAKGROUNDs.BLUE,'◍◍Finding S2',tc.ENDC)
     #first atempt
     s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
                         .filterDate(date_range[0], date_range[1]) \
@@ -660,7 +661,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     
     '''
     OPTIM_DATES = 8 # number of dates that are enough for despackling
-    print('◍◍Finding S1')
+    print(tc.BOLD_BAKGROUNDs.BLUE,'◍◍Finding S1',tc.ENDC)
     # if ASC is prioriy then DESC is the second prioriy and vice versa
     if priority_path == 'ASCENDING':
         second_priority = 'DESCENDING'
@@ -737,16 +738,19 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
                 s1_collection = s1_collection.filter(ee.Filter.eq('relativeOrbitNumber_start', get_best_sen1_orbit(s1_collection,roi)))
             # What to return: if the collection is less than 8 
             col_size = s1_collection.size().getInfo()
-            if col_size < OPTIM_DATES:    
+            if col_size < OPTIM_DATES:
+                "Low number of images, we will retry: "    
                 if date_diffrence(start_date,end_date) >= 100 and best_orbit:
+                    print(tc.WARNING,"  More than 100days, Setting best_orbit to False",tc.ENDC)
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days ,month_span = month_span,snow_removal=snow_removal, best_orbit=False)
                 elif date_diffrence(start_date,end_date) < 100:
+                    print(tc.WARNING,"  Expanding date range by 100 days:",tc.ENDC)
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days + 15 ,month_span = month_span,snow_removal=snow_removal, best_orbit=best_orbit)
                 else:
-                    print(f'◍Nothing Else we can do, returning the collection with {col_size} images')
+                    print(tc.FAIL,f'◍Nothing Else we can do, returning the collection with {col_size} images',tc.FAIL)
                     return s1_collection
             else:
-                print('◍Collection Found!')
+                print(tc.OKGREEN,'◍Collection Found!',tc.ENDC)
                 return s1_collection
 
 
