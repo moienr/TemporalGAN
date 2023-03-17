@@ -70,8 +70,10 @@ def mean_date(dates: list) -> str:
     dates_mean = milsec2date([mil_mean])
     return dates_mean[0]
 
-def date_diffrence(date1, date2):
-    ''' date1 and date2 should be in gee string format'''
+def date_diffrence(date1:str, date2:str) -> int:
+    ''' date1 and date2 should be in gee string format `"YYYY-MM-DD"`
+        reutns the number of days between the two dates in int format
+    '''
     date1 = datetime.strptime(date1, '%Y-%m-%d')
     date2 = datetime.strptime(date2, '%Y-%m-%d')
     diff = date2 - date1
