@@ -111,6 +111,16 @@ class TextColors:
         The ANSI escape code for enabling bold font style.
     `UNDERLINE` : str
         The ANSI escape code for enabling underlined font style.
+        
+    Subclasses:
+    `BOLDs`
+    `UNDERLINEs`
+    `BACKGROUNDs`
+    `HIGHLIGHTs`
+    `HIGH_INTENSITYs`
+    `BOLD_HIGH_INTENSITYs`
+    `HIGH_INTENSITY_BACKGROUNDs`
+    `BOLD_BACKGROUNDs`
     
     
     """
@@ -155,17 +165,6 @@ class TextColors:
         CYAN = '\033[46m'
         WHITE = '\033[47m'
         DEFAULT = '\033[49m'
-    
-    class HIGHLIGHTs:
-        BLACK = '\033[30m'
-        RED = '\033[31m'
-        GREEN = '\033[32m'
-        YELLOW = '\033[33m'
-        BLUE = '\033[34m'
-        PURPLE = '\033[35m'
-        CYAN = '\033[36m'
-        WHITE = '\033[37m'
-        DEFAULT = '\033[39m'
     
     class HIGH_INTENSITYs:
         BLACK = '\033[0;90m'
