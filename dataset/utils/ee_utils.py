@@ -614,8 +614,8 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
             print(f'◍Image Mosaic found in date range of {date_range[0]} to {date_range[1]}')
             return s2
         else:
-            new_date_0 = month_add(date_range[1])
-            new_date_1 = month_add(date_range[0])
+            new_date_0 = month_add(date_range[0])
+            new_date_1 = month_add(date_range[1])
             print(' 🔺 Month Range shifted ', f'new range: {new_date_0} -to- {new_date_1}')
             return get_s2((new_date_0,new_date_1),roi,max_cloud)
     else:
