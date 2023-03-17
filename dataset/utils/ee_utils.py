@@ -383,6 +383,7 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
     
     properties_list = ee_list.getInfo()
     if not df_instead_of_print:
+        print('Collection Size: ', len(properties_list[0]))
         for name, element in zip(formatted_lst,properties_list):
             print(name, "-> ", element,sep="")
     if df_instead_of_print:    
@@ -613,9 +614,10 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
             print(f'◍Image Mosaic found in date range of {date_range[0]} to {date_range[1]}')
             return s2
         else:
-            new_date = month_add(date_range[1])
-            print(' - Month Range Expaned ', f'new range: {date_range[0]} -to- {new_date}')
-            return get_s2((date_range[0],new_date),roi,max_cloud)
+            new_date_0 = month_add(date_range[1])
+            new_date_1 = month_add(date_range[0])
+            print(' 🔺 Month Range shifted ', f'new range: {new_date_0} -to- {new_date_1}')
+            return get_s2((new_date_0,new_date_1),roi,max_cloud)
     else:
         print('◍Single scene coverege was fount!')
         return s2
