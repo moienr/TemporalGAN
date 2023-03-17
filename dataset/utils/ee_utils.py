@@ -393,7 +393,7 @@ def ee_property_printer(s1_collection, propertie_name_list = ['system:time_start
         return styled_df
 
 # Wrapping ee_property_printer() to print the properties of Sentinel-1 and Sentinel-2 image collections
-sen1_print = lambda s1_collection: ee_property_printer(s1_collection,df)
+sen1_print = lambda s1_collection: ee_property_printer(s1_collection)
 sen2_print = lambda s2_collection: ee_property_printer(s2_collection, propertie_name_list=['system:time_start','roi_cloud_cover', 'CLOUDY_PIXEL_PERCENTAGE',
                                                                                   'CLOUD_SHADOW_PERCENTAGE', 'VEGETATION_PERCENTAGE',
                                                                                   'NOT_VEGETATED_PERCENTAGE', 'CLOUD_COVERAGE_ASSESSMENT',
@@ -412,8 +412,49 @@ def is_col_empty(im_collection):
   else:
     return True
 
+def mosaic_covers_roi_v1(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 0.95,scale = 100 , optimum_pix_num = 10000):
+    '''
+    the input is an image collection that has beed filterd by date and boundry
 
-def mosaic_covers_roi(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 85,scale = 100, verbose = True):
+    Returns
+    ---
+    *  `True`  if the ratio of image to whole area is bigger that acceptance rate
+    *  `False` the collection is empy or the ratio of image to whole area is smaller that acceptance rate
+    '''
+    if is_col_empty(imgecollection): # first we check if collection is not empty
+        print('Collection was empty!')
+        return False
+
+
+    img = imgecollection.mosaic().clip(roi).select(ref_band_name) # convertin image to mosaic and clip it by roi
+    mask = img.mask().clip(roi) # create the mask and clip it by roi - clip is important beucase mask convers the whole globe
+
+    img_pix_dict = img.reduceRegion(reducer=ee.Reducer.count(),geometry= roi,scale=scale).getInfo() # counting pixels
+    msk_pix_dict = mask.reduceRegion(reducer=ee.Reducer.count(),geometry= roi,scale=scale).getInfo()
+
+    img_pix_int = dict_to_int(img_pix_dict) # count() output is a dict , we need numbers 
+    msk_pix_int = dict_to_int(msk_pix_dict)
+
+    # if we chose the scale too high it the reuslat woudlnt be acurate, so we worte this functino as a 
+    # recursive function, so it comes back and devides sacle by a factor of 10 and tries again
+    if msk_pix_int <= optimum_pix_num:
+        print('WARNING: low pixel nubmer - recurse activated - scale droped to ',round(scale/10))
+        return mosaic_covers_roi_v1(imgecollection, roi, ref_band_name, acceptance_rate,scale = round(scale/10))  # the return is crosial for a recursive func, i missed it the first time
+    else:
+        print(f'Mosiac Covers {(img_pix_int/msk_pix_int) * 100} percent of the roi',' - detail: ',f'Image Pixels = {img_pix_int} / All Pixels = {msk_pix_int}')
+        #print(f'Image Pixels = {img_pix_int} / All Pixels = {msk_pix_int}')
+        if img_pix_int >= acceptance_rate * msk_pix_int: 
+            print('Mosaic Coverege Accepted')
+            return True
+        else:
+            print('Mosaic Coverege Not Accepted')
+            return False
+
+
+
+
+
+def mosaic_covers_roi_v2(imgecollection, roi, ref_band_name = 'B2',acceptance_rate = 85,scale = 100, verbose = True):
     '''
     the input is an image collection that has beed filterd by date and boundry
 
@@ -568,7 +609,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
         s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',max_cloud)) 
         
         
-        if mosaic_covers_roi(s2,roi,ref_band_name = 'B2'):
+        if mosaic_covers_roi_v2(s2,roi,ref_band_name = 'B2'):
             print(f'◍Image Mosaic found in date range of {date_range[0]} to {date_range[1]}')
             return s2
         else:
@@ -667,11 +708,11 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
         s1_collection = s1_col_func(start_date,end_date,roi,path = priority_path,single_scene=False)
 
 
-    if (is_col_empty(s1_collection) or not mosaic_covers_roi(s1_collection,roi,ref_band_name = 'VV')) and check_second_priority_path:
+    if (is_col_empty(s1_collection) or not mosaic_covers_roi_v2(s1_collection,roi,ref_band_name = 'VV')) and check_second_priority_path:
         print(f'◍{priority_path} and {second_priority} singe scene was not fount, {priority_path} mosaic was not found,  checking {second_priority}  mosaic ...')
         s1_collection = s1_collection = s1_col_func(start_date,end_date,roi,path = second_priority,single_scene=False)
       
-    if is_col_empty(s1_collection) or not mosaic_covers_roi(s1_collection,roi,ref_band_name = 'VV', verbose=False):
+    if is_col_empty(s1_collection) or not mosaic_covers_roi_v2(s1_collection,roi,ref_band_name = 'VV', verbose=False):
         print('◍No S1 dataset was found!')
         if not check_second_priority_path: print('◍check_second_priority_path was set to True and check range was buffed by 5 days')
 
