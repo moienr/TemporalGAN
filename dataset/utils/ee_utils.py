@@ -552,7 +552,7 @@ def toDb(linear:ee.Image, input_band_name:str = 'VV_lin'):
 
 
 
-def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_snow = False):
+def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_snow = False, sr = True):
     ''' 
     Inputs
     ---
@@ -563,6 +563,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     `scl` : if True, the function will find the Cloud Cover based on SCL band, if False, it will use the QA60 band, default is False
     `check_snow` : if True, the function will filter the collection by snow cover, if False, it will not, default is False
         don't use it for cloudy summer images - it has a high false positive rate.
+    `sr` : if True, the function will use the Surface Reflectance product, if False, it will use the Top of Atmosphere product, default is True
     
 
     Algorithm
@@ -579,12 +580,13 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     the function reutrns an GEE `image collection`
     
     '''
+    s2 = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") if sr else ee.ImageCollection("COPERNICUS/S2_HARMONIZED")
+    
     print(tc.BOLD_BAKGROUNDs.S2,'◍◍Finding S2',tc.ENDC)
     #first we chech if there is single scene that covers the roi   
-    s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
-                        .filterDate(date_range[0], date_range[1]) \
-                        .filterBounds(roi) \
-                        .filter(ee.Filter.contains('.geo', roi)) #this line checks if the scene completly covers the roi, which mean roi is in the scene
+    s2 = s2.filterDate(date_range[0], date_range[1]) \
+                    .filterBounds(roi) \
+                    .filter(ee.Filter.contains('.geo', roi)) #this line checks if the scene completly covers the roi, which mean roi is in the scene
     
     if check_snow:
         s2 = s2.filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) 
@@ -598,8 +600,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     if  is_col_empty(s2): # if the collection is empty we go and check if therse a mosaic that covers the whole area otherwise we return s2
         print('◍No single scene coverge was found!')
 
-        s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
-                        .filterDate(date_range[0], date_range[1]) \
+        s2 = s2.filterDate(date_range[0], date_range[1]) \
                         .filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) \
                         .filterBounds(roi)
         # whether to find couldmask from SCL or QA60                
@@ -757,7 +758,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
 
 def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',
          check_second_priority_path = True,month_span = 1,max_cloud = 5,max_snow = 5,
-         retry_days = 0, best_orbit = True, snow_removal = False):
+         retry_days = 0, best_orbit = True, snow_removal = False, sr = True):
     """
     Returns Sentinel-2 and Sentinel-1 image collections filtered by specified parameters.
 
@@ -807,7 +808,7 @@ def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',
         A tuple containing the filtered Sentinel-2 and Sentinel-1 image collections.
     
     """
-    s2_col = get_s2(date,roi,max_cloud,max_snow)
+    s2_col = get_s2(date, roi, max_cloud, max_snow, check_snow= False ,sr = sr)
     s1_col = get_s1(s2_col, roi, max_snow, priority_path, check_second_priority_path, month_span=month_span, retry_days=retry_days,
                     best_orbit = best_orbit, snow_removal = snow_removal)
     return s2_col,s1_col
