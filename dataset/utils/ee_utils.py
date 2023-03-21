@@ -801,6 +801,8 @@ def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',
     `snow_removal` : bool, optional
         A flag to determine whether to remove snowy images from the Sentinel-1 image collection.
         - don't use it on sumemer images, it has a lot of false positives.
+    `sr` : bool, optional
+        A flag to determine whether to return the Sentinel-2 image collection in surface reflectance or top of atmosphere.
 
     Returns:
     --------
@@ -808,7 +810,7 @@ def s1s2(roi, date = ('yyyy-mm-dd', 'yyyy-mm-dd'),priority_path = 'ASCENDING',
         A tuple containing the filtered Sentinel-2 and Sentinel-1 image collections.
     
     """
-    s2_col = get_s2(date, roi, max_cloud, max_snow, check_snow= False ,sr = sr)
+    s2_col = get_s2(date, roi, max_cloud, max_snow, check_snow= False, sr = sr)
     s1_col = get_s1(s2_col, roi, max_snow, priority_path, check_second_priority_path, month_span=month_span, retry_days=retry_days,
                     best_orbit = best_orbit, snow_removal = snow_removal)
     return s2_col,s1_col
