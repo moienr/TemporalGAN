@@ -552,7 +552,7 @@ def toDb(linear:ee.Image, input_band_name:str = 'VV_lin'):
 
 
 
-def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check_snow = False):
+def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_snow = False):
     ''' 
     Inputs
     ---
@@ -580,7 +580,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
     
     '''
     print(tc.BOLD_BAKGROUNDs.S2,'◍◍Finding S2',tc.ENDC)
-    #first atempt
+    #first we chech if there is single scene that covers the roi   
     s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
                         .filterDate(date_range[0], date_range[1]) \
                         .filterBounds(roi) \
@@ -593,17 +593,16 @@ def get_s2(date_range: tuple,roi,max_cloud = 10,max_snow = 5, scl = False, check
         s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
     else:                                    
         s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask(img)[2])))
-    s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',5)) 
+    s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',max_cloud)) 
 
-    if  is_col_empty(s2): # if the collection is empty we go and check if therse a mosaic that covers the whole area
+    if  is_col_empty(s2): # if the collection is empty we go and check if therse a mosaic that covers the whole area otherwise we return s2
         print('◍No single scene coverge was found!')
 
         s2 = ee.ImageCollection('COPERNICUS/S2_SR') \
                         .filterDate(date_range[0], date_range[1]) \
-                        .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE',max_cloud)) \
                         .filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) \
                         .filterBounds(roi)
-                        
+        # whether to find couldmask from SCL or QA60                
         if scl:
             s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
         else:                                    
