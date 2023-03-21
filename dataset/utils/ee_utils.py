@@ -678,7 +678,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     if retry_days !=0:
         start_date = day_add(start_date,days_to_add = -retry_days)
         end_date   = day_add(end_date,days_to_add =  retry_days)
-    print('final date range: ',tc.SLIME,start_date,end_date,tc.ENDC)
+    print('final date range: ',tc.SLIME,start_date,end_date,f"| diff_days -> {date_diffrence(start_date,end_date)}",tc.ENDC)
 
     if snow_removal:
         # S2 collection in the S1 Collection range to find the snowy days
@@ -738,7 +738,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
             # What to return: if the collection is less than 8 
             col_size = s1_collection.size().getInfo()
             if col_size < OPTIM_DATES:
-                print(tc.WARNING,"Low number of images, we will retry: ",tc.ENDC)  
+                print(tc.WARNING,f"Low number of images (col_size={col_size}), we will retry: ",tc.ENDC)  
                 if date_diffrence(start_date,end_date) >= 100 and best_orbit:
                     print("  RETRY: ALready more than 100days, Setting best_orbit to False")
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days ,month_span = month_span,snow_removal=snow_removal, best_orbit=False)
