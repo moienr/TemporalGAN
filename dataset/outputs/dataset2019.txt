@@ -1,0 +1,1527 @@
+🟢 [1;45m abudhabi21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-29
+final date range:  [38;2;165;165;0m 2021-05-29 2021-07-29 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.63861773206382 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-29
+final date range:  [38;2;165;165;0m 2021-05-14 2021-08-13 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.63861773206382 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  4
+system:time_start-------> ['2021-06-21', '2021-06-26', '2021-07-01', '2021-07-06']
+roi_cloud_cover---------> [0.5744838271936722, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.66795, 0.11095, 0.087004, 0.104731]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-05-15', '2021-05-27', '2021-06-08', '2021-06-20', '2021-07-02', '2021-07-14', '2021-07-26', '2021-08-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [24, 24, 24, 24, 24, 24, 24, 24]
+relativeOrbitNumber_start-> [24, 24, 24, 24, 24, 24, 24, 24]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m abudhabi_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-29
+final date range:  [38;2;165;165;0m 2021-05-29 2021-07-29 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.28746546491728 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-29
+final date range:  [38;2;165;165;0m 2021-05-14 2021-08-13 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.28746546491728 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  4
+system:time_start-------> ['2021-06-21', '2021-06-26', '2021-07-01', '2021-07-06']
+roi_cloud_cover---------> [0.5744838271936722, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.66795, 0.11095, 0.087004, 0.104731]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-05-15', '2021-05-27', '2021-06-08', '2021-06-20', '2021-07-02', '2021-07-14', '2021-07-26', '2021-08-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [24, 24, 24, 24, 24, 24, 24, 24]
+relativeOrbitNumber_start-> [24, 24, 24, 24, 24, 24, 24, 24]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m aguasclaras_adj_goiania21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-26
+final date range:  [38;2;165;165;0m 2021-05-26 2021-07-26 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.21802084167001 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-26
+final date range:  [38;2;165;165;0m 2021-05-11 2021-08-10 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.21802084167001 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  5
+system:time_start-------> ['2021-06-16', '2021-06-21', '2021-06-26', '2021-07-01', '2021-07-06']
+roi_cloud_cover---------> [0.14532134929877472, 0.06303894147663744, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.538631, 2.084144, 0.023696, 0.021287, 0.021914]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-05-15', '2021-05-27', '2021-06-08', '2021-06-20', '2021-07-02', '2021-07-14', '2021-07-26', '2021-08-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [24, 24, 24, 24, 24, 24, 24, 24]
+relativeOrbitNumber_start-> [24, 24, 24, 24, 24, 24, 24, 24]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m beihai21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 8.808329186631845 percent of the roi.
+Mosaic Coverege Not Accepted
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-09-07 -to- 2021-10-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-10-07 -to- 2021-11-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-24
+final date range:  [38;2;165;165;0m 2021-09-24 2021-11-24 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 96.14835886936038 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-10-24']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [3.15064]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-10-03', '2021-10-15', '2021-10-27', '2021-11-08', '2021-11-20', '2021-09-27', '2021-10-09', '2021-10-21', '2021-11-02', '2021-11-14']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [157, 157, 157, 157, 157, 157, 157, 157, 157, 157]
+relativeOrbitNumber_start-> [157, 157, 157, 157, 157, 157, 157, 157, 157, 157]
+cycleNumber---------------> [242, 243, 244, 245, 246, 171, 172, 173, 174, 175]
+🟢 [1;45m beihai_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 5.996756346961706 percent of the roi.
+Mosaic Coverege Not Accepted
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-09-07 -to- 2021-10-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-10-07 -to- 2021-11-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-24
+final date range:  [38;2;165;165;0m 2021-09-24 2021-11-24 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 98.70306840669505 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-24
+final date range:  [38;2;165;165;0m 2021-09-09 2021-12-09 | diff_days -> 91 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 98.70306840669505 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-10-24']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [3.15064]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-09-15', '2021-09-27', '2021-10-09', '2021-10-21', '2021-11-02', '2021-11-14', '2021-11-26', '2021-12-08']
+platform_number-----------> ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [157, 157, 157, 157, 157, 157, 157, 157]
+relativeOrbitNumber_start-> [157, 157, 157, 157, 157, 157, 157, 157]
+cycleNumber---------------> [170, 171, 172, 173, 174, 175, 176, 177]
+🟢 [1;45m beihai_adj_gaoqiazhen21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 89.01206447411785 percent of the roi.
+Mosaic Coverege Accepted
+[92m ◍Image Mosaic found in date range of 2021-07-07 to 2021-08-07 [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-26
+final date range:  [38;2;165;165;0m 2021-06-26 2021-08-26 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 99.32443318384219 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-26
+final date range:  [38;2;165;165;0m 2021-06-11 2021-09-10 | diff_days -> 91 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 99.32443318384219 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-26']
+roi_cloud_cover---------> [1.485230639579829]
+CLOUDY_PIXEL_PERCENTAGE-> [3.020301]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  12
+system:time_start---------> ['2021-06-17', '2021-07-11', '2021-07-23', '2021-08-04', '2021-08-16', '2021-08-28', '2021-09-09', '2021-06-11', '2021-07-17', '2021-08-10', '2021-08-22', '2021-09-03']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [157, 157, 157, 157, 157, 157, 157, 157, 157, 157, 157, 157]
+relativeOrbitNumber_start-> [157, 157, 157, 157, 157, 157, 157, 157, 157, 157, 157, 157]
+cycleNumber---------------> [233, 235, 236, 237, 238, 239, 240, 162, 165, 167, 168, 169]
+🟢 [1;45m beirut21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-19 2021-07-19 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 97.71225737124382 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  5
+system:time_start-------> ['2021-06-09', '2021-06-14', '2021-06-19', '2021-06-24', '2021-06-29']
+roi_cloud_cover---------> [0, 1.1307195397493703, 0.5508442241399332, 1.2299229265994474, 0.22221226870514696]
+CLOUDY_PIXEL_PERCENTAGE-> [0.275958, 1.813518, 2.441004, 2.053208, 0.490815]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-05-19', '2021-05-31', '2021-06-12', '2021-06-24', '2021-07-06', '2021-07-18', '2021-05-25', '2021-06-06', '2021-06-18', '2021-07-12']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [87, 87, 87, 87, 87, 87, 87, 87, 87, 87]
+relativeOrbitNumber_start-> [87, 87, 87, 87, 87, 87, 87, 87, 87, 87]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 165]
+🟢 [1;45m beirut_adj_tripoli21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-20
+final date range:  [38;2;165;165;0m 2021-05-20 2021-07-20 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 97.19462921725031 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  7
+system:time_start-------> ['2021-06-09', '2021-06-09', '2021-06-14', '2021-06-24', '2021-06-24', '2021-06-29', '2021-06-29']
+roi_cloud_cover---------> [1.3749954379713405, 1.936871476869685, 1.153032007193075, 0.2907256445731766, 0.187872634795505, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [4.644875, 4.331485, 1.977668, 0.922164, 0.535678, 1.271197, 0.469434]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07', '2021-07-19']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14]
+relativeOrbitNumber_start-> [14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14]
+cycleNumber---------------> [232, 233, 234, 235, 236, 161, 162, 163, 164, 165, 166]
+🟢 [1;45m bercy21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-14
+final date range:  [38;2;165;165;0m 2021-05-14 2021-07-14 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 95.00540248471052 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-14']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.329313]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-14', '2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m bercy_buffed_paris21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-14
+final date range:  [38;2;165;165;0m 2021-05-14 2021-07-14 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.17152026284678 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-14']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.329313]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-14', '2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m bordeaux21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-17
+final date range:  [38;2;165;165;0m 2021-06-17 2021-08-17 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 94.96133854775066 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-17']
+roi_cloud_cover---------> [0.06635678050172361]
+CLOUDY_PIXEL_PERCENTAGE-> [0.511432]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-19', '2021-07-01', '2021-07-13', '2021-07-25', '2021-08-06', '2021-06-25', '2021-07-07', '2021-07-19', '2021-07-31', '2021-08-12']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [234, 235, 236, 237, 238, 164, 165, 166, 167, 168]
+🟢 [1;45m bordeaux_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 0.10314763497445495 percent of the roi.
+Mosaic Coverege Not Accepted
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-17
+final date range:  [38;2;165;165;0m 2021-06-17 2021-08-17 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.12017071969017 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-17']
+roi_cloud_cover---------> [0.06635678050172361]
+CLOUDY_PIXEL_PERCENTAGE-> [0.511432]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-19', '2021-07-01', '2021-07-13', '2021-07-25', '2021-08-06', '2021-06-25', '2021-07-07', '2021-07-19', '2021-07-31', '2021-08-12']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [234, 235, 236, 237, 238, 164, 165, 166, 167, 168]
+🟢 [1;45m brasilia21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-26
+final date range:  [38;2;165;165;0m 2021-05-26 2021-07-26 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 92.77161985170764 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-26
+final date range:  [38;2;165;165;0m 2021-05-11 2021-08-10 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 92.77161985170764 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  7
+system:time_start-------> ['2021-06-08', '2021-06-21', '2021-06-23', '2021-06-26', '2021-07-01', '2021-07-03', '2021-07-06']
+roi_cloud_cover---------> [0.05822807489026247, 0.5744838271936722, 0, 0, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.029541, 1.66795, 0.048593, 0.11095, 0.087004, 0.060185, 0.104731]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-05-15', '2021-05-27', '2021-06-08', '2021-06-20', '2021-07-02', '2021-07-14', '2021-07-26', '2021-08-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [24, 24, 24, 24, 24, 24, 24, 24]
+relativeOrbitNumber_start-> [24, 24, 24, 24, 24, 24, 24, 24]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m brasilia_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-26
+final date range:  [38;2;165;165;0m 2021-05-26 2021-07-26 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.68002743532315 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-26
+final date range:  [38;2;165;165;0m 2021-05-11 2021-08-10 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.68002743532315 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  7
+system:time_start-------> ['2021-06-08', '2021-06-21', '2021-06-23', '2021-06-26', '2021-07-01', '2021-07-03', '2021-07-06']
+roi_cloud_cover---------> [0.05822807489026247, 0.5744838271936722, 0, 0, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.029541, 1.66795, 0.048593, 0.11095, 0.087004, 0.060185, 0.104731]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-05-15', '2021-05-27', '2021-06-08', '2021-06-20', '2021-07-02', '2021-07-14', '2021-07-26', '2021-08-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [24, 24, 24, 24, 24, 24, 24, 24]
+relativeOrbitNumber_start-> [24, 24, 24, 24, 24, 24, 24, 24]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m chongqing21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-02
+final date range:  [38;2;165;165;0m 2021-07-02 2021-09-02 | diff_days -> 62 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 94.7070094922932 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=4), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-02
+final date range:  [38;2;165;165;0m 2021-06-17 2021-09-17 | diff_days -> 92 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 94.7070094922932 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-02
+final date range:  [38;2;165;165;0m 2021-06-02 2021-10-02 | diff_days -> 122 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 94.7070094922932 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-08-01', '2021-08-04']
+roi_cloud_cover---------> [0.6252467642774908, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.376954, 1.432443]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-10', '2021-06-22', '2021-07-16', '2021-07-28', '2021-08-09', '2021-08-21', '2021-09-02', '2021-09-14', '2021-09-26', '2021-09-20']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [55, 55, 55, 55, 55, 55, 55, 55, 55, 55]
+relativeOrbitNumber_start-> [55, 55, 55, 55, 55, 55, 55, 55, 55, 55]
+cycleNumber---------------> [233, 234, 236, 237, 238, 239, 240, 241, 242, 171]
+🟢 [1;45m chongqing_adj21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-01
+final date range:  [38;2;165;165;0m 2021-07-01 2021-09-01 | diff_days -> 62 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 99.52777255141429 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-01
+final date range:  [38;2;165;165;0m 2021-06-16 2021-09-16 | diff_days -> 92 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 99.52777255141429 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-01
+final date range:  [38;2;165;165;0m 2021-06-01 2021-10-01 | diff_days -> 122 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 99.52777255141429 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-08-01']
+roi_cloud_cover---------> [0.6252467642774908]
+CLOUDY_PIXEL_PERCENTAGE-> [1.376954]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-10', '2021-06-22', '2021-07-16', '2021-07-28', '2021-08-09', '2021-08-21', '2021-09-02', '2021-09-14', '2021-09-26', '2021-09-20']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [55, 55, 55, 55, 55, 55, 55, 55, 55, 55]
+relativeOrbitNumber_start-> [55, 55, 55, 55, 55, 55, 55, 55, 55, 55]
+cycleNumber---------------> [233, 234, 236, 237, 238, 239, 240, 241, 242, 171]
+🟢 [1;45m cupertino21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-18
+final date range:  [38;2;165;165;0m 2021-05-18 2021-07-18 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.31643240205472 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-18']
+roi_cloud_cover---------> [0.018248114637973996]
+CLOUDY_PIXEL_PERCENTAGE-> [0.818087]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-05-28', '2021-06-09', '2021-06-21', '2021-07-03', '2021-07-15', '2021-05-22', '2021-06-03', '2021-06-15', '2021-06-27', '2021-07-09']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [42, 42, 42, 42, 42, 42, 42, 42, 42, 42]
+relativeOrbitNumber_start-> [42, 42, 42, 42, 42, 42, 42, 42, 42, 42]
+cycleNumber---------------> [232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m cupertino_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-18
+final date range:  [38;2;165;165;0m 2021-05-18 2021-07-18 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.70002740681713 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-18']
+roi_cloud_cover---------> [0.018248114637973996]
+CLOUDY_PIXEL_PERCENTAGE-> [0.818087]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-05-28', '2021-06-09', '2021-06-21', '2021-07-03', '2021-07-15', '2021-05-22', '2021-06-03', '2021-06-15', '2021-06-27', '2021-07-09']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [42, 42, 42, 42, 42, 42, 42, 42, 42, 42]
+relativeOrbitNumber_start-> [42, 42, 42, 42, 42, 42, 42, 42, 42, 42]
+cycleNumber---------------> [232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m cupertino_adj_losangles21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-12
+final date range:  [38;2;165;165;0m 2021-05-12 2021-07-12 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 99.7262358362303 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-12']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.286084]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-18', '2021-05-30', '2021-06-11', '2021-06-23', '2021-07-05', '2021-05-12', '2021-05-24', '2021-06-05', '2021-06-17', '2021-06-29', '2021-07-11']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71]
+relativeOrbitNumber_start-> [71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71]
+cycleNumber---------------> [231, 232, 233, 234, 235, 160, 161, 162, 163, 164, 165]
+🟢 [1;45m dubai21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-19 2021-07-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 95.9508884885926 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-04 2021-08-03 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 95.9508884885926 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-04-19 2021-08-18 | diff_days -> 121 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 95.9508884885926 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  6
+system:time_start-------> ['2021-06-07', '2021-06-12', '2021-06-17', '2021-06-22', '2021-06-27', '2021-07-02']
+roi_cloud_cover---------> [0, 0, 0, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [5.381472, 5.139203, 5.082219, 6.222312, 6.415961, 1.087634]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-04-19', '2021-05-01', '2021-05-13', '2021-05-25', '2021-06-06', '2021-06-18', '2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [166, 166, 166, 166, 166, 166, 166, 166, 166, 166, 166]
+relativeOrbitNumber_start-> [166, 166, 166, 166, 166, 166, 166, 166, 166, 166, 166]
+cycleNumber---------------> [228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m dubai_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-19 2021-07-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.86637206863 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-04 2021-08-03 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.86637206863 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-04-19 2021-08-18 | diff_days -> 121 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.86637206863 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  6
+system:time_start-------> ['2021-06-07', '2021-06-12', '2021-06-17', '2021-06-22', '2021-06-27', '2021-07-02']
+roi_cloud_cover---------> [0, 0, 0, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [5.381472, 5.139203, 5.082219, 6.222312, 6.415961, 1.087634]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-04-19', '2021-05-01', '2021-05-13', '2021-05-25', '2021-06-06', '2021-06-18', '2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [166, 166, 166, 166, 166, 166, 166, 166, 166, 166, 166]
+relativeOrbitNumber_start-> [166, 166, 166, 166, 166, 166, 166, 166, 166, 166, 166]
+cycleNumber---------------> [228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m dubai_adj_sharje21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-19 2021-07-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.86637206863 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-04 2021-08-03 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.86637206863 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-04-19 2021-08-18 | diff_days -> 121 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.86637206863 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  6
+system:time_start-------> ['2021-06-07', '2021-06-12', '2021-06-17', '2021-06-22', '2021-06-27', '2021-07-02']
+roi_cloud_cover---------> [0, 0, 0, 0, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [5.381472, 5.139203, 5.082219, 6.222312, 6.415961, 1.087634]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-04-19', '2021-05-01', '2021-05-13', '2021-05-25', '2021-06-06', '2021-06-18', '2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [166, 166, 166, 166, 166, 166, 166, 166, 166, 166, 166]
+relativeOrbitNumber_start-> [166, 166, 166, 166, 166, 166, 166, 166, 166, 166, 166]
+cycleNumber---------------> [228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238]
+🟢 [1;45m hongkong21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-15
+final date range:  [38;2;165;165;0m 2021-06-15 2021-08-15 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 95.40081697612398 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-15
+final date range:  [38;2;165;165;0m 2021-05-31 2021-08-30 | diff_days -> 91 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 95.40081697612398 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-07-15', '2021-07-15']
+roi_cloud_cover---------> [0.3722615386146695, 0.38719181422755733]
+CLOUDY_PIXEL_PERCENTAGE-> [10.097, 7.830448]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-06-02', '2021-06-14', '2021-06-26', '2021-07-08', '2021-07-20', '2021-08-01', '2021-08-13', '2021-08-25']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [113, 113, 113, 113, 113, 113, 113, 113]
+relativeOrbitNumber_start-> [113, 113, 113, 113, 113, 113, 113, 113]
+cycleNumber---------------> [232, 233, 234, 235, 236, 237, 238, 239]
+🟢 [1;45m hongkong_adj21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 56.36476515653506 percent of the roi.
+Mosaic Coverege Not Accepted
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-09-07 -to- 2021-10-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-10-07 -to- 2021-11-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-13
+final date range:  [38;2;165;165;0m 2021-09-13 2021-11-13 | diff_days -> 61 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 96.76605024570271 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-13
+final date range:  [38;2;165;165;0m 2021-08-29 2021-11-28 | diff_days -> 91 [0m
+◍checking for ASCENDING single scene
+Mosiac Covers 96.76605024570271 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  4
+system:time_start-------> ['2021-10-11', '2021-10-11', '2021-10-16', '2021-10-16']
+roi_cloud_cover---------> [1.5617897750836924, 1.3169332550323325, 1.3522682406495001, 1.0388153987544833]
+CLOUDY_PIXEL_PERCENTAGE-> [4.570663, 5.364424, 4.998938, 4.82751]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-08-30', '2021-09-11', '2021-09-23', '2021-10-05', '2021-10-17', '2021-10-29', '2021-11-10', '2021-11-22']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [11, 11, 11, 11, 11, 11, 11, 11]
+relativeOrbitNumber_start-> [11, 11, 11, 11, 11, 11, 11, 11]
+cycleNumber---------------> [240, 241, 242, 243, 244, 245, 246, 247]
+🟢 [1;45m lasvegas21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-24
+final date range:  [38;2;165;165;0m 2021-06-24 2021-08-24 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 97.03680800345789 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-07-14', '2021-08-03']
+roi_cloud_cover---------> [0.30101094555094376, 0.6714476727018159]
+CLOUDY_PIXEL_PERCENTAGE-> [0.566538, 1.354504]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17', '2021-06-24', '2021-07-06', '2021-07-18', '2021-07-30', '2021-08-11', '2021-08-23']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [173, 173, 173, 173, 173, 173, 173, 173, 173, 173, 173]
+relativeOrbitNumber_start-> [173, 173, 173, 173, 173, 173, 173, 173, 173, 173, 173]
+cycleNumber---------------> [234, 235, 236, 237, 238, 163, 164, 165, 166, 167, 168]
+🟢 [1;45m lasvegas_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 98.8565907014021 percent of the roi.
+Mosaic Coverege Accepted
+[92m ◍Image Mosaic found in date range of 2021-07-07 to 2021-08-07 [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-21
+final date range:  [38;2;165;165;0m 2021-06-21 2021-08-21 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.85668112523018 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  3
+system:time_start-------> ['2021-07-14', '2021-07-14', '2021-08-03']
+roi_cloud_cover---------> [0.1953377726019489, 0.30101094555094376, 0.6714476727018159]
+CLOUDY_PIXEL_PERCENTAGE-> [0.99225, 0.566538, 1.354504]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17', '2021-06-24', '2021-07-06', '2021-07-18', '2021-07-30', '2021-08-11']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [173, 173, 173, 173, 173, 173, 173, 173, 173, 173]
+relativeOrbitNumber_start-> [173, 173, 173, 173, 173, 173, 173, 173, 173, 173]
+cycleNumber---------------> [234, 235, 236, 237, 238, 163, 164, 165, 166, 167]
+🟢 [1;45m milano21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-14
+final date range:  [38;2;165;165;0m 2021-07-14 2021-09-14 | diff_days -> 62 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 97.08391097505815 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-08-14']
+roi_cloud_cover---------> [0.37110029495588936]
+CLOUDY_PIXEL_PERCENTAGE-> [0.982459]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-07-24', '2021-08-05', '2021-08-17', '2021-08-29', '2021-09-10', '2021-07-18', '2021-07-30', '2021-08-11', '2021-08-23', '2021-09-04']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [168, 168, 168, 168, 168, 168, 168, 168, 168, 168]
+relativeOrbitNumber_start-> [168, 168, 168, 168, 168, 168, 168, 168, 168, 168]
+cycleNumber---------------> [236, 237, 238, 239, 240, 165, 166, 167, 168, 169]
+🟢 [1;45m milano_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-08-14
+final date range:  [38;2;165;165;0m 2021-07-14 2021-09-14 | diff_days -> 62 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 99.05129504274652 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-08-14']
+roi_cloud_cover---------> [0.37110029495588936]
+CLOUDY_PIXEL_PERCENTAGE-> [0.982459]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-07-24', '2021-08-05', '2021-08-17', '2021-08-29', '2021-09-10', '2021-07-18', '2021-07-30', '2021-08-11', '2021-08-23', '2021-09-04']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [168, 168, 168, 168, 168, 168, 168, 168, 168, 168]
+relativeOrbitNumber_start-> [168, 168, 168, 168, 168, 168, 168, 168, 168, 168]
+cycleNumber---------------> [236, 237, 238, 239, 240, 165, 166, 167, 168, 169]
+🟢 [1;45m montpellier21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-11
+final date range:  [38;2;165;165;0m 2021-06-11 2021-08-11 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.179610882976 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-11']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.192707]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-21', '2021-07-03', '2021-07-15', '2021-07-27', '2021-08-08', '2021-06-15', '2021-06-27', '2021-07-09', '2021-07-21', '2021-08-02']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [37, 37, 37, 37, 37, 37, 37, 37, 37, 37]
+relativeOrbitNumber_start-> [37, 37, 37, 37, 37, 37, 37, 37, 37, 37]
+cycleNumber---------------> [234, 235, 236, 237, 238, 163, 164, 165, 166, 167]
+🟢 [1;45m montpellier_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-11
+final date range:  [38;2;165;165;0m 2021-06-11 2021-08-11 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.33362489320162 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-11']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.192707]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-21', '2021-07-03', '2021-07-15', '2021-07-27', '2021-08-08', '2021-06-15', '2021-06-27', '2021-07-09', '2021-07-21', '2021-08-02']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [37, 37, 37, 37, 37, 37, 37, 37, 37, 37]
+relativeOrbitNumber_start-> [37, 37, 37, 37, 37, 37, 37, 37, 37, 37]
+cycleNumber---------------> [234, 235, 236, 237, 238, 163, 164, 165, 166, 167]
+🟢 [1;45m mumbai21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-09-07 -to- 2021-10-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-10-07 -to- 2021-11-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-19
+final date range:  [38;2;165;165;0m 2021-09-19 2021-11-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.20493709603028 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-19
+final date range:  [38;2;165;165;0m 2021-09-04 2021-12-04 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.20493709603028 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-19
+final date range:  [38;2;165;165;0m 2021-08-20 2021-12-19 | diff_days -> 121 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.20493709603028 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-10-14', '2021-10-24']
+roi_cloud_cover---------> [0.1942594749187959, 1.1383505695070688]
+CLOUDY_PIXEL_PERCENTAGE-> [7.378081, 2.499806]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-08-20', '2021-09-01', '2021-09-13', '2021-09-25', '2021-10-07', '2021-10-19', '2021-10-31', '2021-11-12', '2021-11-24', '2021-12-06', '2021-12-18']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34]
+relativeOrbitNumber_start-> [34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34]
+cycleNumber---------------> [239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249]
+🟢 [1;45m mumbai_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-08-07 -to- 2021-09-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-09-07 -to- 2021-10-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-10-07 -to- 2021-11-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-19
+final date range:  [38;2;165;165;0m 2021-09-19 2021-11-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.68593683205219 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-19
+final date range:  [38;2;165;165;0m 2021-09-04 2021-12-04 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.68593683205219 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=7), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-10-19
+final date range:  [38;2;165;165;0m 2021-08-20 2021-12-19 | diff_days -> 121 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.68593683205219 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-10-14', '2021-10-24']
+roi_cloud_cover---------> [0.1942594749187959, 1.1383505695070688]
+CLOUDY_PIXEL_PERCENTAGE-> [7.378081, 2.499806]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-08-20', '2021-09-01', '2021-09-13', '2021-09-25', '2021-10-07', '2021-10-19', '2021-10-31', '2021-11-12', '2021-11-24', '2021-12-06', '2021-12-18']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34]
+relativeOrbitNumber_start-> [34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34]
+cycleNumber---------------> [239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249]
+🟢 [1;45m nantes21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 41.00872721667961 percent of the roi.
+Mosaic Coverege Not Accepted
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-19
+final date range:  [38;2;165;165;0m 2021-06-19 2021-08-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 97.28408673958027 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-07-17', '2021-07-20']
+roi_cloud_cover---------> [0.23863557187932355, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [2.350812, 0.170561]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  9
+system:time_start---------> ['2021-06-24', '2021-07-06', '2021-07-18', '2021-07-30', '2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17']
+platform_number-----------> ['A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [81, 81, 81, 81, 81, 81, 81, 81, 81]
+relativeOrbitNumber_start-> [81, 81, 81, 81, 81, 81, 81, 81, 81]
+cycleNumber---------------> [234, 235, 236, 237, 164, 165, 166, 167, 168]
+🟢 [1;45m nantes_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 67.3416594039906 percent of the roi.
+Mosaic Coverege Not Accepted
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Mosiac Covers 98.88062923965309 percent of the roi.
+Mosaic Coverege Accepted
+[92m ◍Image Mosaic found in date range of 2021-07-07 to 2021-08-07 [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-19
+final date range:  [38;2;165;165;0m 2021-06-19 2021-08-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.88062923965309 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  4
+system:time_start-------> ['2021-07-17', '2021-07-17', '2021-07-20', '2021-07-20']
+roi_cloud_cover---------> [0, 0.23863557187932355, 0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.133123, 2.350812, 0.084303, 0.170561]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  9
+system:time_start---------> ['2021-06-24', '2021-07-06', '2021-07-18', '2021-07-30', '2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17']
+platform_number-----------> ['A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [81, 81, 81, 81, 81, 81, 81, 81, 81]
+relativeOrbitNumber_start-> [81, 81, 81, 81, 81, 81, 81, 81, 81]
+cycleNumber---------------> [234, 235, 236, 237, 164, 165, 166, 167, 168]
+🟢 [1;45m norcia21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-27
+final date range:  [38;2;165;165;0m 2021-06-27 2021-08-27 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 91.36185447010298 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-07-24', '2021-07-29']
+roi_cloud_cover---------> [1.1233373479185536, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [1.410526, 0.075268]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-07-02', '2021-07-14', '2021-07-26', '2021-08-07', '2021-08-19', '2021-07-08', '2021-07-20', '2021-08-01', '2021-08-13', '2021-08-25']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [22, 22, 22, 22, 22, 22, 22, 22, 22, 22]
+relativeOrbitNumber_start-> [22, 22, 22, 22, 22, 22, 22, 22, 22, 22]
+cycleNumber---------------> [235, 236, 237, 238, 239, 165, 166, 167, 168, 169]
+🟢 [1;45m paris21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-14
+final date range:  [38;2;165;165;0m 2021-05-14 2021-07-14 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 93.96914404374861 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-14']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.329313]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-14', '2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m paris_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-14
+final date range:  [38;2;165;165;0m 2021-05-14 2021-07-14 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.31037598339734 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-06-14']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.329313]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-14', '2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m pisa21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-05
+final date range:  [38;2;165;165;0m 2021-06-05 2021-08-05 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 97.09290153325104 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-05']
+roi_cloud_cover---------> [0.4619261382676236]
+CLOUDY_PIXEL_PERCENTAGE-> [4.151827]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-06-06', '2021-06-18', '2021-06-30', '2021-07-12', '2021-07-24', '2021-06-12', '2021-06-24', '2021-07-06', '2021-07-18', '2021-07-30']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [168, 168, 168, 168, 168, 168, 168, 168, 168, 168]
+relativeOrbitNumber_start-> [168, 168, 168, 168, 168, 168, 168, 168, 168, 168]
+cycleNumber---------------> [232, 233, 234, 235, 236, 162, 163, 164, 165, 166]
+🟢 [1;45m rennes21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+◍No single scene coverge was found!
+Collection was empty!
+ 🔺 Month Range shifted  new range: 2021-07-07 -to- 2021-08-07
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-20
+final date range:  [38;2;165;165;0m 2021-06-20 2021-08-20 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.26008308577603 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  3
+system:time_start-------> ['2021-07-17', '2021-07-20', '2021-07-22']
+roi_cloud_cover---------> [0, 0.6264909539118981, 0.06975756550243696]
+CLOUDY_PIXEL_PERCENTAGE-> [0.280988, 1.642938, 1.730615]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  9
+system:time_start---------> ['2021-06-24', '2021-07-06', '2021-07-18', '2021-07-30', '2021-06-30', '2021-07-12', '2021-07-24', '2021-08-05', '2021-08-17']
+platform_number-----------> ['A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [81, 81, 81, 81, 81, 81, 81, 81, 81]
+relativeOrbitNumber_start-> [81, 81, 81, 81, 81, 81, 81, 81, 81]
+cycleNumber---------------> [234, 235, 236, 237, 164, 165, 166, 167, 168]
+🟢 [1;45m rio21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-02
+final date range:  [38;2;165;165;0m 2021-06-02 2021-08-02 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 92.25437853591148 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[93m Low number of images (col_size=5), we will retry:  [0m
+  RETRY: Expanding date range by 15 days
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-07-02
+final date range:  [38;2;165;165;0m 2021-05-18 2021-08-17 | diff_days -> 91 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 92.25437853591148 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  1
+system:time_start-------> ['2021-07-02']
+roi_cloud_cover---------> [0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.152617]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  8
+system:time_start---------> ['2021-05-18', '2021-05-30', '2021-06-11', '2021-06-23', '2021-07-05', '2021-07-17', '2021-07-29', '2021-08-10']
+platform_number-----------> ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [155, 155, 155, 155, 155, 155, 155, 155]
+relativeOrbitNumber_start-> [155, 155, 155, 155, 155, 155, 155, 155]
+cycleNumber---------------> [160, 161, 162, 163, 164, 165, 166, 167]
+🟢 [1;45m saclay_w21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-14
+final date range:  [38;2;165;165;0m 2021-05-14 2021-07-14 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.29941772261772 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-06-14', '2021-06-14']
+roi_cloud_cover---------> [0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.198549, 0.329313]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-14', '2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m saclay_e21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-14
+final date range:  [38;2;165;165;0m 2021-05-14 2021-07-14 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 96.29565725882945 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-06-14', '2021-06-14']
+roi_cloud_cover---------> [0, 0]
+CLOUDY_PIXEL_PERCENTAGE-> [0.198549, 0.329313]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-14', '2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m valencia21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-21
+final date range:  [38;2;165;165;0m 2021-05-21 2021-07-21 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 94.93481324590844 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  3
+system:time_start-------> ['2021-06-14', '2021-06-24', '2021-06-24']
+roi_cloud_cover---------> [0.112723580877303, 0.13520194027226187, 0.06129707598846719]
+CLOUDY_PIXEL_PERCENTAGE-> [1.693392, 1.162757, 0.861301]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  11
+system:time_start---------> ['2021-05-21', '2021-06-02', '2021-06-14', '2021-06-26', '2021-07-08', '2021-07-20', '2021-05-27', '2021-06-08', '2021-06-20', '2021-07-02', '2021-07-14']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110]
+relativeOrbitNumber_start-> [110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110]
+cycleNumber---------------> [231, 232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
+🟢 [1;45m valencia_buffed21 [0m 🟢
+[48;2;50;50;100m ◍◍Finding S2 [0m
+[92m ◍Single scene coverege was found! [0m
+[48;2;100;50;50m ◍◍Finding S1 [0m
+mean s2 date:  2021-06-19
+final date range:  [38;2;165;165;0m 2021-05-19 2021-07-19 | diff_days -> 61 [0m
+◍checking for DESCENDING single scene
+Mosiac Covers 98.85507878646625 percent of the roi.
+Mosaic Coverege Accepted
+Mosaic Coverege Accepted
+[92m ◍Collection Found! [0m
+[96m ---------------------------S2--------------------------- [0m
+Collection Size:  2
+system:time_start-------> ['2021-06-14', '2021-06-24']
+roi_cloud_cover---------> [0.112723580877303, 0.13520194027226187]
+CLOUDY_PIXEL_PERCENTAGE-> [1.693392, 1.162757]
+system:band_names-------> [['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60'], ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12', 'AOT', 'WVP', 'SCL', 'TCI_R', 'TCI_G', 'TCI_B', 'MSK_CLDPRB', 'MSK_SNWPRB', 'QA10', 'QA20', 'QA60']]
+[96m ---------------------------S1--------------------------- [0m
+Collection Size:  10
+system:time_start---------> ['2021-05-26', '2021-06-07', '2021-06-19', '2021-07-01', '2021-07-13', '2021-05-20', '2021-06-01', '2021-06-13', '2021-06-25', '2021-07-07']
+platform_number-----------> ['A', 'A', 'A', 'A', 'A', 'B', 'B', 'B', 'B', 'B']
+system:band_names---------> [['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin'], ['VV', 'VH', 'angle', 'VV_lin']]
+instrumentMode------------> ['IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW', 'IW']
+relativeOrbitNumber_stop--> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+relativeOrbitNumber_start-> [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+cycleNumber---------------> [232, 233, 234, 235, 236, 161, 162, 163, 164, 165]
