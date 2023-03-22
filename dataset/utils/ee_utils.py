@@ -620,7 +620,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
             new_date_0 = month_add(date_range[0])
             new_date_1 = month_add(date_range[1])
             print(' 🔺 Month Range shifted ', f'new range: {new_date_0} -to- {new_date_1}')
-            return get_s2((new_date_0,new_date_1),roi,max_cloud)
+            return get_s2((new_date_0,new_date_1),roi,max_cloud,max_snow,scl,check_snow,sr)
     else:
         print(tc.OKGREEN,'◍Single scene coverege was found!',tc.ENDC)
         return s2
