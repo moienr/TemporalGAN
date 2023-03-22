@@ -405,6 +405,75 @@ def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r
     return stacked_rows 
 
 
+def nan_remover(image,nan_threshhold = 1):
+  """
+  Inputs
+  ---
+  `image`: a nd numpy array
+  `nan_threshhold`: the precentaage of nans that is acceptable
+  """
+  nan_ratio = (np.count_nonzero(np.isnan(image))/image.size) * 100
+  print(f'NaN Ratio: {nan_ratio} Percent')
+  if nan_ratio > nan_threshhold:
+    print(f'⚠️ High NaN ratio! ⚠️')
+
+  image[np.isnan(image)] = 0.01
+  return image
+
+
+
+def reshape_tensor(tensor):
+    """Takes in a pytorch tensor and reshapes it to (C,H,W) if it is not already in that shape.
+    
+    This Algorithm won't work if C is larger than H or W
+    We assume that the smallest dimension is the channel dimension.
+    """
+    if tensor.dim() == 2: # If it is a 2D image we need to add a channel dimension
+        tensor = tensor.unsqueeze(0)
+    elif tensor.dim() == 3 and tensor.shape[2] < tensor.shape[0]: # if it is a 3D image and 3rd dim is smallest, it means it it the channel so we permute
+        tensor = tensor.permute((2,0,1))
+    elif tensor.dim() == 3 and tensor.shape[2] > tensor.shape[0]: # if it is a 3D image and and the first dimension is smaller than others it means its the C and we don't need to permute.
+        pass
+    else:
+        raise ValueError(f"Input tensor shape is unvalid: {tensor.shape}")
+    return tensor
+
+def reshape_array(array: np.ndarray, channel_first=True) -> np.ndarray:
+    """Takes in an array and reshapes it to (C,H,W) or (H,W,C) based on user input.
+    
+    Args
+    ----
+    `array`: a numpy array of shape (H,W,C) or (C,H,W) or (H,W)
+    `channel_first`: if True, the output array will be of shape (C,H,W) otherwise it will be (H,W,C)
+    
+    This Algorithm won't work if C is larger than H or W
+    We assume that the smallest dimension is the channel dimension.
+    """
+    if channel_first:
+        if array.ndim == 2: # If it is a 2D image we need to add a channel dimension
+            array = np.expand_dims(array, axis=0)
+        elif array.ndim == 3 and array.shape[2] < array.shape[0]: # if it is a 3D image and 3rd dim is smallest, it means it it the channel so we permute
+            array = np.swapaxes(array, 0, 2)
+            array = np.swapaxes(array, 1, 2)
+        elif array.ndim == 3 and array.shape[2] > array.shape[0]: # if it is a 3D image and and the first dimension is smaller than others it means its the C and we don't need to permute.
+            pass
+        else:
+            raise ValueError(f"Input array shape is invalid: {array.shape}")
+    
+    else:
+        if array.ndim == 2:
+            array = np.expand_dims(array, axis=-1)
+        elif array.ndim == 3 and array.shape[0] < array.shape[2]:
+            array = np.swapaxes(array, 0, 2)
+            array = np.swapaxes(array, 0, 1)
+        elif array.ndim == 3 and array.shape[0] > array.shape[2]:
+            pass
+        else:
+            raise ValueError(f"Input array shape is invalid: {array.shape}")
+    
+    return array
+
+
 
 if __name__ == '__main__':
     #test_function(get_square_roi, 40.02, -105.25, roi_size=1920)
