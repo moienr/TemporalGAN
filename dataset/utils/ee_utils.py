@@ -580,11 +580,11 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     the function reutrns an GEE `image collection`
     
     '''
-    s2 = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") if sr else ee.ImageCollection("COPERNICUS/S2_HARMONIZED")
+    S2_COL = ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED") if sr else ee.ImageCollection("COPERNICUS/S2_HARMONIZED")
     
     print(tc.BOLD_BAKGROUNDs.S2,'◍◍Finding S2',tc.ENDC)
     #first we chech if there is single scene that covers the roi   
-    s2 = s2.filterDate(date_range[0], date_range[1]) \
+    s2 = S2_COL.filterDate(date_range[0], date_range[1]) \
                     .filterBounds(roi) \
                     .filter(ee.Filter.contains('.geo', roi)) #this line checks if the scene completly covers the roi, which mean roi is in the scene
     
@@ -600,9 +600,11 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     if  is_col_empty(s2): # if the collection is empty we go and check if therse a mosaic that covers the whole area otherwise we return s2
         print('◍No single scene coverge was found!')
 
-        s2 = s2.filterDate(date_range[0], date_range[1]) \
-                        .filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) \
+        s2 = S2_COL.filterDate(date_range[0], date_range[1]) \
                         .filterBounds(roi)
+                        
+        if check_snow:
+            s2 = s2.filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) 
         # whether to find couldmask from SCL or QA60                
         if scl:
             s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
