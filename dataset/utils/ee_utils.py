@@ -116,6 +116,24 @@ def get_cloud_mask_form_scl(image: ee.Image) -> ee.Image:
     mask = scl.eq(3).Or(scl.eq(9))
     return mask
 
+def get_cloud_shadow_mask_form_scl(image: ee.Image) -> ee.Image:
+    """
+    This function takes a Sentinel-2 Level 2A Earth Engine image as input and returns the mask for clouds and cloud shadows.
+
+    Args:
+        image: Sentinel-2 Level 2A Earth Engine image to be processed.
+
+    Returns:
+        A binary mask indicating the presence of clouds and cloud shadows in the input image. The mask is of the same dimensions as the input image, with a value of 1 indicating the presence of clouds or cloud shadows and 0 indicating their absence.
+
+    Note:
+        The Sentinel-2 Cloud Mask is generated from the Scene Classification Layer (SCL), which is included in the Level 2A product. The function uses the SCL band to identify the pixels classified as clouds or cloud shadows based on their SCL values. In particular, a pixel is classified as a cloud if its SCL value is 3, and as a cloud shadow if its SCL value is 9.
+    """
+    scl = image.select('SCL')
+    shadow_mask = scl.eq(3)
+    dark_pixels_mask = scl.eq(2)
+    return shadow_mask, dark_pixels_mask
+
 
 # Snow/Ice mask
 def get_snow_mask(img: ee.Image, pixel_quality_band='QA_PIXEL',
