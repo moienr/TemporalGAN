@@ -99,7 +99,7 @@ def get_cloud_mask(img: ee.Image, pixel_quality_band='QA60',
     return cloud, cirrus, cloud.Or(cirrus)
 
 
-def get_cloud_mask_form_scl(image: ee.Image) -> ee.Image:
+def get_cloud_mask_from_scl(image: ee.Image) -> ee.Image:
     """
     This function takes a Sentinel-2 Level 2A Earth Engine image as input and returns the mask for clouds and cloud shadows.
 
@@ -113,7 +113,7 @@ def get_cloud_mask_form_scl(image: ee.Image) -> ee.Image:
         The Sentinel-2 Cloud Mask is generated from the Scene Classification Layer (SCL), which is included in the Level 2A product. The function uses the SCL band to identify the pixels classified as clouds or cloud shadows based on their SCL values. In particular, a pixel is classified as a cloud if its SCL value is 3, and as a cloud shadow if its SCL value is 9.
     """
     scl = image.select('SCL')
-    mask = scl.eq(3).Or(scl.eq(9))
+    mask = scl.eq(3).Or(scl.eq(9)).Or(scl.eq(8))
     return mask
 
 def get_cloud_shadow_mask_form_scl(image: ee.Image) -> ee.Image:
@@ -570,7 +570,7 @@ def toDb(linear:ee.Image, input_band_name:str = 'VV_lin'):
 
 
 
-def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_snow = False, sr = True):
+def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, check_snow = False, sr = True):
     ''' 
     Inputs
     ---
@@ -582,7 +582,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     `check_snow` : if True, the function will filter the collection by snow cover, if False, it will not, default is False
         don't use it for cloudy summer images - it has a high false positive rate.
     `sr` : if True, the function will use the Surface Reflectance product, if False, it will use the Top of Atmosphere product, default is True
-    
+        also  if True, the function will find the Cloud Cover based on SCL band, if False, it will use the QA60 band
 
     Algorithm
     ---
@@ -609,10 +609,10 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
     if check_snow:
         s2 = s2.filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) 
     
-    if scl:
-        s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
+    if sr:
+        s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_from_scl(img.clip(roi)))))               
     else:                                    
-        s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask(img)[2])))
+        s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask(img.clip(roi))[2])))
     s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',max_cloud)) 
 
     if  is_col_empty(s2): # if the collection is empty we go and check if therse a mosaic that covers the whole area otherwise we return s2
@@ -624,10 +624,10 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
         if check_snow:
             s2 = s2.filter(ee.Filter.lt('SNOW_ICE_PERCENTAGE',max_snow)) 
         # whether to find couldmask from SCL or QA60                
-        if scl:
-            s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_form_scl(img))))               
+        if sr:
+            s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask_from_scl(img.clip(roi)))))               
         else:                                    
-            s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask(img)[2])))
+            s2 = s2.map(lambda img: img.set('roi_cloud_cover', get_mask_ones_ratio(get_cloud_mask(img.clip(roi))[2])))
         s2 = s2.filter(ee.Filter.lt('roi_cloud_cover',max_cloud)) 
         
         
@@ -638,7 +638,7 @@ def get_s2(date_range: tuple,roi,max_cloud = 5,max_snow = 5, scl = False, check_
             new_date_0 = month_add(date_range[0])
             new_date_1 = month_add(date_range[1])
             print(' 🔺 Month Range shifted ', f'new range: {new_date_0} -to- {new_date_1}')
-            return get_s2((new_date_0,new_date_1),roi,max_cloud,max_snow,scl,check_snow,sr)
+            return get_s2((new_date_0,new_date_1),roi,max_cloud,max_snow,check_snow,sr)
     else:
         print(tc.OKGREEN,'◍Single scene coverege was found!',tc.ENDC)
         return s2
