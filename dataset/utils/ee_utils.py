@@ -680,6 +680,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
     * retry_days: Increasing the date span by how many days in case of empty collection
     
     '''
+    RETRY_ADD = 8
     OPTIM_DATES = 8 # number of dates that are enough for despackling
     print(tc.BOLD_BAKGROUNDs.S1,'◍◍Finding S1',tc.ENDC)
     # if ASC is prioriy then DESC is the second prioriy and vice versa
@@ -760,12 +761,12 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
             col_size = s1_collection.size().getInfo()
             if col_size < OPTIM_DATES:
                 print(tc.WARNING,f"Low number of images (col_size={col_size}), we will retry: ",tc.ENDC)  
-                if date_diffrence(start_date,end_date) >= 100 and best_orbit:
+                if date_diffrence(start_date,end_date) >= 120 and best_orbit:
                     print("  RETRY: ALready more than 100days, Setting best_orbit to False")
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days ,month_span = month_span,snow_removal=snow_removal, best_orbit=False)
-                elif date_diffrence(start_date,end_date) < 100:
+                elif date_diffrence(start_date,end_date) < 120:
                     print("  RETRY: Expanding date range by 15 days")
-                    return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days + 15 ,month_span = month_span,snow_removal=snow_removal, best_orbit=best_orbit)
+                    return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days + RETRY_ADD ,month_span = month_span,snow_removal=snow_removal, best_orbit=best_orbit)
                 else:
                     print(tc.FAIL,f'◍Nothing Else we can do, returning the collection with {col_size} images',tc.FAIL)
                     return s1_collection
