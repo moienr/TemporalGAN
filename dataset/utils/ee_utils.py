@@ -955,7 +955,7 @@ def collection_splitter(collection, property_name:str, property_list:ee.List):
     return col_list
     
     
-def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False) -> ee.Number:
+def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False, prefer_most_occured = False) -> ee.Number:
     """
     Get the relative orbit number of the best Sentinel-1 orbit based on the number of times it appears in the input collection 
     and the average incidence angle of the images in that orbit.
@@ -967,6 +967,9 @@ def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False) ->
         `choose_smallest`: A boolean indicating whether to choose the smallest (True) or largest (False) average incidence angle.
                             in SAR images, the larger the incidence angle, the better the range resolution. (although it is all resampled to 10m)
                           Defaults to False.
+        `prefer_most_occured`: Whether to first find the most occured orbits then find the largers/smallest angle if there is more than one.
+                        -> `warning`: this could result in finding images over two diffrent periods return two diffrent orbits which is not for
+                            for comparision of these images.
                           
         * it is important to use roi, when calculating local average, otherwise the average will be calculated over the whole image.
             for expample when calculating `angle` band, the average will be calculated over the whole image, and not over the roi, and will
@@ -979,8 +982,11 @@ def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False) ->
         and the average incidence angle of the images in that orbit.
     """
     rel_list = s1_col.aggregate_array('relativeOrbitNumber_start')
-    most_list = find_most_repeated_element(rel_list)
-    s1_col_filtered = s1_col.filter(ee.Filter.inList('relativeOrbitNumber_start',most_list))
+    if prefer_most_occured:
+        most_list = find_most_repeated_element(rel_list)
+        
+    s1_col_filtered = s1_col.filter(ee.Filter.inList('relativeOrbitNumber_start',most_list)) if prefer_most_occured else s1_col
+
     s1_col_with_avg_angle = s1_col_filtered.map(lambda img: img.set('avg_angle',get_band_average(img,'angle',clip_roi)))
     return s1_col_with_avg_angle.sort('avg_angle',choose_smallest).first().get('relativeOrbitNumber_start')
     
