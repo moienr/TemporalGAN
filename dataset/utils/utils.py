@@ -363,7 +363,7 @@ def best_step_size(img_size, patch_size = 256, ov_first_range = 32, acceptable_r
     step_size = patch_size-opt_ov #step_size = patch_size - overlaps
     return step_size , number_of_patches , opt_ov
 
-def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r=50,mute=False):
+def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r=50,mute=True):
     """
     Inputs
     ---
@@ -400,7 +400,7 @@ def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r
 
     #print('length: ', len(stacked_rows))
     stacked_rows = np.stack(stacked_rows)  # stacking all the rows into a numpy array which gives us the final image patches.
-    print('final stacked shape: ',stacked_rows.shape)    
+    if not mute: print('final stacked shape: ',stacked_rows.shape)    
 
     return stacked_rows 
 
@@ -472,7 +472,7 @@ def nan_remover(image,nan_threshhold = 1, replace_with = 0.01):
     nan_ratio = (np.count_nonzero(np.isnan(image))/image.size) * 100
     print(f'NaN Ratio: {nan_ratio} Percent')
     if nan_ratio > nan_threshhold:
-            print(f'⚠️ High NaN ratio! ⚠️')
+            print(TextColors.WARNING,f'⚠️ High NaN ratio! ⚠️',TextColors.ENDC)
 
     image[np.isnan(image)] = replace_with
     return image
@@ -510,7 +510,7 @@ def patch_folder(in_path, out_path, input_sat = 'S2'):
     files = [f for f in files if f.endswith(".tif") or f.endswith(".tiff")]
     
     for file in files:
-        print('📍📍📍🗺️ \033[92m', file ,'\033[0m 🗺️📍📍📍')
+        print(TextColors.HIGH_INTENSITY_BACKGROUNDs.PURPLE, file ,TextColors.ENDC)
         x=io.imread(in_path+file)
         img = reshape_array(x,channel_first=False)
         print("shape after fix:", img.shape)
@@ -526,11 +526,11 @@ def patch_folder(in_path, out_path, input_sat = 'S2'):
             
         img = nan_remover(img)
 
-        print("range after norm and NaN removal: ",np.min(img),np.mean(img),np.std(img),np.max(img))
+        print("range after norm and NaN removal: ",TextColors.HIGH_INTENSITYs.CYAN,np.min(img),np.mean(img),np.std(img),np.max(img),TextColors.ENDC)
 
         patches = perfect_patchify(img,mute=True)
         
-        print('✅',patches.shape)
+        print('✅',TextColors.OKGREEN,'Final Shape->',patches.shape,TextColors.ENDC)
 
         # SAVING PATHCES
         img_name = file.split('.')[0]
