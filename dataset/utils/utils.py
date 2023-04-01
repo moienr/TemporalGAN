@@ -405,23 +405,6 @@ def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r
     return stacked_rows 
 
 
-def nan_remover(image,nan_threshhold = 1):
-  """
-  Inputs
-  ---
-  `image`: a nd numpy array
-  `nan_threshhold`: the precentaage of nans that is acceptable
-  """
-  nan_ratio = (np.count_nonzero(np.isnan(image))/image.size) * 100
-  print(f'NaN Ratio: {nan_ratio} Percent')
-  if nan_ratio > nan_threshhold:
-    print(f'⚠️ High NaN ratio! ⚠️')
-
-  image[np.isnan(image)] = 0.01
-  return image
-
-
-
 def reshape_tensor(tensor):
     """Takes in a pytorch tensor and reshapes it to (C,H,W) if it is not already in that shape.
     
@@ -476,104 +459,9 @@ def reshape_array(array: np.ndarray, channel_first=True) -> np.ndarray:
 
 
 
-
-
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-from skimage import io
-import math
-def best_step_size(img_size, patch_size = 256, ov_first_range = 32, acceptable_r = 50, mute=False):
-    """
-    finds the optimum step size for the moving window algorithm to capture the patches of the image.
-    this will resualt in minimum leftover pixels in the image.
-    
-    inputs
-    ---
-    * `img_size`: the length or width of the image
-    * `patch_size`: size of the patch in the same directoin of chosen image size
-    * `ov_first_range`: first finds the remainders of  overlaps less than this chosen range, if the remainder is less 
-        than the `acceptable_r` we choose the corresponding `ov` as the optimum, if not the `extreme mode` gets activated
-        which looks for best overlap in range of `ov_first_range` and `patch_size/2`
-    * `acceptable_r`: the threshold of remainder, where the extreme mode activates.
-    
-    outputs
-    ---
-    * `step_size`: `patch_size - optimum overlap` how much the moving_window moves to capture the next patch. 
-    * `number_of_patches`
-    * `opt_ov` : optimum overlap which gives the least remainder value.
-    """
-    l = img_size
-    best_r = 255 # the maximum remainder can be 255
-    opt_ov = 0
-    for ov in range(0,ov_first_range+1): # ov from 0 to 32
-        r = (l-patch_size)%(patch_size-ov)
-        if r<best_r:
-            best_r = r
-            opt_ov = ov
-
-    if best_r > acceptable_r:
-        print('extreme mode activated!')
-        for ov in range(ov_first_range+1,int(patch_size/2)): # we accept maximum overlap of 128
-            r = (l-patch_size)%(patch_size-ov) 
-            if r<best_r:
-                best_r = r
-                opt_ov = ov
-    number_of_patches = math.floor(((l-patch_size)/(patch_size-opt_ov))+1)
-    if not mute:
-        print('remainder        : ', best_r)
-        print('optimum overlap  : ', opt_ov)
-        print('optimum stepsize : ', patch_size-opt_ov)
-        print('number of patches: ', number_of_patches)
-    step_size = patch_size-opt_ov #step_size = patch_size - overlaps
-    return step_size , number_of_patches , opt_ov
-
-def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r=50,mute=False):
-    """
-    Inputs
-    ---
-    * `img`: a 3D numpy array of `(rows,columns,channels)`
-    * `patch_size`: size of each patch `(row_size,column_size)`
-    * `ov_first_range` , `acceptable_r` , `mute`: arguments of funcion `best_step_size` to caclutate optimum `step_size`
-    
-    Workflow
-    ---
-    note that image `width` corresponds to number of columns, and `hight` refers to the number of rows.
-    
-    Output:
-    * `stacked_rows`: a 5D numpy array, containing patches
-                        of the image `(number_patches_in_each_row, number_patches_in_each_column, patch_hight, patch_width, patch_channels)`
-    """
-    patch_width = patch_size[1]
-    patch_hight = patch_size[0]
-    clmn_sz, clmn_n_ptchs,clmn_opt_ovl = best_step_size(img.shape[1],patch_size=patch_width, ov_first_range=ov_first_range, acceptable_r=acceptable_r,mute=mute)
-    row_sz, row_n_ptchs ,row_opt_ovl  = best_step_size(img.shape[0],patch_size=patch_hight, ov_first_range=ov_first_range, acceptable_r=acceptable_r ,mute=mute)
-    stacked_rows = [] # each row consists of columns.
-    for i in range(row_n_ptchs): # this loop chooses a row
-        row_patches = [] # each row consists of column patches.
-        rp_start= i * row_sz # row_patch_start: we start from 0 then 0+step_size and so on
-        rp_end = rp_start + patch_hight # end of each patch is strt +patch size for example 0-256 adn 200-456
-        for j in range(clmn_n_ptchs): # this loop captures the clumnwise patches from the loop i
-            cp_start= j * clmn_sz # column patch starting pixel
-            cp_end = cp_start + patch_width  # column patch last pixel
-            patch = img[rp_start:rp_end,cp_start:cp_end,:] # a slice of image  based on the rows and columns dfeined by loop i and j
-            row_patches.append(patch)  # A list contaiing patchs of row i
-        #print('length: ', len(row_patches))
-        row_patches = np.stack(row_patches)  # converting the list into a stacked numpy array (rows_stack,hight,wdith,channels)
-        #print(row_patches.shape)
-        stacked_rows.append(row_patches)
-
-    #print('length: ', len(stacked_rows))
-    stacked_rows = np.stack(stacked_rows)  # stacking all the rows into a numpy array which gives us the final image patches.
-    print('final stacked shape: ',stacked_rows.shape)    
-
-    return stacked_rows 
-
-
 def nan_remover(image,nan_threshhold = 1, replace_with = 0.01):
     """
-    Removes the nans from the image and replaces them with 0.01
+    Removes the nans from the image and replaces them with `replace_with` value
     
     Inputs
     ---
