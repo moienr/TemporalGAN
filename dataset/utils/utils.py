@@ -571,6 +571,25 @@ def perfect_patchify(img, patch_size=(256,256) , ov_first_range=32, acceptable_r
     return stacked_rows 
 
 
+def nan_remover(image,nan_threshhold = 1, replace_with = 0.01):
+    """
+    Removes the nans from the image and replaces them with 0.01
+    
+    Inputs
+    ---
+    `image`: a nd numpy array
+    `nan_threshhold`: the precentaage of nans that is acceptable
+    `replace_with`(defualt= 0.01): the value to replace the nans with 
+    """
+    nan_ratio = (np.count_nonzero(np.isnan(image))/image.size) * 100
+    print(f'NaN Ratio: {nan_ratio} Percent')
+    if nan_ratio > nan_threshhold:
+            print(f'⚠️ High NaN ratio! ⚠️')
+
+    image[np.isnan(image)] = replace_with
+    return image
+
+
 
     
     
