@@ -591,5 +591,21 @@ def nan_remover(image,nan_threshhold = 1, replace_with = 0.01):
 
 
 
-    
+import os
+import fnmatch
+def count_files(folder, formart = '*.tif'):
+    """finds the number of tif files in a folder
+
+    Args:
+        folder (str): the folder to search in
+        formart (str, optional): the file foramt to look for . Defaults to '*.tif'.
+
+    Returns:
+        int: the number of files
+    """
+    count = 0
+    for root, dirs, files in os.walk(folder):
+        for filename in fnmatch.filter(files, formart):
+            count += 1
+    return count    
     
