@@ -500,7 +500,7 @@ def count_files(folder, formart = '*.tif'):
 
 
 from skimage import io
-def patch_folder(in_path, out_path, input_sat = 'S2'):
+def patch_folder(in_path, out_path, input_sat = 'S2', remove_year = True):
     if not os.path.exists(out_path):
         os.makedirs(out_path)
         
@@ -541,7 +541,10 @@ def patch_folder(in_path, out_path, input_sat = 'S2'):
                     patch = np.swapaxes(patch, 2,0)
                     patch= np.swapaxes(patch, 1,2)
                 #print(f'patch shape: {patch.shape}')
-                io.imsave(out_path + img_name[:-2] + '_r'+ str(i).zfill(2) + '_c' + str(j).zfill(2) + '.tif', patch) # the [:-2] removes the year from the names
+                if remove_year:
+                    io.imsave(out_path + img_name[:-2] + '_r'+ str(i).zfill(2) + '_c' + str(j).zfill(2) + '.tif', patch) # the [:-2] removes the year from the names
+                else:
+                    io.imsave(out_path + img_name + '_r'+ str(i).zfill(2) + '_c' + str(j).zfill(2) + '.tif', patch)
 
 if __name__ == "__main__":
     patch_folder(in_path = 'E:\s1s2\s1s2\content\drive\MyDrive\TemporalGAN-main\dataset\s1s2\\2021\s1_imgs\\test\\', out_path = 'E:\s1s2\s1s2\content\drive\MyDrive\TemporalGAN-main\dataset\s1s2_patched\\2021\s1_imgs\\test\\', input_sat = 'S1')
