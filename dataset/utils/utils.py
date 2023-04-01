@@ -496,4 +496,52 @@ def count_files(folder, formart = '*.tif'):
         for filename in fnmatch.filter(files, formart):
             count += 1
     return count    
+
+
+
+from skimage import io
+def patch_folder(in_path, out_path, input_sat = 'S2'):
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+        
+    files = os.listdir(in_path)
+    files.sort()
+    # only keep the tif files
+    files = [f for f in files if f.endswith(".tif") or f.endswith(".tiff")]
     
+    for file in files:
+        print('📍📍📍🗺️ \033[92m', file ,'\033[0m 🗺️📍📍📍')
+        x=io.imread(in_path+file)
+        img = reshape_array(x,channel_first=False)
+        print("shape after fix:", img.shape)
+
+        print("range before norm: ",np.min(img),np.mean(img),np.std(img),np.max(img))
+
+        if input_sat == 'S2':
+            img[img>0.99] = 0.99
+            img[img<0] = 0
+        elif input_sat == 'S1':
+            img[img>15] = 15
+            img[img<-25] = -25
+            
+        img = nan_remover(img)
+
+        print("range after norm and NaN removal: ",np.min(img),np.mean(img),np.std(img),np.max(img))
+
+        patches = perfect_patchify(img,mute=True)
+        
+        print('✅',patches.shape)
+
+        # SAVING PATHCES
+        img_name = file.split('.')[0]
+        for i in range(patches.shape[0]):
+            for j in range(patches.shape[1]):
+                patch = patches[i,j,:,:,:]
+                if input_sat == 'S2': # reshaping to (H,W,C) so io.imsave can save it as a tif
+                    patch = np.swapaxes(patch, 2,0)
+                    patch= np.swapaxes(patch, 1,2)
+                #print(f'patch shape: {patch.shape}')
+                io.imsave(out_path + img_name + '_r'+ str(i).zfill(2) + '_c' + str(j).zfill(2) + '.tif', patch)
+
+if __name__ == "__main__":
+    patch_folder(in_path = 'E:\s1s2\s1s2\content\drive\MyDrive\TemporalGAN-main\dataset\s1s2\\2021\s1_imgs\\test\\', out_path = 'E:\s1s2\s1s2\content\drive\MyDrive\TemporalGAN-main\dataset\s1s2_patched\\2021\s1_imgs\\test\\', input_sat = 'S1')
