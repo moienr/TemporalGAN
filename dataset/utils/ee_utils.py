@@ -991,3 +991,79 @@ def get_best_sen1_orbit(s1_col,clip_roi:ee.Geometry, choose_smallest = False, pr
     s1_col_with_avg_angle = s1_col_filtered.map(lambda img: img.set('avg_angle',get_band_average(img,'angle',clip_roi)))
     return s1_col_with_avg_angle.sort('avg_angle',choose_smallest).first().get('relativeOrbitNumber_start')
     
+    
+    
+
+
+
+def top_left_roi(roi: ee.Geometry) -> ee.Geometry:
+    """
+    Divides a square region of interest (ROI) into four pieces and returns the coordinates
+    of the top-left rectangular piece as an ee.Geometry object.
+    
+    Args:
+        roi: An ee.Geometry object representing a square region of interest.
+        
+    Returns:
+        An ee.Geometry object representing the top-left piece of the ROI.
+        
+        this output can be used as the input of `add_driection_band` function
+    """
+    square_coords = roi.bounds().getInfo()['coordinates'][0] # getting the list of coorinates
+    # Removing the duplicate vlues form the list so we only have 4 coordiantes of the rectangle 
+    square_coords = list(set(tuple(x) for x in square_coords))
+    square_coords = [list(x) for x in square_coords]
+    
+    # Find x-coordinates of left and right edges of the square
+    x_left = min(coord[0] for coord in square_coords)
+    x_right = max(coord[0] for coord in square_coords)
+
+    # Find y-coordinates of top and bottom edges of the square
+    y_top = max(coord[1] for coord in square_coords)
+    y_bottom = min(coord[1] for coord in square_coords)
+
+    # Calculate center x-coordinate and center y-coordinate
+    x_center = (x_left + x_right) / 2
+    y_center = (y_top + y_bottom) / 2
+
+    # Create coordinates for each quarter of the square
+    top_left = (x_left, y_top)
+    top_right = (x_center, y_top)
+    bottom_left = (x_left, y_center)
+    bottom_right = (x_center, y_center)
+
+    # Return coordinates of the top-left quarter
+    top_left_square = [top_left, top_right, bottom_right, bottom_left] # List of tupples
+     
+    # Converting the coordinate list to ee.Geometry
+    top_left_square = ee.Geometry.Polygon(top_left_square)
+    return top_left_square
+
+
+def add_driection_band(image: ee.Image, roi: ee.Geometry) -> ee.Image:
+    """
+    Adds a constant band with value 1 in the top left corner quartre of the given ROI to the input image.
+    
+    
+    This is due to the bug in geemap.ee_image_download, wheer downlaods some of the images vertically flipped.
+    ths extra band can be used to figure the right direction of the image.
+
+    Args:
+        image (ee.Image): The input image to add the constant band to.
+        roi (ee.Geometry): The ROI to clip the output image to. must be rectangular.
+        
+    Attributes:
+        `top_left_square_roi`: The top left quarter of the ROI, created using the `top_left_roi` function.
+
+    Returns:
+        ee.Image: The input image with the constant band added.
+    """
+    # Create a constant band of zeros
+    constant_band = ee.Image.constant(0)
+    # Set the pixel value at the top left corner to 1
+    top_left_square_roi = top_left_roi(roi)
+    
+    constant_band_with_one = constant_band.paint(top_left_square_roi, 1).clip(roi)
+    # Add the constant band with one to the image
+    image_with_constant_band = image.addBands(constant_band_with_one.clip(roi))
+    return image_with_constant_band.clip(roi)
