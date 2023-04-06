@@ -23,15 +23,16 @@ class Sen12Dataset(Dataset):
                verbose=False):
         """
         Args:
-            s1_t2_dir (str): Path to the directory containing the S1 time-2 images.
-            s2_t2_dir (str): Path to the directory containing the S2 time-2 images.
-            s1_t1_dir (str): Path to the directory containing the S1 time-1 images.
-            s2_t1_dir (str): Path to the directory containing the S2 time-1 images.
-            s2_bands (list, optional): List of indices indicating which bands to use from the S2 images.
+            `s1_t2_dir` (str): Path to the directory containing the S1 time-2 images.
+            `s2_t2_dir` (str): Path to the directory containing the S2 time-2 images.
+            `s1_t1_dir` (str): Path to the directory containing the S1 time-1 images.
+            `s2_t1_dir` (str): Path to the directory containing the S2 time-1 images.
+            `s2_bands` (list, optional): List of indices indicating which bands to use from the S2 images.
                                        If not specified, all bands are used.
-            transform (callable, optional): Optional transform to be applied to the S2 images.
-            hist_match (bool, optional): Whether to perform histogram matching between the S2 time-2 
+            `transform` (callable, optional): Optional transform to be applied to the S2 images.
+           ` hist_match` (bool, optional): Whether to perform histogram matching between the S2 time-2 
                                          and S2 time-1 images.
+            `two_way` (bool, optional): is used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2). If two_way=True, __len__ returns twice the number of images in the dataset, with the first half of the indices corresponding to the time-2 to time-1 direction and the second half corresponding to the time-1 to time-2 direction.
         """
         self.verbose = verbose
         # Set the directories for the four sets of images
@@ -59,11 +60,12 @@ class Sen12Dataset(Dataset):
         self.transform = transform
         self.hist_match = hist_match
         
-        self.two_way = two_way
-        self.used_reversed_way = False
+        self.two_way = two_way # used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2)
+        self.used_reversed_way = False # used to determine whether the images returned were from the time-2 to time-1 direction or the time-1 to time-2 direction
 
     def __len__(self):
         """Return the number of images in the dataset."""
+        # If two_way is True, return twice the number of images in the dataset since we will return images from both time directions
         return 2 * len(self.s2_t2_names) if self.two_way else len(self.s2_t2_names)
   
     def __getitem__(self, index):
@@ -78,11 +80,11 @@ class Sen12Dataset(Dataset):
             * Difference map: `np.abs(s2_t2_img - s2_t1_img)`
             * Reversed difference map: `np.max(diff_map) - diff_map + np.min(diff_map) `
         """
-        if self.two_way:
-            if index < len(self.s2_t2_names):
-                img_name = self.s2_t2_names[index] 
-                self.used_reversed_way = False
-            else:
+        if self.two_way: # if two_way is True, we will return images from both time directions
+            if index < len(self.s2_t2_names): # if index is less than the number of images in the dataset, return images from time-2 to time-1
+                img_name = self.s2_t2_names[index]  
+                self.used_reversed_way = False 
+            else: # if index is greater than or equal to the number of images in the dataset, return images from time-1 to time-2
                 img_name = self.s2_t2_names[index - len(self.s2_t2_names)]
                 self.used_reversed_way = True
         else:
@@ -105,11 +107,11 @@ class Sen12Dataset(Dataset):
         s1_t1_img = io.imread(s1_t1_img_path)
     
 
-        if self.hist_match:
-            if self.used_reversed_way:
+        if self.hist_match: # if hist_match is True, match the histograms of the two images
+            if self.used_reversed_way: # if the images returned were from the time-1 to time-2 direction, match the histograms of the two images with t1 being the reference
                 s2_t1_img = match_histograms(s2_t1_img, s2_t2_img, channel_axis=0) # match the histograms of the two images (image, reference)
-            else:
-                s2_t2_img = match_histograms(s2_t2_img, s2_t1_img, channel_axis=0) # match the histograms of the two images (image, reference)
+            else: # if the images returned were from the time-2 to time-1 direction, match the histograms of the two images with t2 being the reference
+                s2_t2_img = match_histograms(s2_t2_img, s2_t1_img, channel_axis=0) 
 
         if self.transform:
             sample = s2_t2_img, s1_t2_img
@@ -129,9 +131,9 @@ class Sen12Dataset(Dataset):
         diff_map = diff_map.detach()
         reversed_diff_map = reversed_diff_map.detach()
         
-        if self.used_reversed_way:
-            return  s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map
-        else:
+        if self.used_reversed_way: # returning the images in the opposite order 
+            return s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map
+        else: # returning the images in the t2->t1 order
             return s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map
 
 
