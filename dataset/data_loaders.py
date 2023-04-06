@@ -19,6 +19,7 @@ class Sen12Dataset(Dataset):
                s2_bands: list = None ,
                transform = None,
                hist_match=False,
+               two_way = True,
                verbose=False):
         """
         Args:
@@ -58,11 +59,12 @@ class Sen12Dataset(Dataset):
         self.transform = transform
         self.hist_match = hist_match
         
-
+        self.two_way = two_way
+        self.used_reversed_way = False
 
     def __len__(self):
         """Return the number of images in the dataset."""
-        return len(self.s2_t2_names)
+        return 2 * len(self.s2_t2_names) if self.two_way else len(self.s2_t2_names)
   
     def __getitem__(self, index):
         """Get the S2 time-2 image, S1 time-2 image, S2 time-1 image, S1 time-1 image, 
@@ -76,8 +78,16 @@ class Sen12Dataset(Dataset):
             * Difference map: `np.abs(s2_t2_img - s2_t1_img)`
             * Reversed difference map: `np.max(diff_map) - diff_map + np.min(diff_map) `
         """
-        
-        img_name = self.s2_t2_names[index] 
+        if self.two_way:
+            if index < len(self.s2_t2_names):
+                img_name = self.s2_t2_names[index] 
+                self.used_reversed_way = False
+            else:
+                img_name = self.s2_t2_names[index - len(self.s2_t2_names)]
+                self.used_reversed_way = True
+        else:
+            img_name = self.s2_t2_names[index] 
+            self.used_reversed_way = False # just to be sure
 
         s2_t2_img_path = os.path.join(self.s2_t2_dir,img_name)
         s1_t2_img_path = os.path.join(self.s1_t2_dir,img_name)
@@ -96,7 +106,10 @@ class Sen12Dataset(Dataset):
     
 
         if self.hist_match:
-            s2_t2_img = match_histograms(s2_t2_img, s2_t1_img, channel_axis=0) # match the histograms of the two images (image, reference)
+            if self.used_reversed_way:
+                s2_t1_img = match_histograms(s2_t1_img, s2_t2_img, channel_axis=0) # match the histograms of the two images (image, reference)
+            else:
+                s2_t2_img = match_histograms(s2_t2_img, s2_t1_img, channel_axis=0) # match the histograms of the two images (image, reference)
 
         if self.transform:
             sample = s2_t2_img, s1_t2_img
@@ -114,7 +127,10 @@ class Sen12Dataset(Dataset):
         reversed_diff_map = np.max(diff_map) - diff_map + np.min(diff_map) # to focus the unchanged areas in the s2 image
         
         
-        return s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map
+        if self.used_reversed_way:
+            return  s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map
+        else:
+            return s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map
 
 
 
