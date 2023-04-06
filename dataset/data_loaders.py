@@ -100,7 +100,7 @@ class Sen12Dataset(Dataset):
         s1_t1_img_path = os.path.join(self.s1_t1_dir,img_name)
         
         s2_t1_img = io.imread(s2_t1_img_path)
-        print(f's2 shape apon reading: {s2_t1_img.shape}')
+        print(f's2 shape apon reading: {s2_t1_img.shape}') if self.verbose else None
         if self.s2_bands: s2_t1_img = s2_t1_img[self.s2_bands,:,:]
         s1_t1_img = io.imread(s1_t1_img_path)
     
@@ -123,9 +123,11 @@ class Sen12Dataset(Dataset):
             print(f"s2_t1_img shape: {s2_t1_img.shape}")
             print(f"s1_t1_img shape: {s1_t1_img.shape}")
         
-        diff_map = np.abs(s2_t2_img - s2_t1_img) # to focus on the changes in the s2 image
-        reversed_diff_map = np.max(diff_map) - diff_map + np.min(diff_map) # to focus the unchanged areas in the s2 image
-        
+        diff_map = torch.abs(s2_t2_img - s2_t1_img) # to focus on the changes in the s2 image
+        reversed_diff_map = torch.max(diff_map) - diff_map + torch.min(diff_map) # to focus the unchanged areas in the s2 image
+        # Detach the tensors from the graph to avoid memory leaks
+        diff_map = diff_map.detach()
+        reversed_diff_map = reversed_diff_map.detach()
         
         if self.used_reversed_way:
             return  s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map
@@ -214,4 +216,17 @@ class S2S1Normalize:
     
 
 if __name__ == "__main__":
-    s1s2_dataset = Sen12Dataset(s1_t1_dir="")
+    from utils.plot_utils import *
+    
+    transform = transforms.Compose([S2S1Normalize(),myToTensor()])
+    
+    s1s2_dataset = Sen12Dataset(s1_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s1_imgs\\train",
+                                s2_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s2_imgs\\train",
+                                s1_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s1_imgs\\train",
+                                s2_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s2_imgs\\train",
+                                transform=transform,
+                                two_way=False)
+    print("len(s1s2_dataset): ",len(s1s2_dataset))
+    print("s1s2_dataset[0][0]shape: ",s1s2_dataset[0][0].shape)
+                                
+    
