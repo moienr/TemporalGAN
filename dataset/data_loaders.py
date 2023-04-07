@@ -245,7 +245,7 @@ if __name__ == "__main__":
     
     transform = transforms.Compose([S2S1Normalize(),myToTensor()])
     
-    print("Readin only S1 2021 train data...")
+    print("Reading only S1 2021 train data...")
     s1s2_dataset = Sen12Dataset(s1_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s1_imgs\\train",
                                 s2_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s2_imgs\\train",
                                 s1_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s1_imgs\\train",
@@ -256,7 +256,7 @@ if __name__ == "__main__":
     print("s1s2_dataset[0][0]shape: ",s1s2_dataset[0][0].shape)
     
     
-    print("Readin All the S1 2021...")
+    print("Reading All the S1 2021...")
     s1s2_dataset = Sen12Dataset(s1_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s1_imgs\\",
                                 s2_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s2_imgs\\",
                                 s1_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s1_imgs\\",
