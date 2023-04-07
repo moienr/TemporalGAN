@@ -9,6 +9,27 @@ from skimage import data
 from skimage import exposure
 from skimage.exposure import match_histograms
 
+def get_all_files(path:str, file_type=None)->list:
+    """Returns all the files in the specified directory and its subdirectories.
+    
+    e.g 2021/s1_imgs/ will return all the files in `2021/s1_imgs/` subfolders which are `train` and `test`
+    
+    it will return the names like `train/2021_01_01.tif` and `test/2021_01_01.tif` if subfolders are present
+    if not it will return the names like `2021_01_01.tif`
+    """
+    file_list = []
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file_type is None:
+                file_list.append(os.path.relpath(os.path.join(root, file), path))
+            elif file.endswith(file_type):
+                file_list.append(os.path.relpath(os.path.join(root, file), path))
+            
+    return file_list
+
+
+
+
 class Sen12Dataset(Dataset):
     """Dataset class for the Sen12MS dataset."""
     def __init__(self,
@@ -42,13 +63,13 @@ class Sen12Dataset(Dataset):
         self.s2_t1_dir = s2_t1_dir
         
         # Get the names of the S2 and S1 time-2 images and sort them
-        self.s2_t2_names= os.listdir(s2_t2_dir)
-        self.s1_t2_names= os.listdir(s1_t2_dir)
+        self.s2_t2_names= get_all_files(s2_t2_dir)
+        self.s1_t2_names= get_all_files(s1_t2_dir)
         self.s2_t2_names.sort()
         self.s1_t2_names.sort()
         # Get the names of the S2 and S1 time-1 images and sort them
-        self.s2_t1_names= os.listdir(s2_t1_dir)
-        self.s1_t1_names= os.listdir(s1_t1_dir)
+        self.s2_t1_names= get_all_files(s2_t1_dir)
+        self.s1_t1_names= get_all_files(s1_t1_dir)
         self.s2_t1_names.sort()
         self.s1_t1_names.sort()
         # Verify that the four sets of images have the same names
@@ -91,6 +112,8 @@ class Sen12Dataset(Dataset):
             img_name = self.s2_t2_names[index] 
             self.used_reversed_way = False # just to be sure
 
+        if self.verbose: print(f"Image name: {img_name}")  
+            
         s2_t2_img_path = os.path.join(self.s2_t2_dir,img_name)
         s1_t2_img_path = os.path.join(self.s1_t2_dir,img_name)
         
@@ -102,7 +125,7 @@ class Sen12Dataset(Dataset):
         s1_t1_img_path = os.path.join(self.s1_t1_dir,img_name)
         
         s2_t1_img = io.imread(s2_t1_img_path)
-        print(f's2 shape apon reading: {s2_t1_img.shape}') if self.verbose else None
+        if self.verbose: print(f's2 shape apon reading: {s2_t1_img.shape}')
         if self.s2_bands: s2_t1_img = s2_t1_img[self.s2_bands,:,:]
         s1_t1_img = io.imread(s1_t1_img_path)
     
@@ -222,10 +245,22 @@ if __name__ == "__main__":
     
     transform = transforms.Compose([S2S1Normalize(),myToTensor()])
     
+    print("Readin only S1 2021 train data...")
     s1s2_dataset = Sen12Dataset(s1_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s1_imgs\\train",
                                 s2_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s2_imgs\\train",
                                 s1_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s1_imgs\\train",
                                 s2_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s2_imgs\\train",
+                                transform=transform,
+                                two_way=False)
+    print("len(s1s2_dataset): ",len(s1s2_dataset))
+    print("s1s2_dataset[0][0]shape: ",s1s2_dataset[0][0].shape)
+    
+    
+    print("Readin All the S1 2021...")
+    s1s2_dataset = Sen12Dataset(s1_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s1_imgs\\",
+                                s2_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s2_imgs\\",
+                                s1_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s1_imgs\\",
+                                s2_t2_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s2_imgs\\",
                                 transform=transform,
                                 two_way=False)
     print("len(s1s2_dataset): ",len(s1s2_dataset))
