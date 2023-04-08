@@ -43,7 +43,8 @@ class Sen12Dataset(Dataset):
                two_way = True,
                verbose=False):
         """
-        Args:
+        Args
+        ---
             `s1_t2_dir` (str): Path to the directory containing the S1 time-2 images.
             `s2_t2_dir` (str): Path to the directory containing the S2 time-2 images.
             `s1_t1_dir` (str): Path to the directory containing the S1 time-1 images.
@@ -54,6 +55,16 @@ class Sen12Dataset(Dataset):
            ` hist_match` (bool, optional): Whether to perform histogram matching between the S2 time-2 
                                          and S2 time-1 images.
             `two_way` (bool, optional): is used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2). If two_way=True, __len__ returns twice the number of images in the dataset, with the first half of the indices corresponding to the time-2 to time-1 direction and the second half corresponding to the time-1 to time-2 direction.
+            
+        
+        __getitem__ Return
+        ---
+            `(s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map)` or `(s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map)` if reversed index
+             
+            tuple: A tuple containing the `S2 time-2` image, `S1 time-2` image, `S2 time-1` image, `S1 time-1` image, Difference map and Reversed difference map.
+            * `Difference map`: `np.abs(s2_t2_img - s2_t1_img)`
+            * `Reversed difference map`: `np.max(diff_map) - diff_map + np.min(diff_map) `
+                - when reversed is activated the index `i` in a reversed mode has the index `len(dataset) - i`
         """
         self.verbose = verbose
         # Set the directories for the four sets of images
