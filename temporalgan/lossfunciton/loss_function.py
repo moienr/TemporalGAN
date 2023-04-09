@@ -4,17 +4,23 @@ import torch
 import torch.nn as nn
 
 class WeightedL1Loss(nn.Module):
-    def __init__(self, change_weight = 5):
+    def __init__(self, change_weight = 5, convert_to_float32: bool = True):
         """
-        Args:
-        - change_weight: A scalar value representing the weight of L1 loss for changed pixels.
+        Args
+        ----
+        `change_weight`: A scalar value representing the weight of L1 loss for changed pixels.
                         the weight of L1 loss for unchanged pixels is 1.
+        `convert_to_float32`: A boolean value representing whether to convert the input and target images to float32.
+                            This is useful for when the input and target images are float16 which can cause the loss to be NaN.
+            
+                        
 
         Returns:
         - None
         """
         super().__init__()
         self.change_weight = change_weight
+        self.convert_to_float32 = convert_to_float32
 
     def forward(self, input, target, change_map, reversed_change_map):
         """
@@ -29,6 +35,11 @@ class WeightedL1Loss(nn.Module):
         Returns:
         - loss: A PyTorch scalar representing the weighted L1 loss.
         """
+        if self.convert_to_float32:
+            input = input.to(torch.float32)
+            target = target.to(torch.float32)
+            change_map = change_map.to(torch.float32)
+            reversed_change_map = reversed_change_map.to(torch.float32)
 
         # Calculate the absolute difference between the input and target images
         abs_diff = torch.abs(input - target)
