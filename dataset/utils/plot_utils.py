@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import torch
 
 def plot_s1s2_tensors(tensors, names, n_rows, n_cols):
+    tensors = [tensor.to(torch.float32) for tensor in tensors]
     fig, axs = plt.subplots(n_rows, n_cols)
     for i in range(n_rows):
         for j in range(n_cols):
@@ -24,6 +25,7 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols):
     
     
 def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size):
+    tensors = [tensor.to(torch.float32) for tensor in tensors]
     fig, axs = plt.subplots(n_rows, n_cols, figsize=fig_size)
     for i in range(n_rows):
         for j in range(n_cols):
