@@ -176,16 +176,19 @@ class myToTensor:
     """Transform a pair of numpy arrays to PyTorch tensors"""
     def __init__(self,dtype=torch.float16):
         """Transform a pair of numpy arrays to PyTorch tensors
-            Args:
-                dtype (torch.dtype): Data type for the output tensor (default: torch.float16)
+        
+        Args
+        ---
+            `dtype` (torch.dtype): Data type for the output tensor (default: torch.float16)
         """
         self.dtype = dtype
         
     def reshape_tensor(self,tensor):
         """Reshape a 2D or 3D tensor to the expected shape of pytorch models which is (channels, height, width)
         
-        Args:
-            tensor (numpy.ndarray): Input tensor to be reshaped
+        Args
+        ---
+            `tensor`(numpy.ndarray): Input tensor to be reshaped
         
         Returns:
             torch.Tensor: Reshaped tensor
@@ -209,18 +212,23 @@ class S2S1Normalize:
     Class for normalizing Sentinel-2 and Sentinel-1 images for use with a pix2pix model.
     """
 
-    def __init__(self, s1_min = -25, s1_max = 10 , s2_min = 0 , s2_max = 1):
+    def __init__(self, s1_min = -25, s1_max = 10 , s2_min = 0 , s2_max = 1, check_nan = False, fix_nan = False):
         """
-        Args:
-            s1_min (float): Minimum value for Sentinel-1 data. Default is -25.
-            s1_max (float): Maximum value for Sentinel-1 data. Default is 10.
-            s2_min (float): Minimum value for Sentinel-2 data. Default is 0.
-            s2_max (float): Maximum value for Sentinel-2 data. Default is 1.
+        Args
+        ---
+            `s1_min` (float): Minimum value for Sentinel-1 data. Default is -25.
+            `s1_max` (float): Maximum value for Sentinel-1 data. Default is 10.
+            `s2_min` (float): Minimum value for Sentinel-2 data. Default is 0.
+            `s2_max` (float): Maximum value for Sentinel-2 data. Default is 1.
+            `check_nan` (bool): Check for NaN values in the images, if there is it will rasie an error. Default is False.
+            `fix_nan` (bool): Check for NaN values in the images, if there is it will replace it with `0.01`. Default is False.
         """
         self.s1_min = s1_min
         self.s1_max = s1_max
         self.s2_min = s2_min
         self.s2_max = s2_max
+        self.check_nan = check_nan
+        self.fix_nan = fix_nan
     def __call__(self,sample):
         """
         Normalize Sentinel-2 and Sentinel-1 images for use with a pix2pix model.
@@ -247,6 +255,18 @@ class S2S1Normalize:
         s1_img = (s1_img - np.min(s1_img)) / (np.max(s1_img) - np.min(s1_img))
         s1_img = (s1_img * 2) - 1
         
+        if self.check_nan:
+            if np.isnan(s2_img).any():
+                raise ValueError("s2_img contains NaN values")
+            if np.isnan(s1_img).any():
+                raise ValueError("s1_img contains NaN values")
+        elif self.fix_nan:
+            if np.isnan(s2_img).any():
+                s2_img[np.isnan(s2_img)] = 0.01
+            if np.isnan(s1_img).any():
+                s1_img[np.isnan(s1_img)] = 0.01
+    
+        
         return s2_img, s1_img
     
     
@@ -254,7 +274,7 @@ class S2S1Normalize:
 if __name__ == "__main__":
     from utils.plot_utils import *
     
-    transform = transforms.Compose([S2S1Normalize(),myToTensor()])
+    transform = transforms.Compose([S2S1Normalize(fix_nan=True),myToTensor()])
     
     print("Reading only S1 2021 train data...")
     s1s2_dataset = Sen12Dataset(s1_t1_dir="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2021\\s1_imgs\\train",
