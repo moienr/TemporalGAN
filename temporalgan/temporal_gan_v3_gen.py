@@ -118,6 +118,15 @@ class Generator(nn.Module):
         )
 
     def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
+        """Forward pass of the generator.
+
+        Args:
+            s2 (torch.Tensor): The Sentinel-2 image
+            s1 (torch.Tensor): The Sentinel-1 image
+
+        Returns:
+            torch.Tensor: Generated Sentinel-1 image
+        """
         # First we do the encoding part for the Sentinel2
         d1_s2 = self.s2_pam_init(self.s2_initial_down(s2))
         d2_s2 = self.s2_pam1(self.s2_down1(d1_s2))
@@ -176,5 +185,5 @@ def test(summary=False, gpu=False):
         row_settings=["var_names"])
 
 if __name__ == "__main__":
-    test(summary=True, gpu=True)
+    test(summary=False, gpu=True)
     
