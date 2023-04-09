@@ -41,8 +41,9 @@ class Generator(nn.Module):
         ---
             `s2_in_channels` (int, optional): Number of input channels for the Sentinel2 image. Defaults to 3.
             `s1_in_channels` (int, optional): Number of input channels for the Sentinel1 image. Defaults to 1.
-            out_channels (int, optional): Number of output channels. Defaults to 1.
-            `features` (int, optional): Number of features in the first layer. Defaults to 64. after that the number of features will be doubled in each layer.
+            `out_channels`   (int, optional): Number of output channels. Defaults to 1.
+            `features`       (int, optional): Number of features in the first layer. Defaults to 64. after that the number of features will be doubled in each layer.
+            `pam_downsample` (int, optional): The downsample factor for the PAM module. Defaults to None (no downsampling). only applies to the 128x128, and 64x64 layers.
             
         Important Attributes:
         ---
