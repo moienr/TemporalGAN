@@ -21,12 +21,13 @@ class Generator(nn.Module):
     A generator model for image-to-image translation using a U-Net architecture.
 
     Args:
-        s2_in_channels (int, optional): Number of input channels for the Sentinel2 image. Defaults to 3.
-        s1_in_channels (int, optional): Number of input channels for the Sentinel1 image. Defaults to 1.
-        out_channels (int, optional): Number of output channels. Defaults to 1.
-        features (int, optional): Number of features in the first layer. Defaults to 64. after that the number of features will be doubled in each layer.
+        `s2_in_channels` (int, optional): Number of input channels for the Sentinel2 image. Defaults to 3.
+        `s1_in_channels` (int, optional): Number of input channels for the Sentinel1 image. Defaults to 1.
+        `out_channels` (int, optional): Number of output channels. Defaults to 1.
+        `features` (int, optional): Number of features in the first layer. Defaults to 64. after that the number of features will be doubled in each layer.
+        `pam_downsample` (int, optional): The downsample factor for the PAM module. Defaults to None (no downsampling). only applies to the 128x128, and 64x64 layers.
     """
-    def __init__(self, s2_in_channels=3,s1_in_channels = 1,out_channels=1, features=64):
+    def __init__(self, s2_in_channels=3, s1_in_channels = 1, out_channels=1, features=64, pam_downsample = None):
         super().__init__()
         # Initial downsampling layer for S2
         self.s2_initial_down = nn.Sequential(
@@ -39,9 +40,9 @@ class Generator(nn.Module):
             nn.LeakyReLU(0.2)) #128
         
         # Downsample blocks for Sentinel-2
-        self.s2_pam_init  = PAM(features) # input from the initial_down layer / output goes to the down1 layer
+        self.s2_pam_init  = PAM(features,downsample=pam_downsample) # input from the initial_down layer / output goes to the down1 layer
         self.s2_down1 = Block(features    , features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.s2_pam1 = PAM(features * 2) # input from the down1 layer / output goes to the down2 layer
+        self.s2_pam1 = PAM(features * 2, downsample=pam_downsample) # input from the down1 layer / output goes to the down2 layer
         self.s2_down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
         self.s2_pam2 = PAM(features * 4) # input from the down2 layer / output goes to the down3 layer
         self.s2_down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
@@ -130,7 +131,7 @@ def test(summary=False):
     s2 = torch.randn((1, 7, 256, 256)).to(device)
     s1 = torch.randn((1, 1, 256, 256)).to(device)
     
-    model = Generator(s2_in_channels=7, s1_in_channels=1, features=64)
+    model = Generator(s2_in_channels=7, s1_in_channels=1, features=64,pam_downsample=2)
     model.to(device)
     preds = model(s2,s1)
     print(preds.shape)
