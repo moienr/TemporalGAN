@@ -75,14 +75,16 @@ class WeightedL1Loss(nn.Module):
 
 if __name__ == "__main__":
     # Create a dummy input and target image
-    input = torch.randn(1, 3, 256, 256)
-    target = torch.randn(1, 3, 256, 256)
+    input = torch.randn(1, 3, 256, 256).to(torch.float16)
+    target = torch.randn(1, 3, 256, 256).to(torch.float16)
 
     # Create a dummy weight map
-    change_map = torch.ones(1, 3, 256, 256)
-    unchanged_map = (torch.max(change_map) - change_map) + torch.min(change_map)
+    change_map = torch.ones(1, 3, 256, 256).to(torch.float16)
+    unchanged_map = (torch.max(change_map) - change_map) + torch.min(change_map).to(torch.float16)
 
     # Calculate the weighted L1 loss
-    loss = WeightedL1Loss(change_weight=1)(input, target, change_map, unchanged_map)
+    loss_dytpe16 = WeightedL1Loss(change_weight=1,convert_to_float32=False)(input, target, change_map, unchanged_map)
+    loss_dytpe32 = WeightedL1Loss(change_weight=1,convert_to_float32=True)(input, target, change_map, unchanged_map)
 
-    print(loss)
+    print("Loss with float16: ", loss_dytpe16)
+    print("Loss with float32: ", loss_dytpe32)
