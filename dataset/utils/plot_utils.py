@@ -82,8 +82,8 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
                     array = tensor[[0,1,2],:,:].permute(1,2,0).cpu().numpy()
                 else:
                     array = tensor[bands_to_plot,:,:].permute(1,2,0).cpu().numpy()
-                
-                array = stretch_img(array)
+                if name != change_map_name: # we don't want to stretch the change map, since it will be misleading.
+                    array = stretch_img(array)
                 axs[i][j].imshow(array)
                 axs[i][j].set_title(name)
             else:
