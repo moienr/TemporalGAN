@@ -3,7 +3,20 @@ import torch
 import numpy as np
 import cv2 as cv
 
-def plot_s1s2_tensors(tensors, names, n_rows, n_cols):
+def plot_s1s2_tensors(tensors, names, n_rows, n_cols , bands_to_plot = [2,1,0]):
+    """
+    Plots a list of Tensors with shape [C, H, W] or [H,W]
+
+    Args:
+        tensors (list): List of pytorch tensors of shape [C, H, W] or [H,W] , if C>3 int only plots the bands specified in `bands_to_plot`
+        names (list): List of string names corresponding to the tensors. Defaults to None.
+        n_rows (int): Number of rows in the plot.
+        n_cols (int): Number of columns in the plot.
+        bands_to_plot (list): the index of 3 bands to be ploted in case of tensor having more that 3 bands.
+
+    Returns:
+        None
+    """
     tensors = [tensor.to(torch.float32) for tensor in tensors]
     fig, axs = plt.subplots(n_rows, n_cols)
     for i in range(n_rows):
@@ -16,7 +29,7 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols):
                 tensor = (tensor + 1)/2
             name = names[idx] if names is not None else None
             if tensor.ndim > 2 and tensor.shape[0] > 1:
-                axs[i][j].imshow(tensor[[3,2,1],:,:].permute(1,2,0).cpu().numpy())
+                axs[i][j].imshow(tensor[bands_to_plot,:,:].permute(1,2,0).cpu().numpy())
                 axs[i][j].set_title(name)
             else:
                 axs[i][j].imshow(tensor[0].cpu().numpy())
@@ -26,7 +39,32 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols):
     plt.show()
     
     
-def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size,change_map_name = 'change map'):
+def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, bands_to_plot = [2,1,0], change_map_name = 'change map'):
+    """
+    Saves a grid of PyTorch tensors as an image file.
+
+    Parameters
+    ---
+        tensors (List[torch.Tensor]): List of PyTorch tensors to be plotted, if number of channels of a tensor is more than 3, only the bands specified in `bands_to_plot` will be ploted as rgb 
+        names (Optional[List[str]]): List of names for each tensor. If None,
+                                      no names will be displayed.
+        n_rows (int): Number of rows in the output grid.
+        n_cols (int): Number of columns in the output grid.
+        filename (str): Name of the output image file.
+        fig_size (Tuple[int, int]): Size of the output image in inches.
+        change_map_name (str): Name of the tensor containing the change map.
+                               Default is 'change map'.
+        bands_to_plot (list): the index of 3 bands to be ploted in case of tensor having more that 3 bands.                        
+    
+    Chnage Map
+    ---
+    converts the change map into 3 bands where the Red band is the change in RGB values, Green band is 
+    the change in NIR values and Blue band is the change in SWIR valuess.
+
+    Returns
+    ---
+        None
+    """
     tensors = [tensor.to(torch.float32) for tensor in tensors]
     fig, axs = plt.subplots(n_rows, n_cols, figsize=fig_size)
     for i in range(n_rows):
@@ -43,7 +81,7 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size,ch
                     tensor = combine_cm_bands(tensor)
                     array = tensor[[0,1,2],:,:].permute(1,2,0).cpu().numpy()
                 else:
-                    array = tensor[[2,1,0],:,:].permute(1,2,0).cpu().numpy()
+                    array = tensor[bands_to_plot,:,:].permute(1,2,0).cpu().numpy()
                 
                 array = stretch_img(array)
                 axs[i][j].imshow(array)
@@ -63,7 +101,8 @@ def combine_cm_bands(input_tensor):
     [3, 256, 256] where the first band is the max of bands 0, 1, and 2, the
     second band is band 3, and the third band is the max of bands 4 and 5.
     
-    Usage:
+    Usage
+    ---
         The Change map is RGB NIR SWIR1 SWIR2 after this combination
         the first band is the max of RGB, the second band is NIR and the third band is the max of SWIR1 and SWIR2
         * Red is the change in RGB values
@@ -71,10 +110,12 @@ def combine_cm_bands(input_tensor):
         * Blue is the cahnge in SWIR values
         
 
-    Parameters:
+    Parameters
+    ---
         input_tensor (torch.Tensor): Input tensor of shape [6, 256, 256]
 
-    Returns:
+    Returns
+    ---
         torch.Tensor: Output tensor of shape [3, 256, 256]
     """
     max_band_0_1_2 = torch.max(input_tensor[:3], dim=0, keepdim=True)[0]
@@ -91,7 +132,7 @@ def stretch_img(img, clipLimit = 0.1 ,  tileGridSize=(32,32) ):
     Enhance the contrast of an RGB image using Contrast Limited Adaptive Histogram Equalization (CLAHE) 
     and convert it to a stretched RGB image using the HSV color space.
 
-    Parameters:
+    Parameters
     -----------
     img : numpy.ndarray
         A 3-dimensional numpy array representing the input BGR image. - Band Blue should be index 0 and band Red should be index 2
@@ -102,7 +143,7 @@ def stretch_img(img, clipLimit = 0.1 ,  tileGridSize=(32,32) ):
     tileGridSize : tuple, optional (default=(16,16))
         The size of the grid used to divide the image into small tiles for local histogram equalization.
 
-    Returns:
+    Returns
     --------
     numpy.ndarray
         A 3-dimensional numpy array representing the stretched RGB image with enhanced contrast.
