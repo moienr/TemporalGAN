@@ -28,15 +28,26 @@ def psnr(img1: torch.Tensor, img2: torch.Tensor, max_val: float = 1.) -> float:
 
 
 import torch.nn.functional as F
+from typing import Callable, Sequence, Union
+def _gaussian(kernel_size: int, sigma: float) -> torch.Tensor:
+    ksize_half = (kernel_size - 1) * 0.5
+    kernel = torch.linspace(-ksize_half, ksize_half, steps=kernel_size)
+    gauss = torch.exp(-0.5 * (kernel / sigma).pow(2))
+    return (gauss / gauss.sum()).unsqueeze(dim=0)  # (1, kernel_size)
 
-def ssim(tensor1, tensor2, window_size=11, size_average=True, full=False):
+def _gaussian_or_uniform_kernel(kernel_size: Sequence[int], sigma: Sequence[float]) -> torch.Tensor:
+    kernel_x = _gaussian(kernel_size[0], sigma[0])
+    kernel_y = _gaussian(kernel_size[1], sigma[1])
+    return torch.matmul(kernel_x.t(), kernel_y)  # (kernel_size, 1) * (1, kernel_size)
+
+def ssim(tensor1, tensor2, window_size=11, size_average=True, full=False, max_val=1.):
     # Values below which we clamp the numerator and denominator of SSIM
-    C1 = (0.01 * 255) ** 2
-    C2 = (0.03 * 255) ** 2
+    C1 = (0.01 * max_val) ** 2
+    C2 = (0.03 * max_val) ** 2
 
-    window = torch.Tensor(torch.ones(1, 1, window_size, window_size))
+    window = _gaussian_or_uniform_kernel((window_size,window_size), (1.5,1.5))
+    window = window.unsqueeze(0).unsqueeze(0)
     padding = window_size // 2
-
     mu1 = F.conv2d(tensor1, window, padding=padding, groups=tensor1.shape[1])
     mu2 = F.conv2d(tensor2, window, padding=padding, groups=tensor2.shape[1])
 
