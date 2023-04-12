@@ -4,17 +4,20 @@ from typing import Sequence
 def wpsnr(compare_tesnors: Sequence[torch.Tensor], weight_map: torch.Tensor = None, max_val: float = 1.) -> torch.Tensor:
     """Compute the Peak Weighted Signal-to-Noise Ratio (PSNR) between two batches of images based on a weight map.
 
-    Args:
-        compare_tensors (Sequence[torch.Tensor]): A sequence of two tensors representing the batches of images to compare. 
+    Args
+    ---
+        compare_tensors (Sequence[torch.Tensor]): A sequence of two tensors (y and y_pred) representing the batches of images to compare. 
             Both tensors must have shape (B, C, H, W).
-        weight_map (torch.Tensor, optional): The weight map. Must have the same shape as `compare_tensors`.
+        weight_map (torch.Tensor, optional): The weight map. Must have the same Batch size, H and W as `y` tesnor but channel could be either 1 or the same as `y` 
         max_val (float, optional): The maximum value of the pixels. Defaults to 1. Example: for `uint8` images, 
             it should be 255.
 
-    Returns:
+    Returns
+    ---
         float: The mean PSNR value between each pair of images in the batches based on the weight map.
 
-    Raises:
+    Raises
+    ---
         ValueError: If `compare_tensors` and `weight_map` have different shapes, or if they are not 4D tensors with
             the expected shapes.
     """
