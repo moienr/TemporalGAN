@@ -152,7 +152,7 @@ class WSSIM():
 
         Args:
             compare_tesnors (Sequence[torch.Tensor]): The two q tensors to compare. They must have the same shape. (y and y_pred)
-            weight_map (torch.Tensor, optional): The weight map to use. Defaults to None.
+            weight_map (torch.Tensor, optional): The weight map to use. Defaults to None. if None, use ones, which is the same as Normal SSIM.
 
         Raises:
             TypeError: The data types of the two tensors must be the same and the same.
@@ -237,8 +237,8 @@ class WSSIM():
         ssim_idx = (a1 * a2) / (b1 * b2) # SHAPE -> (B, C, H, W)
         # Multiplying SSIM map by the Weight map, to get the weighted sum
         ssim_idx_weighted = ssim_idx * weight_map 
-        ssim_idx_weighted_sum = torch.sum(ssim_idx_weighted, (1, 2, 3), dtype=torch.float64)# sum ssim_idx over (C, H, W) -> out shape:(B)
-        weight_map_sum = torch.sum(weight_map, (1, 2, 3), dtype=torch.float64) # sum of weighted_map over (C, H, W) -> out shape:(B)
+        ssim_idx_weighted_sum = torch.sum(ssim_idx_weighted, (1, 2, 3), dtype=torch.float32)# sum ssim_idx over (C, H, W) -> out shape:(B)
+        weight_map_sum = torch.sum(weight_map, (1, 2, 3), dtype=torch.float32) # sum of weighted_map over (C, H, W) -> out shape:(B)
         ssim_idx_weighted_mean = ssim_idx_weighted_sum / weight_map_sum # Weighted mean 
 
         
