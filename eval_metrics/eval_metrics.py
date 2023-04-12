@@ -47,6 +47,7 @@ def ssim(tensor1, tensor2, window_size=11, size_average=True, full=False, max_va
 
     window = _gaussian_or_uniform_kernel((window_size,window_size), (1.5,1.5))
     window = window.unsqueeze(0).unsqueeze(0)
+    # window = torch.Tensor(torch.ones(1, 1, window_size, window_size))
     padding = window_size // 2
     mu1 = F.conv2d(tensor1, window, padding=padding, groups=tensor1.shape[1])
     mu2 = F.conv2d(tensor2, window, padding=padding, groups=tensor2.shape[1])
