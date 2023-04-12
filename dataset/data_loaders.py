@@ -64,7 +64,7 @@ class Sen12Dataset(Dataset):
             tuple: A tuple containing the `S2 time-2` image, `S1 time-2` image, `S2 time-1` image, `S1 time-1` image, Difference map and Reversed difference map.
             * `Difference map`: `np.abs(s2_t2_img - s2_t1_img)`
             * `Reversed difference map`: `np.max(diff_map) - diff_map + np.min(diff_map) `
-                - when reversed is activated the index `i` in a reversed mode has the index `len(dataset) - i`
+            *  when reversed is activated the index `i` in a reversed mode has the index `len(dataset) - i`
         """
         self.verbose = verbose
         # Set the directories for the four sets of images
@@ -109,8 +109,9 @@ class Sen12Dataset(Dataset):
             
         Returns:
             tuple: A tuple containing the S2 time-2 image, S1 time-2 image, S2 time-1 image, S1 time-1 image, Difference map and Reversed difference map.
-            * Difference map: `np.abs(s2_t2_img - s2_t1_img)`
-            * Reversed difference map: `np.max(diff_map) - diff_map + np.min(diff_map) `
+            * Difference map: `s2_t2_img - s2_t1_img` Values are in the range [-1, 1].
+            * Reversed difference map: 1 - torch.abs(diff_map)  Values are in the range [0, 1].
+            * S1_abs_diff_map: `abs(s1_t2_img - s1_t1_img)` Values are in the range [0, 1].
         """
         if self.two_way: # if two_way is True, we will return images from both time directions
             if index < len(self.s2_t2_names): # if index is less than the number of images in the dataset, return images from time-2 to time-1
@@ -160,8 +161,7 @@ class Sen12Dataset(Dataset):
             print(f"s1_t1_img shape: {s1_t1_img.shape}")
         
         diff_map = s2_t2_img - s2_t1_img # to focus on the changes in the s2 image
-        abs_diff_map = torch.abs(diff_map) # to focus on the changes in the s2 image
-        reversed_diff_map = torch.max(abs_diff_map) - abs_diff_map + torch.min(abs_diff_map) # to focus the unchanged areas in the s2 image
+        reversed_diff_map = 1 - torch.abs(diff_map) # to focus the unchanged areas in the s2 image
         
         s1_abs_diff_map = torch.abs(s1_t2_img - s1_t1_img) # to focus on the changes in the s1 image
         
