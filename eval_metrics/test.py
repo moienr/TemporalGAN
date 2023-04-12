@@ -10,10 +10,17 @@ else:
 
 
 tensor1 = torch.rand(7, 3, 256, 256).to(device)
-tensor2 = tensor1.clone() + torch.rand(7, 3, 256, 256).to(device) * 1
+tensor2 = tensor1.clone() + torch.rand(7, 3, 256, 256).to(device) * 0.2
 weight_map = torch.rand(7, 3, 256, 256).to(device)
 
 wssim = WSSIM(data_range=1.0)
 print(wssim((tensor1, tensor2), weight_map))
 print(wssim((tensor2, tensor1), weight_map))
 print(wssim((tensor1, tensor2), weight_map))
+
+
+
+
+from psnr import wpsnr
+
+print(wpsnr(tensor1, tensor2, weight_map))
