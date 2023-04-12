@@ -134,9 +134,9 @@ class SSIM(Metric):
         return torch.matmul(kernel_x.t(), kernel_y)  # (kernel_size, 1) * (1, kernel_size)
 
     @reinit__is_reduced
-    def update(self, output: Sequence[torch.Tensor]) -> None:
+    def update(self, output: Sequence[torch.Tensor], weight_map: torch.Tensor = None) -> None:
         y_pred, y = output[0].detach(), output[1].detach()
-
+        weight_map = weight_map.detach() if weight_map is not None else None
         if y_pred.dtype != y.dtype:
             raise TypeError(
                 f"Expected y_pred and y to have the same data type. Got y_pred: {y_pred.dtype} and y: {y.dtype}."
@@ -152,17 +152,40 @@ class SSIM(Metric):
                 f"Expected y_pred and y to have BxCxHxW shape. Got y_pred: {y_pred.shape} and y: {y.shape}."
             )
 
+        if weight_map is not None:
+            if weight_map.dtype != y.dtype:
+                raise TypeError(
+                    f"Expected weight_map and y to have the same data type. Got weight_map: {weight_map.dtype} and y: {y.dtype}."
+                )
+            if weight_map.shape[0,2,3] != y.shape[0,2,3] and (weight_map.shape[1] != y.shape[1] or weight_map.shape[1] != 1):
+                raise ValueError(
+                    f"Expected weight_map to have the same B,H, and W as y | and must have eaither the same n_channels as y or have only 1 channel . Got weight_map: {weight_map.shape} and y: {y.shape}."
+                )
+            if len(weight_map.shape) != 4:
+                raise ValueError(
+                    f"Expected weight_map to have BxCxHxW shape. Got weight_map: {weight_map.shape}."
+                )
+                
+        
         channel = y_pred.size(1)
         if len(self._kernel.shape) < 4:
             self._kernel = self._kernel.expand(channel, 1, -1, -1).to(device=y_pred.device)
+        
+
 
         y_pred = F.pad(y_pred, [self.pad_w, self.pad_w, self.pad_h, self.pad_h], mode="reflect")
         y = F.pad(y, [self.pad_w, self.pad_w, self.pad_h, self.pad_h], mode="reflect")
-
+        weight_map = F.pad(weight_map, [self.pad_w, self.pad_w, self.pad_h, self.pad_h], mode="reflect") if weight_map is not None else None
+        
+        print("y_pred shape ",y_pred.shape)
         input_list = torch.cat([y_pred, y, y_pred * y_pred, y * y, y_pred * y])
-        outputs = F.conv2d(input_list, self._kernel, groups=channel)
-
-        output_list = [outputs[x * y_pred.size(0) : (x + 1) * y_pred.size(0)] for x in range(len(outputs))]
+        print("input_list shape ",input_list.shape)
+        outputs = F.conv2d(input_list, self._kernel, groups=channel) # running the kernel on each channel seperatly (groups devieds cheannls by chennel which is 1 | it has nothing to do with batches)
+        print("outputs shape ",outputs.shape)
+        print("len outputs ",len(outputs))
+        print("len(outputs)/y_pred.size(0) ",len(outputs)/y_pred.size(0))
+        output_list = [outputs[x * y_pred.size(0) : (x + 1) * y_pred.size(0)] for x in range(int(len(outputs)/y_pred.size(0)))]
+        print("output_list len ",len(output_list))
 
         mu_pred_sq = output_list[0].pow(2)
         mu_target_sq = output_list[1].pow(2)
@@ -178,8 +201,9 @@ class SSIM(Metric):
         b2 = sigma_pred_sq + sigma_target_sq + self.c2
 
         ssim_idx = (a1 * a2) / (b1 * b2)
+        print("ssim_idx shape: ", ssim_idx.shape)
         self._sum_of_ssim += torch.mean(ssim_idx, (1, 2, 3), dtype=torch.float64).sum().to(self._device)
-
+        print("sum of ssim: ", self._sum_of_ssim)
         self._num_examples += y.shape[0]
 
     @sync_all_reduce("_sum_of_ssim", "_num_examples")
