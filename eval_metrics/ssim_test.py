@@ -1,15 +1,19 @@
 import torch
 from torchvision.transforms import functional as F
-from ssim import SSIM
+from ssim import WSSIM
+from ignite.metrics import SSIM as SSIM_ignite
 # Create two dummy tensors
-
-tensor1 = torch.rand(7, 3, 256, 256)
-tensor2 = tensor1.clone() + torch.rand(7, 3, 256, 256) * 0.2
-# Apply SSIM on the tensors
-ssim = SSIM(data_range=1.0)
-ssim.update((tensor1, tensor2))
-print(ssim.compute())
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 
-# from eval_metrics import ssim as my_ssim
-# print(my_ssim(tensor1, tensor2))
+tensor1 = torch.rand(7, 3, 256, 256).to(device)
+tensor2 = tensor1.clone() + torch.rand(7, 3, 256, 256).to(device) * 1
+weight_map = torch.rand(7, 3, 256, 256).to(device)
+
+wssim = WSSIM(data_range=1.0)
+print(wssim((tensor1, tensor2), weight_map))
+print(wssim((tensor2, tensor1), weight_map))
+print(wssim((tensor1, tensor2), weight_map))
