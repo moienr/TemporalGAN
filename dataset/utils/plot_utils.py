@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import torch
 import numpy as np
 import cv2 as cv
@@ -39,7 +40,7 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols , bands_to_plot = [2,1,0]):
     plt.show()
     
     
-def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, bands_to_plot = [2,1,0]):
+def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, bands_to_plot = [2,1,0], title = None):
     """
     Saves a grid of PyTorch tensors as an image file.
 
@@ -67,6 +68,7 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
     """
     tensors = [tensor.to(torch.float32) for tensor in tensors]
     fig, axs = plt.subplots(n_rows, n_cols, figsize=fig_size)
+    fig.suptitle(title) if title is not None else None
     for i in range(n_rows):
         for j in range(n_cols):
             idx = i * n_cols + j
@@ -92,6 +94,7 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
             axs[i][j].set_xticks([])
             axs[i][j].set_yticks([])
     plt.savefig(filename)
+    matplotlib.pyplot.close()
       
 import torch
 
