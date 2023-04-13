@@ -21,6 +21,8 @@ def wpsnr(compare_tesnors: Sequence[torch.Tensor], weight_map: torch.Tensor = No
         ValueError: If `compare_tensors` and `weight_map` have different shapes, or if they are not 4D tensors with
             the expected shapes.
     """
+    if weight_map is None: # if no weight map is provided, use ones | this will be the same is normal SSIM which uses torch.mean()
+        weight_map = torch.ones_like(compare_tesnors[0]).to(compare_tesnors[0].device)
     y_pred, y = compare_tesnors[0].detach(), compare_tesnors[1].detach()
     weight_map = weight_map.detach()
     
