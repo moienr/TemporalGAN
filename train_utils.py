@@ -23,7 +23,7 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
                                ["s2t1", "s1t1", "s2t2", "s1t2", "s2_change map", "s1_change map","reversed change map" ,"generated s1t2"],
                                n_rows=4,
                                n_cols=2,
-                               filename=f"{folder}//img_{img_indx}_epoc{epoch}.png",
+                               filename=f"{folder}//epoc_{epoch}_img{img_indx}.png",
                                fig_size=(8,10))
     gen.train()
 
