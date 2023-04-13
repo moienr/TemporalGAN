@@ -35,12 +35,13 @@ class WeightedL1Loss(nn.Module):
         Returns:
         - loss: A PyTorch scalar representing the weighted L1 loss.
         """
+        reversed_change_map = (1-change_map.clone())
         if self.convert_to_float32:
             input = input.to(torch.float32)
             target = target.to(torch.float32)
             change_map = change_map.to(torch.float32)
-            reversed_change_map = (1-change_map).to(torch.float32)
-
+            reversed_change_map = reversed_change_map.to(torch.float32)
+            
         # Calculate the absolute difference between the input and target images
         abs_diff = torch.abs(input - target)
         
@@ -75,16 +76,15 @@ class WeightedL1Loss(nn.Module):
 
 if __name__ == "__main__":
     # Create a dummy input and target image
-    input = torch.randn(1, 3, 256, 256).to(torch.float16)
-    target = torch.randn(1, 3, 256, 256).to(torch.float16)
+    input = torch.rand((1, 3, 256, 256)).to(torch.float16)
+    target = torch.rand((1, 3, 256, 256)).to(torch.float16)
 
     # Create a dummy weight map
-    change_map = torch.ones(1, 3, 256, 256).to(torch.float16)
-    unchanged_map = (torch.max(change_map) - change_map) + torch.min(change_map).to(torch.float16)
-
+    change_map = torch.rand((1, 3, 256, 256)).to(torch.float16)
+    print("mean->", torch.min(change_map), change_map.shape, change_map.dtype)
     # Calculate the weighted L1 loss
-    loss_dytpe16 = WeightedL1Loss(change_weight=1,convert_to_float32=False)(input, target, change_map, unchanged_map)
-    loss_dytpe32 = WeightedL1Loss(change_weight=1,convert_to_float32=True)(input, target, change_map, unchanged_map)
+    loss_dytpe16 = WeightedL1Loss(change_weight=1,convert_to_float32=False)(input, target, change_map)
+    loss_dytpe32 = WeightedL1Loss(change_weight=1,convert_to_float32=True)(input, target, change_map)
 
     print("Loss with float16: ", loss_dytpe16)
     print("Loss with float32: ", loss_dytpe32)
