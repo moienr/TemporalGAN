@@ -11,8 +11,8 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
     if cm_input:
-        s2t2 = torch.cat((s2t2, cm), dim=1)
-        s1t1 = torch.cat((s1t1, rcm), dim=1)
+        s2t2 = torch.cat((s2t2, cm), dim=0)
+        s1t1 = torch.cat((s1t1, rcm), dim=0)
     
     if os.path.exists(folder) == False:
         os.mkdir(f"{folder}/")
