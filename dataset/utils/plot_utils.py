@@ -87,7 +87,7 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
                 axs[i][j].imshow(array)
                 axs[i][j].set_title(name)
             else:
-                axs[i][j].imshow(tensor[0].cpu().numpy())
+                axs[i][j].imshow(tensor[0].cpu().numpy()) if "change" in name else axs[i][j].imshow(tensor[0].cpu().numpy(),cmap='gray')
                 axs[i][j].set_title(name)
             axs[i][j].set_xticks([])
             axs[i][j].set_yticks([])
