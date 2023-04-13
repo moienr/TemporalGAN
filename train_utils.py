@@ -3,6 +3,8 @@ import os
 from dataset.data_loaders import *
 from dataset.utils.plot_utils import *
 from config import *
+from eval_metrics.ssim import WSSIM
+from eval_metrics.psnr import wpsnr
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
@@ -14,28 +16,36 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
     
     if os.path.exists(folder) == False:
         os.mkdir(f"{folder}/")
-        
+    wssim = WSSIM(data_range=1.0)  
     gen.eval()
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         
+        weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm.unsqueeze(0).to(torch.float32))
+        normal_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
+        weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm.unsqueeze(0).to(torch.float32))
+        normal_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
+        title = f"epoch:{epoch} -- image:{img_indx}  \nweighted ssim: {weighted_ssim:.3f} | normal ssim: {normal_ssim:.3f} | weighted psnr: {weighted_psnr:.3f} | normal psnr: {normal_psnr:.3f}"
         save_s1s2_tensors_plot([s2t1,s1t1,s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]],
                                ["s2t1", "s1t1", "s2t2", "s1t2", "s2_change map", "s1_change map","reversed change map" ,"generated s1t2"],
                                n_rows=4,
                                n_cols=2,
                                filename=f"{folder}//epoc_{epoch}_img{img_indx}.png",
-                               fig_size=(8,10))
+                               fig_size=(8,10),
+                               title=title)
     gen.train()
 
 
-def save_checkpoint(epoc,model, optimizer, filename="my_checkpoint.pth.tar"):
+def save_checkpoint(epoc,model, optimizer, filename="my_checkpoint.pth.tar", folder = "checkpoints"):
+    if os.path.exists(folder) == False:
+        os.mkdir(f"{folder}/")
     print("=> Saving checkpoint")
     checkpoint = {
         "state_dict": model.state_dict(),
         "optimizer": optimizer.state_dict(),
     }
     filename =f"epoc{epoc}_" + filename  
-    torch.save(checkpoint, filename)
+    torch.save(checkpoint, folder + "/" + filename)
 
 
 def load_checkpoint(checkpoint_file, model, optimizer, lr):
@@ -54,7 +64,7 @@ def load_checkpoint(checkpoint_file, model, optimizer, lr):
 from tqdm import tqdm
 torch.backends.cudnn.benchmark = True
 
-def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss = WEIGHTED_LOSS, cm_input = INPUT_CHANGE_MAP):
+def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input):
     loop = tqdm(loader, leave=True)
 
     for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm) in enumerate(loop):
