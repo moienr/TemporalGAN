@@ -39,7 +39,7 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols , bands_to_plot = [2,1,0]):
     plt.show()
     
     
-def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, bands_to_plot = [2,1,0], change_map_name = 'change map'):
+def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, bands_to_plot = [2,1,0]):
     """
     Saves a grid of PyTorch tensors as an image file.
 
@@ -77,13 +77,13 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
                 tensor = (tensor + 1)/2
             name = names[idx] if names is not None else None
             if tensor.ndim > 2 and tensor.shape[0] > 1:
-                if name == change_map_name:
+                if "change" in name:
                     tensor = combine_cm_bands(tensor)
                     array = tensor[[0,1,2],:,:].permute(1,2,0).cpu().numpy()
                 else:
                     array = tensor[bands_to_plot,:,:].permute(1,2,0).cpu().numpy()
-                if name != change_map_name: # we don't want to stretch the change map, since it will be misleading.
-                    array = stretch_img(array)
+                    array = stretch_img(array) # we don't want to stretch the change map, since it will be misleading.
+     
                 axs[i][j].imshow(array)
                 axs[i][j].set_title(name)
             else:
