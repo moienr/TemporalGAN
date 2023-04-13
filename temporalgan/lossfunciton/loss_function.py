@@ -22,7 +22,7 @@ class WeightedL1Loss(nn.Module):
         self.change_weight = change_weight
         self.convert_to_float32 = convert_to_float32
 
-    def forward(self, input, target, change_map, reversed_change_map):
+    def forward(self, input, target, change_map):
         """
         Calculates the L1 loss between the input and target images using a change map.
 
@@ -39,7 +39,7 @@ class WeightedL1Loss(nn.Module):
             input = input.to(torch.float32)
             target = target.to(torch.float32)
             change_map = change_map.to(torch.float32)
-            reversed_change_map = reversed_change_map.to(torch.float32)
+            reversed_change_map = (1-change_map).to(torch.float32)
 
         # Calculate the absolute difference between the input and target images
         abs_diff = torch.abs(input - target)
