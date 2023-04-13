@@ -216,10 +216,10 @@ class WSSIM():
         weight_map = F.pad(weight_map, [self.pad_w, self.pad_w, self.pad_h, self.pad_h], mode="reflect")
         weight_map = F.conv2d(weight_map, self._kernel, groups=channel)
 
-        input_tensor = torch.cat([y_pred, y, y_pred * y_pred, y * y, y_pred * y]) # SHAPE -> (B*5, C, H, W)
-        outputs = F.conv2d(input_tensor, self._kernel , groups=channel) # running the kernel on each channel seperatly (groups devieds cheannls by chennel which is 1 | it has nothing to do with batches)
-
-        output_list = [outputs[x * y_pred.size(0) : (x + 1) * y_pred.size(0)] for x in range(int(len(outputs)/y_pred.size(0)))] # len(outputs) is B*5 so we need to devidei t by B so its only 5 -> [y_pred, y, y_pred * y_pred, y * y, y_pred * y]
+        input_list= [y_pred, y, y_pred * y_pred, y * y, y_pred * y]
+        outputs = F.conv2d(torch.cat(input_list), self._kernel, groups=channel) # SHAPE -> (B*5, C, H, W) # running the kernel on each channel seperatly 
+        
+        output_list = [outputs[x * y_pred.size(0) : (x + 1) * y_pred.size(0)] for x in range(len(input_list))] # back to ->(B,C,H,W)
         
         mu_pred_sq = output_list[0].pow(2)
         mu_target_sq = output_list[1].pow(2)

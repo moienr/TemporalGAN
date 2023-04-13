@@ -23,4 +23,4 @@ print(wssim((tensor1, tensor2), weight_map))
 
 from psnr import wpsnr
 
-print(wpsnr(tensor1, tensor2, weight_map))
+print(wpsnr((tensor1, tensor2), weight_map))
