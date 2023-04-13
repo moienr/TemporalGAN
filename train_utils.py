@@ -6,8 +6,8 @@ from config import *
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
-    s2t2,s1t2,s2t1,s1t1,cm,rcm  = val_dataset[img_indx]
-    s2t2,s1t2,s2t1,s1t1,cm,rcm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE)
+    s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
+    s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
     if cm_input:
         s2t2 = torch.cat((s2t2, cm), dim=1)
         s1t1 = torch.cat((s1t1, rcm), dim=1)
@@ -19,9 +19,9 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         
-        save_s1s2_tensors_plot([s2t1,s1t1,s2t2,s1t2,cm,s1t2_generated[0]],
-                               ["s2t1", "s1t1", "s2t2", "s1t2", "change map", "Generated s1t2"],
-                               n_rows=3,
+        save_s1s2_tensors_plot([s2t1,s1t1,s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]],
+                               ["s2t1", "s1t1", "s2t2", "s1t2", "s2_change map", "s1_change map","reversed change map" ,"generated s1t2"],
+                               n_rows=4,
                                n_cols=2,
                                filename=f"{folder}//img_{img_indx}_epoc{epoch}.png",
                                fig_size=(8,10))
@@ -57,8 +57,8 @@ torch.backends.cudnn.benchmark = True
 def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss = WEIGHTED_LOSS, cm_input = INPUT_CHANGE_MAP):
     loop = tqdm(loader, leave=True)
 
-    for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm) in enumerate(loop):
-        s2t2,s1t2,s2t1,s1t1,cm,rcm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE)
+    for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm) in enumerate(loop):
+        s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
         if cm_input:
             s2t2 = torch.cat((s2t2, cm), dim=1)
             s1t1 = torch.cat((s1t1, rcm), dim=1)
@@ -81,7 +81,7 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
             D_fake = disc(s2t2, s1t1, s1t2_fake)
             G_fake_loss = bce(D_fake, torch.ones_like(D_fake))
             if weighted_loss:
-                L1 = l1_loss(s1t2_fake, s1t2, cm, rcm) * L1_LAMBDA
+                L1 = l1_loss(s1t2_fake, s1t2, s1cm) * L1_LAMBDA
             else:
                 L1 = l1_loss(s1t2_fake, s1t2) * L1_LAMBDA
             G_loss = G_fake_loss + L1
@@ -113,5 +113,10 @@ if __name__ == "__main__":
                                 two_way=False)
     print("len(s1s2_dataset): ",len(s1s2_dataset))
     print("s1s2_dataset[0][0]shape: ",s1s2_dataset[0][1].shape)
-
-    save_s1s2_tensors_plot(s1s2_dataset[1], ["s2t2", "s1t2", "s2t1", "s1t1", "change map", "reversed change map"], 3,2,filename="test.png", fig_size=(8,10))
+    s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm =s1s2_dataset[4]
+    save_s1s2_tensors_plot([s2t2,s1t2,s2t1,s1t1,torch.abs(cm),s1cm],
+                           ["s2t2", "s1t2", "s2t1", "s1t1", "change map", "s1_change map"],
+                           3,
+                           2,
+                           filename="test.png",
+                           fig_size=(8,10))
