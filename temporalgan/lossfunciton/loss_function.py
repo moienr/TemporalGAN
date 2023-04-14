@@ -37,10 +37,10 @@ class WeightedL1Loss(nn.Module):
         """
         reversed_change_map = (1-change_map.clone())
         if self.convert_to_float32:
-            input = input.to(torch.float32)
-            target = target.to(torch.float32)
-            change_map = change_map.to(torch.float32)
-            reversed_change_map = reversed_change_map.to(torch.float32)
+            input = input.to(torch.float64)
+            target = target.to(torch.float64)
+            change_map = change_map.to(torch.float64)
+            reversed_change_map = reversed_change_map.to(torch.float64)
             
         # Calculate the absolute difference between the input and target images
         abs_diff = torch.abs(input - target)
@@ -81,7 +81,7 @@ class WeightedL1Loss(nn.Module):
                             abs_diff: {torch.mean(abs_diff)} | change_map: {torch.mean(change_map)} | reversed_change_map: {torch.mean(reversed_change_map)} \n \
                             input: {torch.mean(input)} | target: {torch.mean(target)}")
         
-        return loss
+        return loss.to(torch.float64)
 
 
 if __name__ == "__main__":
