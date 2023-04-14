@@ -55,6 +55,7 @@ class WeightedL1Loss(nn.Module):
         sum_change_weighted_diff = torch.sum(change_weighted_diff, dim=[2, 3])
         # Sum the weights along the height and width dimensions
         sum_weights = torch.sum(change_map, dim=[2, 3])
+        sum_weights.masked_fill_(sum_weights == 0, 0.0001)
         # Divide the sum of the weighted differences by the sum of the weights
         changed_loss = torch.mean(sum_change_weighted_diff / sum_weights)
         
@@ -64,13 +65,22 @@ class WeightedL1Loss(nn.Module):
         # Sum the weighted differences along the height and width dimensions
         sum_unchange_weighted_diff = torch.sum(unchange_weighted_diff, dim=[2, 3])
         # Sum the weights along the height and width dimensions
+        sum_weights = None
         sum_weights = torch.sum(reversed_change_map, dim=[2, 3])
+        sum_weights.masked_fill_(sum_weights == 0, 0.0001)
         # Divide the sum of the weighted differences by the sum of the weights
         unchanged_loss = torch.mean(sum_unchange_weighted_diff / sum_weights)
-        
+    
         # Calculate the final loss as a weighted sum of the changed and unchanged losses
-        loss = unchanged_loss + self.change_weight * changed_loss
-
+        loss = (unchanged_loss + self.change_weight * changed_loss) / (1 + self.change_weight)
+        
+        if torch.isnan(loss) or torch.isnan(loss).any():
+            raise ValueError(f"Loss is NaN \n \
+                            changed_loss: {torch.mean(changed_loss)} | unchanged_loss: {torch.mean(unchanged_loss)} \n \
+                            sum_unchange_weighted_diff: {torch.mean(sum_unchange_weighted_diff)} | sum_weights: {torch.mean(sum_weights)} \n \
+                            abs_diff: {torch.mean(abs_diff)} | change_map: {torch.mean(change_map)} | reversed_change_map: {torch.mean(reversed_change_map)} \n \
+                            input: {torch.mean(input)} | target: {torch.mean(target)}")
+        
         return loss
 
 
