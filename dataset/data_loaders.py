@@ -170,13 +170,17 @@ class Sen12Dataset(Dataset):
         reversed_diff_map = reversed_diff_map.detach()
         s1_abs_diff_map = s1_abs_diff_map.detach()
         
+        check_tensor_values([s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map])
         
         if self.used_reversed_way: # returning the images in the opposite order 
             return s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map
         else: # returning the images in the t2->t1 order
             return s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map, s1_abs_diff_map
 
-
+def check_tensor_values(tensor_list):
+    for tensor in tensor_list:
+        if torch.any(tensor > 1) or torch.any(tensor < -1):
+            raise ValueError("Tensor values must be between -1 and 1.")
 
 class myToTensor:
     """Transform a pair of numpy arrays to PyTorch tensors"""
@@ -247,8 +251,8 @@ class S2S1Normalize:
         """
         s2_img, s1_img = sample
         # Sentinel 2 image  is between 0 and 1 it is surface reflectance so it can't be more than 1 or less than 0
-        s2_img[s2_img>self.s2_max] = self.s2_max
-        s2_img[s2_img<self.s2_min] = self.s2_min
+        s2_img[s2_img>=self.s2_max] = self.s2_max - 0.0001
+        s2_img[s2_img<=self.s2_min] = self.s2_min + 0.0001
         # Normalizing the Senitnel 2 data between -1 and 1 so it could be used on pix2pix model
         s2_img = (s2_img * 2) - 1
         
@@ -259,6 +263,8 @@ class S2S1Normalize:
 
         # Normalizing the Senitnel 1 data between -1 and 1  so it could be used on pix2pix model
         s1_img = (s1_img - np.min(s1_img)) / (np.max(s1_img) - np.min(s1_img))
+        s1_img[s1_img>=1] = 1 - 0.0001 
+        s1_img[s1_img<=0] = 0 + 0.0001
         s1_img = (s1_img * 2) - 1
         
         if self.check_nan:
