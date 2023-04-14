@@ -101,7 +101,7 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
         g_scaler.step(opt_gen)
         g_scaler.update()
 
-        if idx % 10 == 0:
+        if idx % 100 == 0:
             loop.set_postfix(
                 D_real=torch.sigmoid(D_real).mean().item(),
                 D_fake=torch.sigmoid(D_fake).mean().item(),
