@@ -171,13 +171,14 @@ def test(summary=False, gpu=False):
         device = torch.device('cpu')
         
     
-    s2 = torch.randn((1, 12, 256, 256)).to(device)
-    s1 = torch.randn((1, 7, 256, 256)).to(device)
+    s2 = torch.rand((1, 12, 256, 256)).to(torch.float32).to(device)
+    s1 = torch.rand((1, 7, 256, 256)).to(torch.float32).to(device)
     
     model = Generator(s2_in_channels=12, s1_in_channels=7, features=64)
     model.to(device)
     preds = model(s2,s1)
     print(preds.shape)
+    print(torch.min(preds),torch.mean(preds),torch.max(preds),preds.dtype)
     if summary:
         from torchinfo import summary
         summary(model, input_size=[(1, 12, 256, 256),(1, 7, 256, 256)], device=device,col_names=["input_size", "output_size", "num_params"],
