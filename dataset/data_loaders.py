@@ -170,7 +170,7 @@ class Sen12Dataset(Dataset):
         reversed_diff_map = reversed_diff_map.detach()
         s1_abs_diff_map = s1_abs_diff_map.detach()
         
-        check_tensor_values([s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map]
+        check_tensor_values([s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map],
                             ["s2_t1_img", "s1_t1_img", "s2_t2_img", "s1_t2_img", "diff_map", "reversed_diff_map", "s1_abs_diff_map"])
         
         if self.used_reversed_way: # returning the images in the opposite order 
