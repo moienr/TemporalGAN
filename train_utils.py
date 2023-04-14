@@ -113,7 +113,8 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
 def train_fn_no_tqdm(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input):
 
     for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm) in enumerate(loader):
-        print("Barch Number:", idx, "of", len(loader), end="\r")
+        idx = idx+1
+        print("--->  Batch Number:", idx , "of", len(loader), end="\r")
         s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
         if cm_input:
             s2t2 = torch.cat((s2t2, cm), dim=1)
