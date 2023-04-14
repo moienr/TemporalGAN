@@ -160,10 +160,10 @@ class Sen12Dataset(Dataset):
             print(f"s2_t1_img shape: {s2_t1_img.shape}")
             print(f"s1_t1_img shape: {s1_t1_img.shape}")
         
-        diff_map = s2_t2_img - s2_t1_img # to focus on the changes in the s2 image
+        diff_map = (s2_t2_img*0.5 + 0.5) - (s2_t1_img*0.5 + 0.5)  # to focus on the changes in the s2 image
         reversed_diff_map = 1 - torch.abs(diff_map) # to focus the unchanged areas in the s2 image
         
-        s1_abs_diff_map = torch.abs(s1_t2_img - s1_t1_img) # to focus on the changes in the s1 image
+        s1_abs_diff_map = torch.abs((s1_t2_img*0.5 + 0.5)  - (s1_t1_img*0.5 + 0.5)) # to focus on the changes in the s1 image
         
         # Detach the tensors from the graph to avoid memory leaks
         diff_map = diff_map.detach()
