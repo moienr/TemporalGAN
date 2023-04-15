@@ -124,43 +124,6 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
                 G_loss_mean = sum(G_loss_list) / len(G_loss_list),
             )
 
-def train_fn_no_tqdm(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input):
-
-    for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm) in enumerate(loader):
-        idx = idx+1
-        print("--->  Batch Number:", idx , "of", len(loader), end="\r")
-        s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
-        if cm_input:
-            s2t2 = torch.cat((s2t2, cm), dim=1)
-            s1t1 = torch.cat((s1t1, rcm), dim=1)
-        # Train Discriminator
-        with torch.cuda.amp.autocast():
-            s1t2_fake = gen(s2t2, s1t1)
-            D_real = disc(s2t2, s1t1, s1t2)
-            D_real_loss = bce(D_real, torch.ones_like(D_real))
-            D_fake = disc(s2t2, s1t1, s1t2_fake.detach())
-            D_fake_loss = bce(D_fake, torch.zeros_like(D_fake))
-            D_loss = (D_real_loss + D_fake_loss) / 2
-
-        disc.zero_grad()
-        d_scaler.scale(D_loss).backward()
-        d_scaler.step(opt_disc)
-        d_scaler.update()
-
-        # Train generator
-        with torch.cuda.amp.autocast():
-            D_fake = disc(s2t2, s1t1, s1t2_fake)
-            G_fake_loss = bce(D_fake, torch.ones_like(D_fake))
-            if weighted_loss:
-                L1 = l1_loss(s1t2_fake, s1t2, s1cm) * L1_LAMBDA
-            else:
-                L1 = l1_loss(s1t2_fake, s1t2) * L1_LAMBDA
-            G_loss = G_fake_loss + L1
-
-        opt_gen.zero_grad()
-        g_scaler.scale(G_loss).backward()
-        g_scaler.step(opt_gen)
-        g_scaler.update()
 
 
 if __name__ == "__main__":
