@@ -7,6 +7,8 @@ For the attention we use
     * The Position Attention Module(PAM) for the 128x128, 64x64, 32x32, and 16x16 layers.
     * CBAM for the 8x8, 4x4 layers, but only for the skip connection, the normal data gets donwsampled.
 
+Version 2.2 -> PAM only in the first layer
+
 
 """
 
