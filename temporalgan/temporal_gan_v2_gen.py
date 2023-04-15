@@ -42,11 +42,11 @@ class Generator(nn.Module):
         # Downsample blocks for Sentinel-2
         self.s2_pam_init  = PAM(features,downsample=pam_downsample) # input from the initial_down layer / output goes to the down1 layer
         self.s2_down1 = Block(features    , features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.s2_pam1 = PAM(features * 2, downsample=pam_downsample) # input from the down1 layer / output goes to the down2 layer
+        self.s2_cbam1 = CBAM(features * 2) # input from the down1 layer / output goes to the down2 layer
         self.s2_down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
-        self.s2_pam2 = PAM(features * 4) # input from the down2 layer / output goes to the down3 layer
+        self.s2_cbam2 = CBAM(features * 4) # input from the down2 layer / output goes to the down3 layer
         self.s2_down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.s2_pam3 = PAM(features * 8) # input from the down3 layer / output goes to the down4 layer
+        self.s2_cbam3 = CBAM(features * 8) # input from the down3 layer / output goes to the down4 layer
         self.s2_down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
         self.s2_cbam4 = CBAM(features * 8) # input from the down4 layer / output goes to the down5 layer
         self.s2_down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4
@@ -54,13 +54,13 @@ class Generator(nn.Module):
         self.s2_down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 512
         
         # Downsample blocks for Sentinel-1
-        self.s1_pam_init  = PAM(features) # input from the initial_down layer / output goes to the down1 layer
+        self.s1_pam_init  = PAM(features,downsample=pam_downsample) # input from the initial_down layer / output goes to the down1 layer
         self.s1_down1 = Block(features    , features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.s1_pam1 = PAM(features * 2) # input from the down1 layer / output goes to the down2 layer
+        self.s1_cbam1 = CBAM(features * 2) # input from the down1 layer / output goes to the down2 layer
         self.s1_down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
-        self.s1_pam2 = PAM(features * 4) # input from the down2 layer / output goes to the down3 layer
+        self.s1_cbam2 = CBAM(features * 4) # input from the down2 layer / output goes to the down3 layer
         self.s1_down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.s1_pam3 = PAM(features * 8) # input from the down3 layer / output goes to the down4 layer
+        self.s1_cbam3 = CBAM(features * 8) # input from the down3 layer / output goes to the down4 layer
         self.s1_down4 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
         self.s1_cbam4 = CBAM(features * 8) # input from the down4 layer / output goes to the down5 layer
         self.s1_down5 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4
@@ -90,17 +90,17 @@ class Generator(nn.Module):
     def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
         # First we do the encoding part for the Sentinel2
         d1_s2 = self.s2_pam_init(self.s2_initial_down(s2))
-        d2_s2 = self.s2_pam1(self.s2_down1(d1_s2))
-        d3_s2 = self.s2_pam2(self.s2_down2(d2_s2))
-        d4_s2 = self.s2_pam3(self.s2_down3(d3_s2))
+        d2_s2 = self.s2_cbam1(self.s2_down1(d1_s2))
+        d3_s2 = self.s2_cbam2(self.s2_down2(d2_s2))
+        d4_s2 = self.s2_cbam3(self.s2_down3(d3_s2))
         d5_s2 = self.s2_down4(d4_s2)
         d6_s2 = self.s2_down5(d5_s2)
         d7_s2 = self.s2_down6(d6_s2)
         # Now we do the same for the Sentinel1
         d1_s1 = self.s1_pam_init(self.s1_initial_down(s1))
-        d2_s1 = self.s1_pam1(self.s1_down1(d1_s1))
-        d3_s1 = self.s1_pam2(self.s1_down2(d2_s1))
-        d4_s1 = self.s1_pam3(self.s1_down3(d3_s1))
+        d2_s1 = self.s1_cbam1(self.s1_down1(d1_s1))
+        d3_s1 = self.s1_cbam2(self.s1_down2(d2_s1))
+        d4_s1 = self.s1_cbam3(self.s1_down3(d3_s1))
         # No Spatial Attention Module for the last two layers, when downsampling, but we send their CBAM to be concatenated with the upsampled layers.
         d5_s1 = self.s1_down4(d4_s1)
         d6_s1 = self.s1_down5(d5_s1)
