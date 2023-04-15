@@ -1,6 +1,7 @@
 import torch
 from torch.nn import Module, Conv2d, Parameter, Softmax, MaxPool2d, Upsample, AvgPool2d
-
+from gen_cnn_block import Block
+from torch import nn
 """ Modified the code from DANet: Dual Attention Network for Scene Segmentation 
 Ref: https://arxiv.org/abs/1809.02983
 by Zilong Huang, Ping Luo, Chen Change Loy, Xiaoou Tang
@@ -18,7 +19,7 @@ class PAM(Module):
     The attention map will still be upsampled to the original size, so the output tensor will have the same size as the input tensor.
     
     """
-    def __init__(self, in_dim, downsample: int = None):
+    def __init__(self, in_dim, downsample: int = None,cov_downsample = True):
         """    
     Args:
     -----
@@ -49,8 +50,20 @@ class PAM(Module):
             raise ValueError("Input channels must be greater than or equal to out_ratio.")
         
         if downsample:
-            self.pool = AvgPool2d(kernel_size=downsample, stride=downsample)
-            self.upsample = Upsample(scale_factor=downsample, mode='bilinear', align_corners=True)
+            if cov_downsample:
+                if downsample == 2:
+                    self.pool = Block(in_dim, in_dim, down=True, act="leaky", use_dropout=False)
+                    self.upsample = Block(in_dim, in_dim, down=False, act="leaky", use_dropout=False)
+                elif downsample == 4:
+                    self.pool = nn.Sequential(Block(in_dim, in_dim, down=True, act="leaky", use_dropout=False),
+                                              Block(in_dim, in_dim, down=True, act="leaky", use_dropout=False))
+                    self.upsample = nn.Sequential(Block(in_dim, in_dim, down=False, act="leaky", use_dropout=False),
+                                                  Block(in_dim, in_dim, down=False, act="leaky", use_dropout=False))
+                else:
+                    raise ValueError("When using conv_downsample Downsample factor must be 2 or 4.")
+            else:
+                self.pool = AvgPool2d(kernel_size=downsample, stride=downsample)
+                self.upsample = Upsample(scale_factor=downsample, mode='bilinear', align_corners=True)
 
         self.query_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//self.OUT_RATIO, kernel_size=1)
         self.key_conv = Conv2d(in_channels=in_dim, out_channels=in_dim//self.OUT_RATIO, kernel_size=1)
@@ -126,7 +139,7 @@ class CAM(Module):
         out = self.gamma*out + x
         return out
     
-def test(summary=False,gpu=False):
+def test(summary=False,gpu=True):
     if gpu:
         # setting device on GPU if available, else CPU
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -136,8 +149,8 @@ def test(summary=False,gpu=False):
     
     print('Testing Position Attention Module...')
     n_channels = 16
-    x = torch.randn(1, n_channels, 128, 128).to(device)
-    pam = PAM(n_channels, downsample=None)
+    x = torch.randn(1, n_channels, 256, 256).to(device)
+    pam = PAM(n_channels, downsample=4)
     pam = pam.to(device)
     y = pam(x)
     print(y.shape)
