@@ -65,7 +65,7 @@ def load_checkpoint(checkpoint_file, model, optimizer, lr):
 from tqdm import tqdm
 torch.backends.cudnn.benchmark = True
 
-def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input):
+def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input,grad_clip=True):
     loop = tqdm(loader, leave=True)
 
     for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm) in enumerate(loop):
@@ -84,6 +84,8 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
 
         disc.zero_grad()
         d_scaler.scale(D_loss).backward()
+        if grad_clip:
+            torch.nn.utils.clip_grad_norm_(disc.parameters(), max_norm=2.0)
         d_scaler.step(opt_disc)
         d_scaler.update()
 
@@ -99,6 +101,8 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
 
         opt_gen.zero_grad()
         g_scaler.scale(G_loss).backward()
+        if grad_clip:
+            torch.nn.utils.clip_grad_norm_(opt_gen.parameters(), max_norm=2.0)
         g_scaler.step(opt_gen)
         g_scaler.update()
 
