@@ -102,7 +102,7 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
         opt_gen.zero_grad()
         g_scaler.scale(G_loss).backward()
         if grad_clip:
-            torch.nn.utils.clip_grad_norm_(opt_gen.parameters(), max_norm=2.0)
+            torch.nn.utils.clip_grad_norm_(gen.parameters(), max_norm=2.0)
         g_scaler.step(opt_gen)
         g_scaler.update()
 
