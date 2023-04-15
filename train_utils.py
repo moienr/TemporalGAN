@@ -67,7 +67,12 @@ torch.backends.cudnn.benchmark = True
 
 def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input,grad_clip=True):
     loop = tqdm(loader, leave=True)
-
+    
+    D_real_list = []   # Initialize empty list for D_real
+    D_fake_list = []   # Initialize empty list for D_fake
+    L1_list = []       # Initialize empty list for L1
+    G_loss_list = []   # Initialize empty list for G_loss
+    
     for idx, (s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm) in enumerate(loop):
         s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
         if cm_input:
@@ -105,13 +110,18 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
             torch.nn.utils.clip_grad_value_(gen.parameters(), clip_value=0.5)
         g_scaler.step(opt_gen)
         g_scaler.update()
-
-        if idx % 100 == 0:
+        
+        D_real_list.append(torch.sigmoid(D_real).mean().item())
+        D_fake_list.append(torch.sigmoid(D_fake).mean().item())
+        L1_list.append(L1.item())
+        G_loss_list.append(G_loss.item())
+        
+        if idx % 100 == 0 or idx == len(loader)-1:
             loop.set_postfix(
-                D_real=torch.sigmoid(D_real).mean().item(),
-                D_fake=torch.sigmoid(D_fake).mean().item(),
-                G_loss = G_loss.item(),
-                L1 = L1.item(),
+                D_real_mean = sum(D_real_list) / len(D_real_list),
+                D_fake_mean = sum(D_fake_list) / len(D_fake_list),
+                L1_mean = sum(L1_list) / len(L1_list),
+                G_loss_mean = sum(G_loss_list) / len(G_loss_list),
             )
 
 def train_fn_no_tqdm(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_scaler, weighted_loss, cm_input):
