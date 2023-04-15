@@ -82,7 +82,7 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
             D_fake_loss = bce(D_fake, torch.zeros_like(D_fake))
             D_loss = (D_real_loss + D_fake_loss) / 2
 
-        disc.zero_grad()
+        opt_disc.zero_grad()
         d_scaler.scale(D_loss).backward()
         if grad_clip:
             torch.nn.utils.clip_grad_norm_(disc.parameters(), max_norm=2.0)
