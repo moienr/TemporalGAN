@@ -84,9 +84,9 @@ class Generator(nn.Module):
         self.s2_down6 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 512
         
         # Downsample blocks from Sentinel-1
-        self.s1_pam_init  = PAM(features,downsample=2) # input from the initial_down layer / output goes to the down1 layer
+        self.s1_pam_init  = PAM(features,downsample=pam_downsample) # input from the initial_down layer / output goes to the down1 layer
         self.s1_down1 = Block(features    , features * 2, down=True, act="leaky", use_dropout=False) # 128
-        self.s1_pam1 = PAM(features * 2, downsample=2) # input from the down1 layer / output goes to the down2 layer
+        self.s1_pam1 = PAM(features * 2, downsample=pam_downsample) # input from the down1 layer / output goes to the down2 layer
         self.s1_down2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 64
         self.s1_pam2 = PAM(features * 4) # input from the down2 layer / output goes to the down3 layer
         self.s1_down3 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
