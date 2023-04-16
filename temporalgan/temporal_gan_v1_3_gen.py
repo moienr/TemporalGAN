@@ -3,8 +3,7 @@ In this version I use a dual stream for encoding part, which fuses the Sentiel2_
 We use no Attetention module.
 
 ## Version 1.2: Initial_down -> No DownSample
-## Version 2.3: Channel Attentino at the bottleneck
-
+## Version 1.3: Channel Attentino at the bottleneck
 """
 
 import torch
