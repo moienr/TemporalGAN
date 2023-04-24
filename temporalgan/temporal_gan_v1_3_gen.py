@@ -38,20 +38,20 @@ class Generator(nn.Module):
             nn.LeakyReLU(0.2)) #256
         
         # Downsample blocks of Senitel-2
-        self.down1_s2 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.down2_s2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
-        self.down3_s2 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.down4_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
-        self.down5_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 
-        self.down6_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 1024
+        self.down1_s2 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 128
+        self.down2_s2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 64
+        self.down3_s2 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
+        self.down4_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
+        self.down5_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8 
+        self.down6_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
         
         # Downsample blocks of Senitel-1
-        self.down1_s1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 64
-        self.down2_s1 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 32
-        self.down3_s1 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.down4_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
-        self.down5_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 
-        self.down6_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 2 * 1024
+        self.down1_s1 = Block(features, features * 2, down=True, act="leaky", use_dropout=False) # 128
+        self.down2_s1 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 64
+        self.down3_s1 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
+        self.down4_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
+        self.down5_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8 
+        self.down6_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
         
         # Channel Attention Module
         self.ca = ChannelAttention(features * 8 * 2) # The *2 is because we fuse the two streams.
