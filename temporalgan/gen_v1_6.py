@@ -4,7 +4,7 @@ We use no Attetention module.
 
 ## Version 1.2: Initial_down -> No DownSample
 ## Version 1.3: Channel Attentino at the bottleneck
-## Version 1.5: GLAM at 8x8 downstreams
+ ~~Version 1.5: GLAM at 8x8 downstreams~~
 ## Version 1.6: instead of 8x8, we put GLAM at 16x16
 """
 
