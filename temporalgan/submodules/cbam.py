@@ -81,6 +81,12 @@ class SpatialAttention(nn.Module):
     by generating a spatial attention map that is multiplied with the input feature map.
     """
     def __init__(self, kernel_size=7):
+        """    This class defines a spatial attention module that enhances the informative regions of an input feature map
+        by generating a spatial attention map that is multiplied with the input feature map.
+
+        Args:
+            kernel_size (int, optional): Kernel size for the convolutional layer. Defaults to 7.
+        """
         super().__init__()
 
         self.conv = nn.Conv2d(2, 1, kernel_size, padding=3, bias=False)
