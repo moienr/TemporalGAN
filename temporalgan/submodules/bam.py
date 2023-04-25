@@ -44,13 +44,18 @@ class BAM(nn.Module):
         super(BAM, self).__init__()
         self.channel_att = ChannelGate(gate_channel) if use_c else None
         self.spatial_att = SpatialGate(gate_channel) if use_s else None
+        
+        self.sigmoid1 = nn.Sigmoid()
+        self.sigmoid2 = nn.Sigmoid()
+        self.sigmoid3 = nn.Sigmoid()
+        
     def forward(self,in_tensor):
         if self.channel_att and self.spatial_att:
-            att = 1 + F.sigmoid( self.channel_att(in_tensor) * self.spatial_att(in_tensor) )
+            att = 1 + self.sigmoid1( self.channel_att(in_tensor) * self.spatial_att(in_tensor) )
         elif self.channel_att:
-            att = 1 + F.sigmoid( self.channel_att(in_tensor) )
+            att = 1 + self.sigmoid2( self.channel_att(in_tensor) )
         elif self.spatial_att:
-            att = 1 + F.sigmoid( self.spatial_att(in_tensor) )
+            att = 1 + self.sigmoid3( self.spatial_att(in_tensor) )
         else:
             raise ValueError( 'use_c and use_s should not be both False.')
         return att * in_tensor
