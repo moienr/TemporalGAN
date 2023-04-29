@@ -24,17 +24,19 @@ class Generator(nn.Module):
     def __init__(self, s2_in_channels=3,s1_in_channels = 1,out_channels=1, features=64):
         super().__init__()
         # Initial downsampling layer for S2
-        IN_OUT_KSP = (3, 1, 1) # initial layer, and finalup layer kernel size, stride, padding, 
+        S1_IN_OUT_KSP = (5, 1, 2) # initial layer, and finalup layer kernel size, stride, padding, 
+        S2_IN_OUT_KSP = (3, 1, 1)
+        OUTPUT_KSP = (3, 1, 1)
         # I still havn't decided whether to use 3x3 or 5x5, so I will leave it as a variable.
         # In case of 3x3, the padding will be 1, and the stride will be 1. so IN_OUT_KSP = (3, 1, 1)
         # In case of 5x5, the padding will be 2, and the stride will be 1. so IN_OUT_KSP = (5, 1, 2)
         self.s2_initial_down = nn.Sequential(
-            nn.Conv2d(s2_in_channels, features, IN_OUT_KSP[0], IN_OUT_KSP[1], IN_OUT_KSP[2], padding_mode="reflect"),
+            nn.Conv2d(s2_in_channels, features, S2_IN_OUT_KSP[0], S2_IN_OUT_KSP[1], S2_IN_OUT_KSP[2], padding_mode="reflect"),
             nn.LeakyReLU(0.2)) #256
         
         # Initial downsampling layer for S1
         self.s1_initial_down = nn.Sequential(
-            nn.Conv2d(s1_in_channels, features, IN_OUT_KSP[0], IN_OUT_KSP[1], IN_OUT_KSP[2], padding_mode="reflect"),
+            nn.Conv2d(s1_in_channels, features, S1_IN_OUT_KSP[0], S1_IN_OUT_KSP[1], S1_IN_OUT_KSP[2], padding_mode="reflect"),
             nn.LeakyReLU(0.2)) #256
         
         # Downsample blocks of Senitel-2
@@ -70,7 +72,7 @@ class Generator(nn.Module):
 
         # Final upsampling layer
         self.final_up = nn.Sequential(
-            nn.Conv2d(features * 3, out_channels, IN_OUT_KSP[0], IN_OUT_KSP[1], IN_OUT_KSP[2]),
+            nn.Conv2d(features * 3, out_channels, OUTPUT_KSP[0], OUTPUT_KSP[1], OUTPUT_KSP[2]),
             nn.Tanh(),
         )
     def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
