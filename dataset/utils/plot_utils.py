@@ -93,7 +93,8 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
                 axs[i][j].set_title(name)
             axs[i][j].set_xticks([])
             axs[i][j].set_yticks([])
-    plt.savefig(filename)
+    plt.tight_layout()
+    plt.savefig(filename, bbox_inches='tight')
     matplotlib.pyplot.close()
       
 import torch
