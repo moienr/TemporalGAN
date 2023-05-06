@@ -3,6 +3,24 @@ import torch
 import torch
 import torch.nn as nn
 
+def reverse_map(change_map):
+    """
+    Reverses the change map so that the changed pixels have a weight of Min and the unchanged pixels have a weight of Max.
+    
+    Args:
+    - change_map: A PyTorch tensor of size (batch_size, c, height, width) representing the change weight map.
+    
+    Returns:
+    - reversed_change_map: A PyTorch tensor of size (batch_size, c, height, width) representing the reversed change weight map.
+    """
+    # Find the maximum and minimum for each channel in the change map | although S1 is one channel but this can come in handy if we want to VH polarization in the future.
+    max_values, _ = torch.max(change_map, dim=3, keepdim=True)
+    max_values, _ = torch.max(max_values, dim=2, keepdim=True)
+    min_values, _ = torch.max(change_map, dim=3, keepdim=True)
+    min_values, _ = torch.max(min_values, dim=2, keepdim=True)
+    reversed_change_map = max_values - change_map + min_values
+    return reversed_change_map
+
 class WeightedL1Loss(nn.Module):
     def __init__(self, change_weight = 5, convert_to_float32: bool = True, legacy_chage_map: bool = False):
         """
@@ -24,6 +42,8 @@ class WeightedL1Loss(nn.Module):
         self.change_weight = change_weight
         self.convert_to_float32 = convert_to_float32
         self.legacy_chage_map = legacy_chage_map
+    
+        
     def forward(self, input, target, change_map):
         """
         Calculates the L1 loss between the input and target images using a change map.
@@ -43,15 +63,9 @@ class WeightedL1Loss(nn.Module):
         if self.legacy_chage_map:
             reversed_change_map = (1-change_map.clone())
         else:
-            
             cm_copy = change_map.clone()
             # Find the maximum and minimum for each channel in the change map | although S1 is one channel but this can come in handy if we want to VH polarization in the future.
-            max_values, _ = torch.max(cm_copy, dim=3, keepdim=True) # max_values will have size (b,c,h,1)
-            max_values, _ = torch.max(max_values, dim=2, keepdim=True) # max_values will have size (b,c,1,1)
-            min_values, _ = torch.max(cm_copy, dim=3, keepdim=True) # min_values will have size (b,c,h,1)
-            min_values, _ = torch.max(min_values, dim=2, keepdim=True) # min_values will have size (b,c,1,1)  
-                
-            reversed_change_map = max_values - cm_copy + min_values
+            reversed_change_map = reverse_map(cm_copy)
             
         if self.convert_to_float32:
             input = input.to(torch.float64)
