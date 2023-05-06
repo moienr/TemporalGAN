@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 
 class WeightedL1Loss(nn.Module):
-    def __init__(self, change_weight = 5, convert_to_float32: bool = True):
+    def __init__(self, change_weight = 5, convert_to_float32: bool = True, legacy_chage_map: bool = False):
         """
         Args
         ----
@@ -21,7 +21,7 @@ class WeightedL1Loss(nn.Module):
         super().__init__()
         self.change_weight = change_weight
         self.convert_to_float32 = convert_to_float32
-
+        self.legacy_chage_map = legacy_chage_map
     def forward(self, input, target, change_map):
         """
         Calculates the L1 loss between the input and target images using a change map.
@@ -35,7 +35,19 @@ class WeightedL1Loss(nn.Module):
         Returns:
         - loss: A PyTorch scalar representing the weighted L1 loss.
         """
-        reversed_change_map = (1-change_map.clone())
+        if self.legacy_chage_map:
+            reversed_change_map = (1-change_map.clone())
+        else:
+            
+            cm_copy = change_map.clone()
+            # Find the maximum and minimum for each channel in the change map | although S1 is one channel but this can come in handy if we want to VH polarization in the future.
+            max_values, _ = torch.max(cm_copy, dim=3, keepdim=True) # max_values will have size (b,c,h,1)
+            max_values, _ = torch.max(max_values, dim=2, keepdim=True) # max_values will have size (b,c,1,1)
+            min_values, _ = torch.max(cm_copy, dim=3, keepdim=True) # min_values will have size (b,c,h,1)
+            min_values, _ = torch.max(min_values, dim=2, keepdim=True) # min_values will have size (b,c,1,1)  
+                
+            reversed_change_map = max_values - cm_copy + min_values
+            
         if self.convert_to_float32:
             input = input.to(torch.float64)
             target = target.to(torch.float64)
