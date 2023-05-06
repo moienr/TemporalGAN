@@ -8,10 +8,12 @@ class WeightedL1Loss(nn.Module):
         """
         Args
         ----
-        `change_weight`: A scalar value representing the weight of L1 loss for changed pixels.
+        change_weight: A scalar value representing the weight of L1 loss for changed pixels.
                         the weight of L1 loss for unchanged pixels is 1.
-        `convert_to_float32`: A boolean value representing whether to convert the input and target images to float32.
+        convert_to_float32: A boolean value representing whether to convert the input and target images to float32.
                             This is useful for when the input and target images are float16 which can cause the loss to be NaN.
+        legacy_chage_map: A boolean value representing whether to use the legacy change map or not.
+                            The legacy change map is calculated as (1-change_map) instead of (max(change_map) - change_map + min(change_map))
             
                         
 
@@ -30,7 +32,10 @@ class WeightedL1Loss(nn.Module):
         - input: A PyTorch tensor of size (batch_size, channels, height, width) representing the input image.
         - target: A PyTorch tensor of size (batch_size, channels, height, width) representing the target image.
         - change_map: A PyTorch tensor of size (batch_size, 1, height, width) representing the change weight map.
-        - reversed_change_map: A PyTorch tensor of size (batch_size, 1, height, width) representing the reversed change weight map.
+        
+        Attributes:
+        - reversed_change_map: A PyTorch tensor of size (batch_size, C, height, width) representing the reversed change weight map.
+
 
         Returns:
         - loss: A PyTorch scalar representing the weighted L1 loss.
