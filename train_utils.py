@@ -5,6 +5,7 @@ from dataset.utils.plot_utils import *
 from config import *
 from eval_metrics.ssim import WSSIM
 from eval_metrics.psnr import wpsnr
+from eval_metrics.loss_function import reverse_map
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
@@ -23,9 +24,17 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
         
         weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm.unsqueeze(0).to(torch.float32))
         normal_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
+        reverse_weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), reverse_map(s1cm.unsqueeze(0).to(torch.float32)))
+         
         weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm.unsqueeze(0).to(torch.float32))
         normal_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
-        title = f"epoch:{epoch} -- image:{img_indx}  \nweighted ssim: {weighted_ssim:.3f} | normal ssim: {normal_ssim:.3f} | weighted psnr: {weighted_psnr:.3f} | normal psnr: {normal_psnr:.3f}"
+        reverse_weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), reverse_map(s1cm.unsqueeze(0).to(torch.float32)))
+        
+        
+        title = f"epoch:{epoch} -- image:{img_indx} \n\
+            cwssim: {weighted_ssim:.3f} | ssim: {normal_ssim:.3f} | rcwssim: {reverse_weighted_ssim:.3f} \n\
+            cwpsnr: {weighted_psnr:.3f} | psnr: {normal_psnr:.3f} | rcwpsnr: {reverse_weighted_psnr:.3f}"
+        
         input_list = [s2t1,s1t1,s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]] if not cm_input else [s2t1,s1t1[0].unsqueeze(0),s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]]
         save_s1s2_tensors_plot(input_list,
                                ["s2t1", "s1t1", "s2t2", "s1t2", "s2_change map", "s1_change map","reversed change map" ,"generated s1t2"],
