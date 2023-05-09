@@ -40,7 +40,8 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols , bands_to_plot = [2,1,0]):
     plt.show()
     
     
-def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, bands_to_plot = [2,1,0], title = None):
+def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename,
+                           fig_size, bands_to_plot = [2,1,0], title = None, just_show = False):
     """
     Saves a grid of PyTorch tensors as an image file.
 
@@ -94,8 +95,11 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename, fig_size, b
             axs[i][j].set_xticks([])
             axs[i][j].set_yticks([])
     plt.tight_layout()
-    plt.savefig(filename, bbox_inches='tight')
-    matplotlib.pyplot.close()
+    if just_show:
+        plt.show()
+    else:
+        plt.savefig(filename, bbox_inches='tight')
+        matplotlib.pyplot.close()
       
 import torch
 
