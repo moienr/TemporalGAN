@@ -177,6 +177,157 @@ class Sen12Dataset(Dataset):
             return s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map
         else: # returning the images in the t2->t1 order
             return s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map, s1_abs_diff_map
+        
+        
+class Sen12DatasetHardTest(Dataset):
+    """Dataset class for the Sen12MS dataset."""
+    def __init__(self,
+               s1_t2_dir,
+               s2_t2_dir,
+               s1_t1_dir,
+               s2_t1_dir,
+               hard_test_names: list = None,
+               s2_bands: list = None ,
+               transform = None,
+               hist_match=False,
+               two_way = True,
+               verbose=False):
+        """
+        Args
+        ---
+            `s1_t2_dir` (str): Path to the directory containing the S1 time-2 images.
+            `s2_t2_dir` (str): Path to the directory containing the S2 time-2 images.
+            `s1_t1_dir` (str): Path to the directory containing the S1 time-1 images.
+            `s2_t1_dir` (str): Path to the directory containing the S2 time-1 images.
+            `s2_bands` (list, optional): List of indices indicating which bands to use from the S2 images.
+                                       If not specified, all bands are used.
+            `hard_test_names` (list, optional): List of names of the images to be used for the hard test.
+            `transform` (callable, optional): Optional transform to be applied to the S2 images.
+           ` hist_match` (bool, optional): Whether to perform histogram matching between the S2 time-2 
+                                         and S2 time-1 images.
+            `two_way` (bool, optional): is used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2). If two_way=True, __len__ returns twice the number of images in the dataset, with the first half of the indices corresponding to the time-2 to time-1 direction and the second half corresponding to the time-1 to time-2 direction.
+            
+        
+        __getitem__ Return
+        ---
+            `(s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map)` or `(s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map)` if reversed index
+             
+            tuple: A tuple containing the `S2 time-2` image, `S1 time-2` image, `S2 time-1` image, `S1 time-1` image, Difference map and Reversed difference map.
+            * `Difference map`: `np.abs(s2_t2_img - s2_t1_img)`
+            * `Reversed difference map`: `np.max(diff_map) - diff_map + np.min(diff_map) `
+            *  when reversed is activated the index `i` in a reversed mode has the index `len(dataset) - i`
+        """
+        if hard_test_names is None:
+            raise ValueError("hard_test_names must be specified.")
+        self.verbose = verbose
+        # Set the directories for the four sets of images
+        self.s1_t2_dir = s1_t2_dir
+        self.s2_t2_dir = s2_t2_dir
+        self.s1_t1_dir = s1_t1_dir
+        self.s2_t1_dir = s2_t1_dir
+        
+        # Set the names of the S2 and S1 time-2 images
+        self.s2_t2_names= hard_test_names
+        self.s1_t2_names= hard_test_names
+
+        # Set the names of the S2 and S1 time-1 images 
+        self.s2_t1_names= hard_test_names
+        self.s1_t1_names= hard_test_names
+        
+        # Verify that the four sets of images have the same names
+        if self.s1_t2_names != self.s2_t2_names or self.s1_t2_names != self.s2_t1_names or self.s1_t2_names != self.s2_t1_names:
+            raise ValueError("The four directories do not contain the same image pairs.")
+        
+        self.s2_bands = s2_bands if s2_bands else None 
+
+        self.transform = transform
+        self.hist_match = hist_match
+        
+        self.two_way = two_way # used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2)
+        self.used_reversed_way = False # used to determine whether the images returned were from the time-2 to time-1 direction or the time-1 to time-2 direction
+
+    def __len__(self):
+        """Return the number of images in the dataset."""
+        # If two_way is True, return twice the number of images in the dataset since we will return images from both time directions
+        return 2 * len(self.s2_t2_names) if self.two_way else len(self.s2_t2_names)
+  
+    def __getitem__(self, index):
+        """Get the S2 time-2 image, S1 time-2 image, S2 time-1 image, S1 time-1 image, 
+           difference map and reversed difference map for the specified index.
+           
+        Args:
+            index (int): Index of the image to get.
+            
+        Returns:
+            tuple: A tuple containing the S2 time-2 image, S1 time-2 image, S2 time-1 image, S1 time-1 image, Difference map and Reversed difference map.
+            * Difference map: `s2_t2_img - s2_t1_img` Values are in the range [-1, 1].
+            * Reversed difference map: 1 - torch.abs(diff_map)  Values are in the range [0, 1].
+            * S1_abs_diff_map: `abs(s1_t2_img - s1_t1_img)` Values are in the range [0, 1].
+        """
+        if self.two_way: # if two_way is True, we will return images from both time directions
+            if index < len(self.s2_t2_names): # if index is less than the number of images in the dataset, return images from time-2 to time-1
+                img_name = self.s2_t2_names[index]  
+                self.used_reversed_way = False 
+            else: # if index is greater than or equal to the number of images in the dataset, return images from time-1 to time-2
+                img_name = self.s2_t2_names[index - len(self.s2_t2_names)]
+                self.used_reversed_way = True
+        else:
+            img_name = self.s2_t2_names[index] 
+            self.used_reversed_way = False # just to be sure
+
+        if self.verbose: print(f"Image name: {img_name}")  
+            
+        s2_t2_img_path = os.path.join(self.s2_t2_dir,img_name)
+        s1_t2_img_path = os.path.join(self.s1_t2_dir,img_name)
+        
+        s2_t2_img = io.imread(s2_t2_img_path)
+        if self.s2_bands: s2_t2_img = s2_t2_img[self.s2_bands,:,:]
+        s1_t2_img = io.imread(s1_t2_img_path)
+        
+        s2_t1_img_path = os.path.join(self.s2_t1_dir,img_name)
+        s1_t1_img_path = os.path.join(self.s1_t1_dir,img_name)
+        
+        s2_t1_img = io.imread(s2_t1_img_path)
+        if self.verbose: print(f's2 shape apon reading: {s2_t1_img.shape}')
+        if self.s2_bands: s2_t1_img = s2_t1_img[self.s2_bands,:,:]
+        s1_t1_img = io.imread(s1_t1_img_path)
+    
+
+        if self.hist_match: # if hist_match is True, match the histograms of the two images
+            if self.used_reversed_way: # if the images returned were from the time-1 to time-2 direction, match the histograms of the two images with t1 being the reference
+                s2_t1_img = match_histograms(s2_t1_img, s2_t2_img, channel_axis=0) # match the histograms of the two images (image, reference)
+            else: # if the images returned were from the time-2 to time-1 direction, match the histograms of the two images with t2 being the reference
+                s2_t2_img = match_histograms(s2_t2_img, s2_t1_img, channel_axis=0) 
+
+        if self.transform:
+            sample = s2_t2_img, s1_t2_img
+            s2_t2_img, s1_t2_img  = self.transform(sample)
+            sample = s2_t1_img, s1_t1_img
+            s2_t1_img, s1_t1_img  = self.transform(sample)
+
+        if self.verbose:
+            print(f"s2_t2_img shape: {s2_t2_img.shape}")
+            print(f"s1_t2_img shape: {s1_t2_img.shape}")
+            print(f"s2_t1_img shape: {s2_t1_img.shape}")
+            print(f"s1_t1_img shape: {s1_t1_img.shape}")
+        
+        diff_map = (s2_t2_img*0.5 + 0.5) - (s2_t1_img*0.5 + 0.5)  # to focus on the changes in the s2 image
+        reversed_diff_map = 1 - torch.abs(diff_map) # to focus the unchanged areas in the s2 image
+        
+        s1_abs_diff_map = torch.abs((s1_t2_img*0.5 + 0.5)  - (s1_t1_img*0.5 + 0.5)) # to focus on the changes in the s1 image
+        
+        # Detach the tensors from the graph to avoid memory leaks
+        diff_map = diff_map.detach()
+        reversed_diff_map = reversed_diff_map.detach()
+        s1_abs_diff_map = s1_abs_diff_map.detach()
+        
+        check_tensor_values([s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map],
+                            ["s2_t1_img", "s1_t1_img", "s2_t2_img", "s1_t2_img", "diff_map", "reversed_diff_map", "s1_abs_diff_map"])
+        
+        if self.used_reversed_way: # returning the images in the opposite order 
+            return s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map
+        else: # returning the images in the t2->t1 order
+            return s2_t2_img, s1_t2_img, s2_t1_img, s1_t1_img, diff_map, reversed_diff_map, s1_abs_diff_map
 
 def check_tensor_values(tensor_list, input_names):
     for i, tensor in enumerate(tensor_list):
