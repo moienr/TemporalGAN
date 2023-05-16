@@ -8,6 +8,7 @@ from torchvision import datasets, transforms
 from skimage import data
 from skimage import exposure
 from skimage.exposure import match_histograms
+from changedetection.utils import get_binary_change_map, get_ones_ratio
 
 def get_all_files(path:str, file_type=None)->list:
     """Returns all the files in the specified directory and its subdirectories.
@@ -259,10 +260,10 @@ class Sen12DatasetHardTest(Dataset):
             index (int): Index of the image to get.
             
         Returns:
-            tuple: A tuple containing the S2 time-2 image, S1 time-2 image, S2 time-1 image, S1 time-1 image, Difference map and Reversed difference map.
-            * Difference map: `s2_t2_img - s2_t1_img` Values are in the range [-1, 1].
-            * Reversed difference map: 1 - torch.abs(diff_map)  Values are in the range [0, 1].
-            * S1_abs_diff_map: `abs(s1_t2_img - s1_t1_img)` Values are in the range [0, 1].
+            tuple : A tuple containing the S2 time-2 image, S1 time-2 image, S2 time-1 image, S1 time-1 image, Difference map and Reversed difference map.
+            * Difference map : `s2_t2_img - s2_t1_img` Values are in the range [-1, 1].
+            * Reversed difference map : 1 - torch.abs(diff_map)  Values are in the range [0, 1].
+            * S1_abs_diff_map : The Binary Change map, after thresholding and morphological operations.
         """
         if self.two_way: # if two_way is True, we will return images from both time directions
             if index < len(self.s2_t2_names): # if index is less than the number of images in the dataset, return images from time-2 to time-1
@@ -324,6 +325,8 @@ class Sen12DatasetHardTest(Dataset):
         check_tensor_values([s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map],
                             ["s2_t1_img", "s1_t1_img", "s2_t2_img", "s1_t2_img", "diff_map", "reversed_diff_map", "s1_abs_diff_map"])
         
+        s1_abs_diff_map = get_binary_change_map(s1_abs_diff_map)
+        
         if self.used_reversed_way: # returning the images in the opposite order 
             return s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map
         else: # returning the images in the t2->t1 order
@@ -334,6 +337,11 @@ def check_tensor_values(tensor_list, input_names):
         if torch.any(tensor > 1) or torch.any(tensor < -1):
             input_name = input_names[i]
             raise ValueError(f"Values of {input_name} tensor must be between -1 and 1.")
+        
+#########################################################################################################################################
+###################################################### Transfroms #######################################################################
+#########################################################################################################################################      
+      
         
 class myToTensor:
     """Transform a pair of numpy arrays to PyTorch tensors"""
