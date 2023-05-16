@@ -8,7 +8,7 @@ from eval_metrics.psnr import wpsnr
 from eval_metrics.loss_function import reverse_map
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
+def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, just_show = False):
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
     if cm_input:
@@ -42,7 +42,8 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1):
                                n_cols=2,
                                filename=f"{folder}//epoc_{epoch}_img{img_indx}.png",
                                fig_size=(8,10),
-                               title=title)
+                               title=title,
+                               just_show= just_show)
     gen.train()
 
 
