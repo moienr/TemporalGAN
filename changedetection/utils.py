@@ -13,7 +13,7 @@ def get_column_values(csv_file, column_name):
     return column_values
 
 
-def get_ones_ratio(arr):
+def get_array_ones_ratio(arr):
     """
     Calculates the ratio of ones in a 2D array.
     """
@@ -25,6 +25,7 @@ def get_ones_ratio(arr):
     total_pixels = arr.shape[0] * arr.shape[1]
     ratio = ones_count / total_pixels
     return ratio
+
 
 def get_binary_change_map(diff: torch.Tensor, threshold: float = 0.09) -> torch.Tensor:
     """
