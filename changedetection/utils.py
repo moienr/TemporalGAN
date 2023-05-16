@@ -2,6 +2,15 @@ from skimage.filters import threshold_otsu
 import skimage
 import torch
 import numpy as np
+import pandas as pd
+
+def get_column_values(csv_file, column_name):
+    """
+    takes a csv file and a column name and returns a list of that column values.
+    """
+    df = pd.read_csv(csv_file)
+    column_values = df[column_name].tolist()
+    return column_values
 
 
 def get_ones_ratio(arr):

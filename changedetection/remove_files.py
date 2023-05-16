@@ -10,10 +10,7 @@ def remove_files_by_name(names, directory):
                 
 import pandas as pd
 
-def get_column_values(csv_file, column_name):
-    df = pd.read_csv(csv_file)
-    column_values = df[column_name].tolist()
-    return column_values
+
 
 # if __name__ == "__main__":
 #     csv_file = "D:\\python\\TemporalGAN\\changedetection\\chaned_pairs.csv"
