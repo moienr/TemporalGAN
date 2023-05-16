@@ -8,7 +8,7 @@ from torchvision import datasets, transforms
 from skimage import data
 from skimage import exposure
 from skimage.exposure import match_histograms
-from changedetection.utils import get_binary_change_map, get_ones_ratio
+from changedetection.utils import get_binary_change_map
 
 def get_all_files(path:str, file_type=None)->list:
     """Returns all the files in the specified directory and its subdirectories.
