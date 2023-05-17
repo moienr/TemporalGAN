@@ -196,7 +196,7 @@ def weighted_mean(lst):
     return numerator / denominator
 
 
-def eval_fn(gen, loader, ssim, psnr, hard_test = False, loader_part = "all"):
+def eval_fn(gen, loader, ssim, psnr, hard_test = False, loader_part = "all", in_change_map = False):
     """_summary_
 
     Args:
@@ -224,7 +224,7 @@ def eval_fn(gen, loader, ssim, psnr, hard_test = False, loader_part = "all"):
             continue 
         s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
         s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(torch.float32),s1t2.to(torch.float32),s2t1.to(torch.float32),s1t1.to(torch.float32),cm.to(torch.float32),rcm.to(torch.float32),s1cm.to(torch.float32)
-        if INPUT_CHANGE_MAP:
+        if in_change_map:
             s2t2 = torch.cat((s2t2, cm), dim=1)
             s1t1 = torch.cat((s1t1, rcm), dim=1)
         preds = gen(s2t2, s1t1)
