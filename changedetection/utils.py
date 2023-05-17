@@ -41,6 +41,11 @@ def get_binary_change_map(diff: torch.Tensor, threshold: float = 0.09) -> torch.
     torch.Tensor
         The binary thresholded change map tensor, with shape (1, H, W).
     """
+    in_cuda = diff.is_cuda
+    if in_cuda:
+        diff = diff.cpu()
+        
+    
     diff = diff.numpy()
     if threshold is None:
         threshold = threshold_otsu(diff)
@@ -51,4 +56,6 @@ def get_binary_change_map(diff: torch.Tensor, threshold: float = 0.09) -> torch.
     # numpy to torch tensor
     diff = torch.from_numpy(diff)
     diff = diff.unsqueeze(0)
+    if in_cuda:
+        diff = diff.cuda()
     return diff # binary thresholded change map
