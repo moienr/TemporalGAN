@@ -6,6 +6,7 @@ from config import *
 from eval_metrics.ssim import WSSIM
 from eval_metrics.psnr import wpsnr
 from eval_metrics.loss_function import reverse_map
+from changedetection.utils import get_binary_change_map
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, just_show = False):
@@ -22,18 +23,23 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         
-        weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm.unsqueeze(0).to(torch.float32))
+        s1cm_binary = get_binary_change_map(s1cm.unsqueeze(0).to(torch.float32))
+        s1cm_binary_reverse = reverse_map(s1cm_binary)
+        
+        weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary)
         normal_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
-        reverse_weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), reverse_map(s1cm.unsqueeze(0).to(torch.float32)))
+        reverse_weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary_reverse)
          
-        weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm.unsqueeze(0).to(torch.float32))
+        weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary)
         normal_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
-        reverse_weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), reverse_map(s1cm.unsqueeze(0).to(torch.float32)))
+        reverse_weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary_reverse)
         
         
         title = f"epoch:{epoch} -- image:{img_indx} \n\
             cwssim: {weighted_ssim:.3f} | ssim: {normal_ssim:.3f} | rcwssim: {reverse_weighted_ssim:.3f} \n\
             cwpsnr: {weighted_psnr:.3f} | psnr: {normal_psnr:.3f} | rcwpsnr: {reverse_weighted_psnr:.3f}"
+            
+            
         
         input_list = [s2t1,s1t1,s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]] if not cm_input else [s2t1,s1t1[0].unsqueeze(0),s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]]
         save_s1s2_tensors_plot(input_list,
