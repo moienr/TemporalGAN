@@ -33,13 +33,13 @@ def get_binary_change_map(diff: torch.Tensor, threshold: float = 0.09) -> torch.
 
     Parameters
     ----------
-    diff (torch.Tensor):  The input tensor.
+    diff (torch.Tensor):  The input tensor. with shape (1, H, W).
     threshold (float, optional):  The threshold value. If None, threshold_otsu is used to calculate the threshold value.
 
     Returns
     -------
     torch.Tensor
-        The binary thresholded change map tensor.
+        The binary thresholded change map tensor, with shape (1, H, W).
     """
     diff = diff.numpy()
     if threshold is None:
