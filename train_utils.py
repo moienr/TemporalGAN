@@ -23,29 +23,42 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         
-        s1cm_binary = get_binary_change_map(s1cm.unsqueeze(0).to(torch.float32))
+        s1cm_binary = get_binary_change_map(s1cm.to(torch.float32))
         s1cm_binary_reverse = reverse_map(s1cm_binary)
         
-        weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary)
+        weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary.unsqueeze(0))
         normal_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
-        reverse_weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary_reverse)
+        reverse_weighted_ssim = wssim((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary_reverse.unsqueeze(0))
          
-        weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary)
+        weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary.unsqueeze(0))
         normal_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)))
-        reverse_weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary_reverse)
+        reverse_weighted_psnr = wpsnr((s1t2.unsqueeze(0).to(torch.float32), s1t2_generated.to(torch.float32)), s1cm_binary_reverse.unsqueeze(0))
         
         
         title = f"epoch:{epoch} -- image:{img_indx} \n\
             cwssim: {weighted_ssim:.3f} | ssim: {normal_ssim:.3f} | rcwssim: {reverse_weighted_ssim:.3f} \n\
             cwpsnr: {weighted_psnr:.3f} | psnr: {normal_psnr:.3f} | rcwpsnr: {reverse_weighted_psnr:.3f}"
-            
-            
         
-        input_list = [s2t1,s1t1,s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]] if not cm_input else [s2t1,s1t1[0].unsqueeze(0),s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]]
+        # s1t2 generated difference with real s1t2
+        s1t2_generated_diff_w_s1t2 = torch.abs(s1t2_generated[0] - s1t2)
+        # s1t2 generated difference with past s1t1
+        s1t2_generated_diff_w_s1t1 = torch.abs(s1t2_generated[0] - s1t1)
+        
+        s1t2_generated_change_highlited = s1t2_generated_diff_w_s1t2 * (s1cm_binary + 0.1)
+            
+        if cm_input:
+            input_list = [s2t1,s1t1[0].unsqueeze(0),s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0], s1cm_binary, s1t2_generated_diff_w_s1t2, s1t2_generated_diff_w_s1t1,s1t2_generated_change_highlited]
+        else:
+            input_list = [s2t1,s1t1,s2t2,s1t2,torch.abs(cm),s1cm,rcm,s1t2_generated[0]                , s1cm_binary, s1t2_generated_diff_w_s1t2, s1t2_generated_diff_w_s1t1,s1t2_generated_change_highlited]
+            
         save_s1s2_tensors_plot(input_list,
-                               ["s2t1", "s1t1", "s2t2", "s1t2", "s2_change map", "s1_change map","reversed change map" ,"generated s1t2"],
+                               ["s2t1", "s1t1", "s2t2", "s1t2",
+                                "s2_change map", "s1_change map",
+                                "reversed change map" ,"generated s1t2",
+                                "s1_change map binary", "s1t2 generated diff w s1t2",
+                                "s1t2 generated diff w s1t1", "s1t2 generated change highlited"],
                                n_rows=4,
-                               n_cols=2,
+                               n_cols=3,
                                filename=f"{folder}//epoc_{epoch}_img{img_indx}.png",
                                fig_size=(8,10),
                                title=title,
