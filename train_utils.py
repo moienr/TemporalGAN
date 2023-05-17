@@ -43,7 +43,10 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
         # s1t2 generated difference with real s1t2
         s1t2_generated_diff_w_s1t2 = torch.abs(s1t2_generated[0] - s1t2)
         # s1t2 generated difference with past s1t1
-        s1t2_generated_diff_w_s1t1 = torch.abs(s1t2_generated[0] - s1t1)
+        if not cm_input:
+            s1t2_generated_diff_w_s1t1 = torch.abs(s1t2_generated[0] - s1t1)
+        else:
+            s1t2_generated_diff_w_s1t1 = torch.abs(s1t2_generated[0] - s1t1[0].unsqueeze(0))
         
         s1t2_generated_change_highlited = s1t2_generated[0] * (s1cm_binary + 0.1)
             
