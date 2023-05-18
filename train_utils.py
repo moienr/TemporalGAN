@@ -7,6 +7,8 @@ from eval_metrics.ssim import WSSIM
 from eval_metrics.psnr import wpsnr
 from eval_metrics.loss_function import reverse_map
 from changedetection.utils import get_binary_change_map
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, just_show = False, fig_size = (8,12)):
@@ -278,10 +280,93 @@ def eval_fn(gen, loader, ssim, psnr, hard_test = False, loader_part = "all", in_
     
     return eval_dict
 
+def separate_lists(dict_list):
+    """
+    Extracts PSNR and SSIM metrics from a list of dictionaries and returns them as separate lists.
+
+    Args:
+        dict_list (list[dict]): A list of dictionaries containing PSNR and SSIM metrics.
+
+    Returns:
+        tuple: A tuple containing six lists of floats each, representing the extracted PSNR and SSIM metrics.
+    """
+    psnr_list = []
+    cw_psnr_list = []
+    rcwpsnr_list = []
+    ssim_list = []
+    cwssim_list = []
+    rcwssim_list = []
+
+    for d in dict_list:
+        psnr_list.append(d['PSNR']['psnr_mean'])
+        cw_psnr_list.append(d['PSNR']['cwpsnr_mean'])
+        rcwpsnr_list.append(d['PSNR']['rcwpsnr_mean'])
+        ssim_list.append(d['SSIM']['ssim_mean'])
+        cwssim_list.append(d['SSIM']['cwssim_mean'])
+        rcwssim_list.append(d['SSIM']['rcwssim_mean'])
+        
+    return psnr_list, cw_psnr_list, rcwpsnr_list, ssim_list, cwssim_list, rcwssim_list
 
 
 
+def plot_metrics(dict_list, save_path=None, colors = ['#33a9a5', '#3598db', '#f27085']):
+    # First, create the six lists and the epochs list
+    psnr_list, cw_psnr_list, rcwpsnr_list, ssim_list, cwssim_list, rcwssim_list = separate_lists(dict_list)
+    epochs = list(range(len(psnr_list)))
 
+    # Next, create a figure and four axis objects
+    fig, ax = plt.subplots(nrows=2, ncols=2, sharex=True, figsize=(10, 5))
+    
+
+    # Plot the PSNRs on the first axis
+    ax[0, 0].plot(epochs, psnr_list, label='PSNR', color=colors[0])
+    ax[0, 0].plot(epochs, cw_psnr_list, label='CW-PSNR', color=colors[1])
+    ax[0, 0].plot(epochs, rcwpsnr_list, label='RCW-PSNR', color = colors[2])
+    ax[0, 0].legend(framealpha=1, frameon=True)
+    ax[0, 0].set_ylabel('PSNR (dB)')
+    ax[0, 0].set_title('PSNR Metrics')
+    # Plot the SSIMs on the second axis
+    ax[1, 0].plot(epochs, ssim_list, label='SSIM', color=colors[0])
+    ax[1, 0].plot(epochs, cwssim_list, label='CW-SSIM', color=colors[1])
+    ax[1, 0].plot(epochs, rcwssim_list, label='RCW-SSIM', color = colors[2])
+    ax[1, 0].legend(framealpha=1, frameon=True)
+    ax[1, 0].set_ylabel('SSIM')
+    ax[1, 0].set_xlabel('Epochs')
+    ax[1, 0].set_title('SSIM Metrics')
+    # Add the new subplots for CWPSNR and CWSSIM
+    ax[0, 1].plot(epochs, cw_psnr_list, label='CW-PSNR', color=colors[1])
+    ax[0, 1].legend(framealpha=1, frameon=True)
+    ax[0, 1].set_ylabel('CWPSNR (dB)')
+    ax[0, 1].set_title('CWPSNR')
+
+    ax[1, 1].plot(epochs, cwssim_list, label='CW-SSIM', color=colors[1])
+    ax[1, 1].legend(framealpha=1, frameon=True)
+    ax[1, 1].set_ylabel('CWSSIM')
+    ax[1, 1].set_xlabel('Epochs')
+    ax[1, 1].set_title('CWSSIM')
+
+    # Set the x-axis tick locator to MaxNLocator with integer=True
+    ax[0, 0].xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax[1, 0].xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax[0, 1].xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax[1, 1].xaxis.set_major_locator(MaxNLocator(integer=True))
+
+    # Add horizontal grid lines to the plot
+    ax[0, 0].yaxis.grid(True, color='gray', linestyle='--', linewidth=0.5)
+    ax[1, 0].yaxis.grid(True, color='gray', linestyle='--', linewidth=0.5)
+    ax[0, 1].yaxis.grid(True, color='gray', linestyle='--', linewidth=0.5)
+    ax[1, 1].yaxis.grid(True, color='gray', linestyle='--', linewidth=0.5)
+
+    # Adjust the layout of the figure
+    fig.tight_layout()
+
+
+    # Save the plot to a file if save_path is provided
+    if save_path is not None:
+        plt.savefig(save_path, bbox_inches='tight')
+
+    # Show the plot
+    plt.show()
 
 
 
