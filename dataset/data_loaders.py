@@ -42,6 +42,7 @@ class Sen12Dataset(Dataset):
                transform = None,
                hist_match=False,
                two_way = True,
+               binary_s1cm = False,
                verbose=False):
         """
         Args
@@ -56,6 +57,7 @@ class Sen12Dataset(Dataset):
            ` hist_match` (bool, optional): Whether to perform histogram matching between the S2 time-2 
                                          and S2 time-1 images.
             `two_way` (bool, optional): is used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2). If two_way=True, __len__ returns twice the number of images in the dataset, with the first half of the indices corresponding to the time-2 to time-1 direction and the second half corresponding to the time-1 to time-2 direction.
+            `binary_s1cm` (bool, optional): Whether to return the binary change map for the S1 images.
             
         
         __getitem__ Return
@@ -95,6 +97,7 @@ class Sen12Dataset(Dataset):
         
         self.two_way = two_way # used to determine whether to return images from both time directions (i.e. time-2 to time-1 and time-1 to time-2)
         self.used_reversed_way = False # used to determine whether the images returned were from the time-2 to time-1 direction or the time-1 to time-2 direction
+        self.binary_s1cm = binary_s1cm # used to determine whether to return the S1 change map mask as a binary mask or as a float mask
 
     def __len__(self):
         """Return the number of images in the dataset."""
@@ -173,6 +176,9 @@ class Sen12Dataset(Dataset):
         
         check_tensor_values([s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map],
                             ["s2_t1_img", "s1_t1_img", "s2_t2_img", "s1_t2_img", "diff_map", "reversed_diff_map", "s1_abs_diff_map"])
+        
+        if self.binary_s1cm: # if binary_s1cm is True, convert the s1 images to binary  masks
+            s1_t1_img = get_binary_change_map(s1_t1_img)
         
         if self.used_reversed_way: # returning the images in the opposite order 
             return s2_t1_img, s1_t1_img, s2_t2_img, s1_t2_img, diff_map, reversed_diff_map, s1_abs_diff_map
