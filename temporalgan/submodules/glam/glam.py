@@ -36,7 +36,7 @@ class GLAM(nn.Module):
         
     def forward(self, x):
         local_channel_att = self.local_channel_att(x) # local channel
-        local_att = self.local_spatial_att(x, local_channel_att) # local spatial
+        local_att, local_att_map = self.local_spatial_att(x, local_channel_att) # local spatial
         global_channel_att = self.global_channel_att(x) # global channel
         global_att = self.global_spatial_att(x, global_channel_att) # global spatial
         
@@ -48,4 +48,4 @@ class GLAM(nn.Module):
         weights = self.fusion_weights.softmax(-1).reshape(1, 3, 1, 1, 1)
         fused_feature_maps = (all_feature_maps * weights).sum(1)
         
-        return fused_feature_maps
+        return fused_feature_maps, local_att_map
