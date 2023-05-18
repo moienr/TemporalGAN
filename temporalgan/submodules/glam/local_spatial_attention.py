@@ -19,4 +19,4 @@ class LocalSpatialAttention(nn.Module):
         d3 = self.dilated_conv7x7(att)
         att = torch.cat((att, d1, d2, d3), dim=1)
         att = self.conv1x1_2(att)
-        return (local_channel_output * att) + local_channel_output
+        return (local_channel_output * att) + local_channel_output, att
