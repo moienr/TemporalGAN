@@ -102,6 +102,8 @@ class SpatialGate(nn.Module):
             self.gate_s.add_module( 'gate_s_bn_di_%d'%i, nn.BatchNorm2d(gate_channel//reduction_ratio) )
             self.gate_s.add_module( 'gate_s_relu_di_%d'%i, nn.ReLU() )
         self.gate_s.add_module( 'gate_s_conv_final', nn.Conv2d(gate_channel//reduction_ratio, 1, kernel_size=1) )
+        
+        self.att_map = None # Defining as an instance variable for visualization purposes
     def forward(self, in_tensor):
         """
         Computes the forward pass of the SpatialGate module.
@@ -112,7 +114,8 @@ class SpatialGate(nn.Module):
         Returns:
             A tensor with the same shape as the input tensor, where each spatial location has been scaled by a spatial attention weight.
         """
-        return self.gate_s( in_tensor ).expand_as(in_tensor)
+        self.att_map = self.gate_s( in_tensor )
+        return self.att_map.expand_as(in_tensor) # expanding from (batch_size, 1, height, width) to (batch_size, channels, height, width)
 class BAM(nn.Module):
     """
     Args:
@@ -145,6 +148,7 @@ class BAM(nn.Module):
         self.sigmoid1 = nn.Sigmoid()
         self.sigmoid2 = nn.Sigmoid()
         self.sigmoid3 = nn.Sigmoid()
+    
         
     def forward(self,in_tensor):
         """
@@ -161,6 +165,7 @@ class BAM(nn.Module):
             att = 1 + self.sigmoid3( self.spatial_att(in_tensor) )
         else:
             raise ValueError( 'use_c and use_s should not be both False.')
+     
         return att * in_tensor
 
 
