@@ -19,10 +19,16 @@ class GLAM(nn.Module):
         Song, C. H., Han, H. J., & Avrithis, Y. (2022). All the attention you need: Global-local, spatial-channel attention for image retrieval. In Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (pp. 2754-2763).
 
         Args:
+        ---
             in_channels (int): number of channels of the input feature map
             num_reduced_channels (int): number of channels that the local and global spatial attention modules will reduce the input feature map. Refer to figures 3 and 5 in the paper.
             feaure_map_size (int): height/width of the feature map
             kernel_size (int): scope of the inter-channel attention
+            
+        Attributes:
+        ---
+            You can access the attention maps of the local and global spatial attention modules by calling the following attributes:
+            `glam_object.local_spatial_att.local_att_map (torch.Tensor)`: attention map of the local spatial attention module
         '''
         
         super().__init__()
@@ -36,7 +42,7 @@ class GLAM(nn.Module):
         
     def forward(self, x):
         local_channel_att = self.local_channel_att(x) # local channel
-        local_att, local_att_map = self.local_spatial_att(x, local_channel_att) # local spatial
+        local_att = self.local_spatial_att(x, local_channel_att) # local spatial
         global_channel_att = self.global_channel_att(x) # global channel
         global_att = self.global_spatial_att(x, global_channel_att) # global spatial
         
@@ -48,4 +54,4 @@ class GLAM(nn.Module):
         weights = self.fusion_weights.softmax(-1).reshape(1, 3, 1, 1, 1)
         fused_feature_maps = (all_feature_maps * weights).sum(1)
         
-        return fused_feature_maps, local_att_map
+        return fused_feature_maps
