@@ -12,6 +12,7 @@ class LocalSpatialAttention(nn.Module):
         self.dilated_conv5x5 = nn.Conv2d(num_reduced_channels, num_reduced_channels, 3, 1, padding=2, dilation=2)
         self.dilated_conv7x7 = nn.Conv2d(num_reduced_channels, num_reduced_channels, 3, 1, padding=3, dilation=3)
         
+        self.local_att_map = None # to access the attention map outside the module for visualization
     def forward(self, feature_maps, local_channel_output):
         att = self.conv1x1_1(feature_maps)
         d1 = self.dilated_conv3x3(att)
@@ -19,4 +20,5 @@ class LocalSpatialAttention(nn.Module):
         d3 = self.dilated_conv7x7(att)
         att = torch.cat((att, d1, d2, d3), dim=1)
         att = self.conv1x1_2(att)
-        return (local_channel_output * att) + local_channel_output, att
+        self.local_att_map = att # to access the attention map outside the module for visualization
+        return (local_channel_output * att) + local_channel_output
