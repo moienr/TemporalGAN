@@ -78,8 +78,7 @@ class Generator(nn.Module):
             nn.Conv2d(features * 3, out_channels, IN_OUT_KSP[0], IN_OUT_KSP[1], IN_OUT_KSP[2]),
             nn.Tanh(),
         )
-        self.s1_local_att_map = None
-        self.s2_local_att_map = None
+
 
     def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
         # First we do the encoding part for the Sentinel2
@@ -87,7 +86,7 @@ class Generator(nn.Module):
         d2_s2 = self.down1_s2(d1_s2)
         d3_s2 = self.down2_s2(d2_s2)
         d4_s2 = self.down3_s2(d3_s2)
-        d5_s2, self.s2_local_att_map = self.glam4_s2(self.down4_s2(d4_s2))
+        d5_s2 = self.glam4_s2(self.down4_s2(d4_s2))
         d6_s2 = self.down5_s2(d5_s2)
         d7_s2 = self.down6_s2(d6_s2)
         # Now we do the same for the Sentinel1
@@ -95,7 +94,7 @@ class Generator(nn.Module):
         d2_s1 = self.down1_s1(d1_s1)
         d3_s1 = self.down2_s1(d2_s1)
         d4_s1 = self.down3_s1(d3_s1)
-        d5_s1, self.s1_local_att_map = self.glam4_s1(self.down4_s1(d4_s1))
+        d5_s1 = self.glam4_s1(self.down4_s1(d4_s1))
         d6_s1 = self.down5_s1(d5_s1)
         d7_s1 = self.down6_s1(d6_s1)
         # Now we fuse the two streams
