@@ -3,6 +3,8 @@ import matplotlib
 import torch
 import numpy as np
 import cv2 as cv
+from PIL import Image
+import os
 
 def plot_s1s2_tensors(tensors, names, n_rows, n_cols , bands_to_plot = [2,1,0]):
     """
@@ -39,9 +41,31 @@ def plot_s1s2_tensors(tensors, names, n_rows, n_cols , bands_to_plot = [2,1,0]):
             axs[i][j].set_yticks([])
     plt.show()
     
+def normalize(x):
+    return (x - x.min()) / (x.max() - x.min())
+def convert2uint8(x):
+    return (x * 255).astype(np.uint8)
+
+def save_numpy_array(image_array, filename="image.jpg"):
+    """Save a NumPy array with shape (H x W x C) as an image."""
+    # if shape is (H,,W) convert it to (H,W,1)
+    if image_array.ndim == 2:
+        image_array = image_array[:,:,np.newaxis]
+    # if its a binary image, convert it to 3 channels
+    if image_array.shape[-1] == 1:
+        image_array = np.concatenate([image_array]*3, axis = -1)    
+    
+    image_array = convert2uint8(normalize(image_array))
+        
+    print(f"Saving image of shape {image_array.shape} to {filename}")
+    # Convert the NumPy array to a PIL Image object
+    image = Image.fromarray(image_array)
+    # Save the image as a JPEG file
+    image.save(filename)
+    
     
 def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename,
-                           fig_size, bands_to_plot = [2,1,0], title = None, just_show = False):
+                           fig_size, bands_to_plot = [2,1,0], title = None, just_show = False, save_raw_images_folder = None):
     """
     Saves a grid of PyTorch tensors as an image file.
 
@@ -67,6 +91,11 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename,
     ---
         None
     """
+    # checking ig save_raw_images_folder exists else create it
+    if save_raw_images_folder:
+        if not os.path.exists(save_raw_images_folder):
+            os.makedirs(save_raw_images_folder)
+    
     tensors = [tensor.to(torch.float32) for tensor in tensors]
     fig, axs = plt.subplots(n_rows, n_cols, figsize=fig_size)
     fig.suptitle(title) if title is not None else None
@@ -90,8 +119,17 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename,
                 axs[i][j].imshow(array)
                 axs[i][j].set_title(name)
             else:
-                axs[i][j].imshow(tensor[0].cpu().numpy()) if "change" in name else axs[i][j].imshow(tensor[0].cpu().numpy(),cmap='gray')
+                array = tensor[0].cpu().numpy()
+                axs[i][j].imshow(array) if "change" in name else axs[i][j].imshow(array,cmap='gray')
                 axs[i][j].set_title(name)
+            if save_raw_images_folder:
+                if array.ndim == 2:
+                    array = array[:,:,np.newaxis]
+                if array.ndim > 2 and array.shape[2] ==1:
+                    array = convert2uint8(normalize(array))
+                    array = cv.applyColorMap(array, cv.COLORMAP_VIRIDIS) if "change" in name else array
+                    array = cv.cvtColor(array, cv.COLOR_BGR2RGB)
+                save_numpy_array(array, filename=f"{save_raw_images_folder}/{name}.jpg")
             axs[i][j].set_xticks([])
             axs[i][j].set_yticks([])
     plt.tight_layout()
