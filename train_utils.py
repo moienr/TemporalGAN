@@ -71,7 +71,7 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
                                 "s1t2gen change from s1t2", "s1t2gen cm highlited"],
                                n_rows=4,
                                n_cols=3,
-                               filename=f"{folder}//epoc_{epoch}_img{img_indx}.png",
+                               filename=f"{folder}//epoc_{epoch}_img{img_indx}.jpg",
                                fig_size=fig_size,
                                title=title,
                                just_show= just_show)
