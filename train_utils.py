@@ -77,13 +77,16 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
                                fig_size=fig_size,
                                title=title,
                                save_raw_images_folder=save_raw_images_folder,
+                               img_indx=img_indx,
                                just_show= just_show)
     gen.train()
 
 
 
 
-def plot_att_maps(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, abs_atts = True, just_show = False, fig_size = (8,12)):
+def plot_att_maps(gen, val_dataset ,epoch, folder, cm_input,
+                  img_indx = 1,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = True, just_show = False, fig_size = (8,12)):
+    
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
     if cm_input:
@@ -140,19 +143,21 @@ def plot_att_maps(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, abs_a
 
         
         # Overlay attention map on RGB image
-        alpha_s1 = 0.5
         s1t2_np_colormaped = cv2.addWeighted(s1t2_np, 1 - alpha_s1, s1_colormap, alpha_s1, 0)
         #s1t2_generated_np_colormaped = cv2.addWeighted(s1t2_generated_np, 1 - alpha, s1_colormap, alpha, 0)
-        alpha_s2 = 0.5
         s2t2_np_colormaped = cv2.addWeighted(s2t2_np, 1 - alpha_s2, s2_colormap, alpha_s2, 0)
         
 
         #print(f"result shape {s2t2_np_colormaped.shape}, {s1t2_np_colormaped.shape}")
         
+        s1_name = f"img{img_indx}_S1_ATT_ABS" if abs_atts else f"img{img_indx}_S1_ATT_REL"
+        s2_name = f"img{img_indx}_S2_ATT_ABS" if abs_atts else f"img{img_indx}_S2_ATT_REL"
+        
+        
         plot_np_images([s2t2_np_colormaped, s1t2_np_colormaped],
-                    [f"img{img_indx}_S2_ATT", f"img{img_indx}_S1_ATT"],
+                    [s2_name, s1_name],
                     folder=folder,
-                    subplot_shape= (1,2), plot_name= "Attmaps",
+                    subplot_shape= (1,2), plot_name= "ATTENTION MAPS",
                     fig_size=fig_size, save_path=None)
 
         
