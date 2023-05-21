@@ -35,7 +35,7 @@ def save_numpy_array(image_array, filename="image.jpg"):
     
     
 def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename,
-                           fig_size, bands_to_plot = [2,1,0], title = None, just_show = False, save_raw_images_folder = None):
+                           fig_size, bands_to_plot = [2,1,0], title = None, just_show = False,img_indx=None, save_raw_images_folder = None):
     """
     Saves a grid of PyTorch tensors as an image file.
 
@@ -99,7 +99,10 @@ def save_s1s2_tensors_plot(tensors, names, n_rows, n_cols, filename,
                     array = convert2uint8(normalize(array))
                     array = cv.applyColorMap(array, cv.COLORMAP_VIRIDIS) if "change" in name else array
                     array = cv.cvtColor(array, cv.COLOR_BGR2RGB)
-                save_numpy_array(array, filename=f"{save_raw_images_folder}/{name}.jpg")
+                if img_indx:
+                    save_numpy_array(array, filename=f"{save_raw_images_folder}/img{img_indx}_{name}.jpg")
+                else:
+                    save_numpy_array(array, filename=f"{save_raw_images_folder}/{name}.jpg")
             axs[i][j].set_xticks([])
             axs[i][j].set_yticks([])
     plt.tight_layout()
