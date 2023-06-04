@@ -85,7 +85,7 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
 
 
 def plot_lcl_att_maps(gen, val_dataset ,epoch, folder, cm_input,
-                  img_indx = 1,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = True, just_show = False, fig_size = (8,12)):
+                  img_indx = 1,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = True, no_plot = False, fig_size = (8,12), glam_5 = False):
     
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
@@ -94,19 +94,20 @@ def plot_lcl_att_maps(gen, val_dataset ,epoch, folder, cm_input,
         s1t1 = torch.cat((s1t1, rcm), dim=0)
     
     if os.path.exists(folder) == False:
-        os.mkdir(f"{folder}/")
+        os.makedirs(f"{folder}/")
     wssim = WSSIM(data_range=1.0)  
     gen.eval()
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         s1t2_generated = s1t2_generated.squeeze(0)
         try:
-            s1_att_map = gen.glam4_s1.local_spatial_att.local_att_map
+            
+            s1_att_map = gen.glam5_s1.local_spatial_att.local_att_map if glam_5 else gen.glam4_s1.local_spatial_att.local_att_map
             s1_att_map = F.interpolate(s1_att_map, size=(256, 256), mode='bicubic', align_corners=True)
             s1_att_map = np.abs(s1_att_map[0, 0, :, :].detach().cpu().numpy()) if abs_atts else s1_att_map[0, 0, :, :].detach().cpu().numpy()
-            
             s1_att_map = convert2uint8(normalize(s1_att_map))
-            s2_att_map = gen.glam4_s2.local_spatial_att.local_att_map
+            
+            s2_att_map = gen.glam5_s2.local_spatial_att.local_att_map if glam_5 else gen.glam4_s2.local_spatial_att.local_att_map
             s2_att_map = F.interpolate(s2_att_map, size=(256, 256), mode='bicubic', align_corners=True)
             s2_att_map = np.abs(s2_att_map[0, 0, :, :].detach().cpu().numpy()) if abs_atts else s2_att_map[0, 0, :, :].detach().cpu().numpy()
             s2_att_map = convert2uint8(normalize(s2_att_map))
@@ -158,11 +159,11 @@ def plot_lcl_att_maps(gen, val_dataset ,epoch, folder, cm_input,
                     [s2_name, s1_name],
                     folder=folder,
                     subplot_shape= (1,2), plot_name= "ATTENTION MAPS",
-                    fig_size=fig_size, save_path=None)
+                    fig_size=fig_size, save_path=None, no_plot=no_plot)
         
         
 def plot_glob_att_maps(gen, val_dataset ,epoch, folder, cm_input,
-                  img_indx = 1,channel=0,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = False, just_show = False, fig_size = (8,12)):
+                  img_indx = 1,channel=0,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = False, no_plot = False, fig_size = (8,12), glam_5 = False):
     
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
@@ -171,19 +172,19 @@ def plot_glob_att_maps(gen, val_dataset ,epoch, folder, cm_input,
         s1t1 = torch.cat((s1t1, rcm), dim=0)
     
     if os.path.exists(folder) == False:
-        os.mkdir(f"{folder}/")
+        os.makedirs(f"{folder}/")
     wssim = WSSIM(data_range=1.0)  
     gen.eval()
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         s1t2_generated = s1t2_generated.squeeze(0)
         try:
-            s1_att_map = gen.glam4_s1.global_spatial_att.att
+            s1_att_map = gen.glam5_s1.global_spatial_att.att if glam_5 else gen.glam4_s1.global_spatial_att.att
             s1_att_map = F.interpolate(s1_att_map, size=(256, 256), mode='bicubic', align_corners=True)
             s1_att_map = np.abs(s1_att_map[0, channel, :, :].detach().cpu().numpy()) if abs_atts else s1_att_map[0, channel, :, :].detach().cpu().numpy()
             
             s1_att_map = convert2uint8(normalize(s1_att_map))
-            s2_att_map = gen.glam4_s2.global_spatial_att.att
+            s2_att_map = gen.glam5_s2.global_spatial_att.att if glam_5 else gen.glam4_s2.global_spatial_att.att
             s2_att_map = F.interpolate(s2_att_map, size=(256, 256), mode='bicubic', align_corners=True)
             s2_att_map = np.abs(s2_att_map[0, channel, :, :].detach().cpu().numpy()) if abs_atts else s2_att_map[0, channel, :, :].detach().cpu().numpy()
             s2_att_map = convert2uint8(normalize(s2_att_map))
@@ -235,11 +236,12 @@ def plot_glob_att_maps(gen, val_dataset ,epoch, folder, cm_input,
                     [s2_name, s1_name],
                     folder=folder,
                     subplot_shape= (1,2), plot_name= "ATTENTION MAPS",
-                    fig_size=fig_size, save_path=None)
+                    fig_size=fig_size, save_path=None, no_plot=no_plot)
         
         
 def plot_qk_att_maps(gen, val_dataset ,epoch, folder,cm_input, row_or_col = "row", row_or_col_indx = 0,
-                  img_indx = 1,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = False, just_show = False, fig_size = (8,12)):
+                  img_indx = 1,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = False, no_plot = False, fig_size = (8,12), glam_5 = False):
+    att_size = 8 if glam_5 else 16
     
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
@@ -248,19 +250,22 @@ def plot_qk_att_maps(gen, val_dataset ,epoch, folder,cm_input, row_or_col = "row
         s1t1 = torch.cat((s1t1, rcm), dim=0)
     
     if os.path.exists(folder) == False:
-        os.mkdir(f"{folder}/")
+        os.makedirs(f"{folder}/")
     wssim = WSSIM(data_range=1.0)  
     gen.eval()
     with torch.no_grad():
         s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
         s1t2_generated = s1t2_generated.squeeze(0)
         try:
+            glam_s1 = gen.glam5_s1 if glam_5 else gen.glam4_s1
+            glam_s2 = gen.glam5_s2 if glam_5 else gen.glam4_s2
             if row_or_col == "row":
-                s1_att_map = gen.glam4_s1.global_spatial_att.query_key[0,row_or_col_indx,:].reshape(16,16)
-                s2_att_map = gen.glam4_s2.global_spatial_att.query_key[0,row_or_col_indx,:].reshape(16,16)
+
+                s1_att_map = glam_s1.global_spatial_att.query_key[0,row_or_col_indx,:].reshape(att_size,att_size)
+                s2_att_map = glam_s2.global_spatial_att.query_key[0,row_or_col_indx,:].reshape(att_size,att_size)
             elif row_or_col == "col":
-                s1_att_map = gen.glam4_s1.global_spatial_att.query_key[0,:,row_or_col_indx].reshape(16,16)
-                s2_att_map = gen.glam4_s2.global_spatial_att.query_key[0,:,row_or_col_indx].reshape(16,16)
+                s1_att_map = glam_s1.global_spatial_att.query_key[0,:,row_or_col_indx].reshape(att_size,att_size)
+                s2_att_map = glam_s2.global_spatial_att.query_key[0,:,row_or_col_indx].reshape(att_size,att_size)
             else:
                 raise ValueError("row_or_col must be either 'row'or 'col'")
             s1_att_map = F.interpolate(s1_att_map.unsqueeze(0).unsqueeze(0), size=(256, 256), mode='bicubic', align_corners=True).squeeze()
@@ -318,7 +323,7 @@ def plot_qk_att_maps(gen, val_dataset ,epoch, folder,cm_input, row_or_col = "row
                     [s2_name, s1_name],
                     folder=folder,
                     subplot_shape= (1,2), plot_name= "ATTENTION MAPS",
-                    fig_size=fig_size, save_path=None)
+                    fig_size=fig_size, save_path=None, no_plot=no_plot)
 
         
 
