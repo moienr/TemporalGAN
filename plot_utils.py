@@ -190,7 +190,9 @@ def stretch_img(img, clipLimit = 0.1 ,  tileGridSize=(32,32) ):
     return bgr_stretched
 
 
-def plot_np_images(images, names, plot_name,folder, subplot_shape, fig_size= (10,10), subplot_spacing=(0.2, 0.2), save_path=None, img_format=".jpg"):
+def plot_np_images(images, names, plot_name,folder, subplot_shape,
+                   fig_size= (10,10), subplot_spacing=(0.2, 0.2),
+                   save_path=None, img_format=".jpg", no_plot=False):
     """
     Plots a list of numpy images with shape (h,w,3) or (h,w,1) and a list of names in a subplot.
 
@@ -223,8 +225,12 @@ def plot_np_images(images, names, plot_name,folder, subplot_shape, fig_size= (10
     # Save the plot if a file path is provided
     if save_path:
         fig.savefig(save_path)
+        plt.close()
     else:
-        plt.show()
+        if no_plot:
+            plt.close()
+        else:
+            plt.show()
 
 
 
