@@ -84,7 +84,7 @@ def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, 
 
 
 
-def plot_att_maps(gen, val_dataset ,epoch, folder, cm_input,
+def plot_lcl_att_maps(gen, val_dataset ,epoch, folder, cm_input,
                   img_indx = 1,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = True, just_show = False, fig_size = (8,12)):
     
     s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
@@ -150,10 +150,87 @@ def plot_att_maps(gen, val_dataset ,epoch, folder, cm_input,
 
         #print(f"result shape {s2t2_np_colormaped.shape}, {s1t2_np_colormaped.shape}")
         
-        s1_name = f"img{img_indx}_S1_ATT_ABS" if abs_atts else f"img{img_indx}_S1_ATT_REL"
-        s2_name = f"img{img_indx}_S2_ATT_ABS" if abs_atts else f"img{img_indx}_S2_ATT_REL"
+        s1_name = f"img{img_indx}_S1_lcl_ATT_ABS" if abs_atts else f"img{img_indx}_S1_lcl_ATT_REL"
+        s2_name = f"img{img_indx}_S2_lcl_ATT_ABS" if abs_atts else f"img{img_indx}_S2_lcl_ATT_REL"
+        
+        gen.train() # set back to train mode
+        plot_np_images([s2t2_np_colormaped, s1t2_np_colormaped],
+                    [s2_name, s1_name],
+                    folder=folder,
+                    subplot_shape= (1,2), plot_name= "ATTENTION MAPS",
+                    fig_size=fig_size, save_path=None)
         
         
+def plot_glob_att_maps(gen, val_dataset ,epoch, folder, cm_input,
+                  img_indx = 1,channel=0,alpha_s1 = 0.5, alpha_s2 = 0.5, abs_atts = False, just_show = False, fig_size = (8,12)):
+    
+    s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm  = val_dataset[img_indx]
+    s2t2,s1t2,s2t1,s1t1,cm,rcm,s1cm = s2t2.to(DEVICE),s1t2.to(DEVICE),s2t1.to(DEVICE),s1t1.to(DEVICE),cm.to(DEVICE),rcm.to(DEVICE),s1cm.to(DEVICE)
+    if cm_input:
+        s2t2 = torch.cat((s2t2, cm), dim=0)
+        s1t1 = torch.cat((s1t1, rcm), dim=0)
+    
+    if os.path.exists(folder) == False:
+        os.mkdir(f"{folder}/")
+    wssim = WSSIM(data_range=1.0)  
+    gen.eval()
+    with torch.no_grad():
+        s1t2_generated = gen(s2t2.unsqueeze(0).to(torch.float32), s1t1.unsqueeze(0).to(torch.float32))
+        s1t2_generated = s1t2_generated.squeeze(0)
+        try:
+            s1_att_map = gen.glam4_s1.global_spatial_att.att
+            s1_att_map = F.interpolate(s1_att_map, size=(256, 256), mode='bicubic', align_corners=True)
+            s1_att_map = np.abs(s1_att_map[0, channel, :, :].detach().cpu().numpy()) if abs_atts else s1_att_map[0, channel, :, :].detach().cpu().numpy()
+            
+            s1_att_map = convert2uint8(normalize(s1_att_map))
+            s2_att_map = gen.glam4_s2.global_spatial_att.att
+            s2_att_map = F.interpolate(s2_att_map, size=(256, 256), mode='bicubic', align_corners=True)
+            s2_att_map = np.abs(s2_att_map[0, channel, :, :].detach().cpu().numpy()) if abs_atts else s2_att_map[0, channel, :, :].detach().cpu().numpy()
+            s2_att_map = convert2uint8(normalize(s2_att_map))
+            
+            
+        except:
+            raise Exception("No attention maps to plot")
+        #print(s1_att_map.shape, np.min(s1_att_map), np.max(s1_att_map))
+
+        s1_colormap = cv2.applyColorMap(s1_att_map, cv2.COLORMAP_JET)
+        s2_colormap = cv2.applyColorMap(s2_att_map, cv2.COLORMAP_JET)
+        # Color maps are in BGR format. But matplotlib uses RGB format.
+        s1_colormap = cv2.cvtColor(s1_colormap, cv2.COLOR_BGR2RGB)
+        s2_colormap = cv2.cvtColor(s2_colormap, cv2.COLOR_BGR2RGB)
+        
+
+        #print(s2_colormap.shape)
+        
+        s1t2_np = s1t2.permute(1,2,0).cpu().numpy()
+        s1t2_np = convert2uint8(normalize(s1t2_np))
+        s1t2_np = s1t2_np.repeat(3, axis=2)# repeat 3 times to combine with colormap
+        
+        # s1t2_generated_np = s1t2_generated.permute(1,2,0).cpu().numpy()
+        # s1t2_generated_np = convert2uint8(normalize(s1t2_generated_np))
+        # s1t2_generated_np = s1t2_generated_np.repeat(3, axis=2) # repeat 3 times to combine with colormap
+        
+        s2t2_np = s2t2.permute(1,2,0)[:,:,[2,1,0]].cpu().numpy()
+        s2t2_np = convert2uint8(normalize(s2t2_np))
+        
+        
+        #print(s2t2_np.shape, s1t2_np.shape)
+        # # Stack RGB image and colormap
+        # s2_stacked = np.stack((rgb_image, colormap), axis=-1)
+
+        
+        # Overlay attention map on RGB image
+        s1t2_np_colormaped = cv2.addWeighted(s1t2_np, 1 - alpha_s1, s1_colormap, alpha_s1, 0)
+        #s1t2_generated_np_colormaped = cv2.addWeighted(s1t2_generated_np, 1 - alpha, s1_colormap, alpha, 0)
+        s2t2_np_colormaped = cv2.addWeighted(s2t2_np, 1 - alpha_s2, s2_colormap, alpha_s2, 0)
+        
+
+        #print(f"result shape {s2t2_np_colormaped.shape}, {s1t2_np_colormaped.shape}")
+        
+        s1_name = f"img{img_indx}_chnl{channel}_S1_glob_ATT_ABS" if abs_atts else f"img{img_indx}_chnl{channel}_S1_glob_ATT_REL"
+        s2_name = f"img{img_indx}_chnl{channel}_S2_glob_ATT_ABS" if abs_atts else f"img{img_indx}_chnl{channel}_S2_glob_ATT_REL"
+        
+        gen.train() # set back to train mode
         plot_np_images([s2t2_np_colormaped, s1t2_np_colormaped],
                     [s2_name, s1_name],
                     folder=folder,
