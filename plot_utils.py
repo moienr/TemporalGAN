@@ -27,7 +27,7 @@ def save_numpy_array(image_array, filename="image.jpg"):
     
     image_array = convert2uint8(normalize(image_array))
         
-    print(f"Saving image of shape {image_array.shape} to {filename}")
+    #print(f"Saving image of shape {image_array.shape} to {filename}")
     # Convert the NumPy array to a PIL Image object
     image = Image.fromarray(image_array)
     # Save the image as a JPEG file
