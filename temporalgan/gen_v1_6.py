@@ -45,7 +45,7 @@ class Generator(nn.Module):
         self.down2_s2 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 64
         self.down3_s2 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
         self.down4_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.glam4_s2 = GLAM(in_channels=features * 8, num_reduced_channels=64, feature_map_size=16,kernel_size=5) 
+        self.glam4_s2 = GLAM(in_channels=features * 8, num_reduced_channels=32, feature_map_size=16,kernel_size=5) 
         self.down5_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
         self.down6_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
         
@@ -54,7 +54,7 @@ class Generator(nn.Module):
         self.down2_s1 = Block(features * 2, features * 4, down=True, act="leaky", use_dropout=False) # 64
         self.down3_s1 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
         self.down4_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
-        self.glam4_s1 = GLAM(in_channels=features * 8, num_reduced_channels=64, feature_map_size=16,kernel_size=5) 
+        self.glam4_s1 = GLAM(in_channels=features * 8, num_reduced_channels=32, feature_map_size=16,kernel_size=5) 
         self.down5_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
         self.down6_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
         
