@@ -23,7 +23,7 @@ class Generator(nn.Module):
     def __init__(self, s2_in_channels=3,s1_in_channels = 1,out_channels=1, features=64):
         super().__init__()
         # Initial downsampling layer for S2
-        S1_IN_OUT_KSP = (5, 1, 2) # initial layer, and finalup layer kernel size, stride, padding, 
+        S1_IN_OUT_KSP = (3, 1, 2) # initial layer, and finalup layer kernel size, stride, padding, 
         S2_IN_OUT_KSP = (3, 1, 1)
         OUTPUT_KSP = (3, 1, 1)
         # I still havn't decided whether to use 3x3 or 5x5, so I will leave it as a variable.
