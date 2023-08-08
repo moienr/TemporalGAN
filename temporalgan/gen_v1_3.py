@@ -18,39 +18,39 @@ class Generator(Generator_v1_2):
         # Channel Attention Module
         self.ca = ChannelAttention(features * 8 * 2) # The *2 is because we fuse the two streams.
         
-        def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
-            # First we do the encoding part for the Sentinel2
-            d1_s2 = self.s2_initial_down(s2)
-            d2_s2 = self.down1_s2(d1_s2)
-            d3_s2 = self.down2_s2(d2_s2)
-            d4_s2 = self.down3_s2(d3_s2)
-            d5_s2 = self.down4_s2(d4_s2)
-            d6_s2 = self.down5_s2(d5_s2)
-            d7_s2 = self.down6_s2(d6_s2)
-            # Now we do the same for the Sentinel1
-            d1_s1 = self.s1_initial_down(s1)
-            d2_s1 = self.down1_s1(d1_s1)
-            d3_s1 = self.down2_s1(d2_s1)
-            d4_s1 = self.down3_s1(d3_s1)
-            d5_s1 = self.down4_s1(d4_s1)
-            d6_s1 = self.down5_s1(d5_s1)
-            d7_s1 = self.down6_s1(d6_s1)
-            # Now we fuse the two streams
-            d7 = torch.cat([d7_s2, d7_s1], 1)
-            # Channel Attention
-            d7 = self.ca(d7) # Channel Attention to learn the importance of each stream, before fusing them.
-            # Bottleneck
-            bottleneck = self.bottleneck(d7)
-            # Now we do the decoding part
-            up1 = self.up1(bottleneck)
-            up2 = self.up2(torch.cat([up1, d7], 1))
-            up3 = self.up3(torch.cat([up2, d6_s2, d6_s1], 1))
-            up4 = self.up4(torch.cat([up3, d5_s2, d5_s1], 1))
-            up5 = self.up5(torch.cat([up4, d4_s2, d4_s1], 1))
-            up6 = self.up6(torch.cat([up5, d3_s2, d3_s1], 1))
-            up7 = self.up7(torch.cat([up6, d2_s2, d2_s1], 1))
-            # Final upsampling which outputs the final image with only 1 channel.
-            return self.final_up(torch.cat([up7, d1_s2, d1_s1], 1))
+    def forward(self, s2: torch.Tensor , s1:torch.Tensor) -> torch.Tensor:
+        # First we do the encoding part for the Sentinel2
+        d1_s2 = self.s2_initial_down(s2)
+        d2_s2 = self.down1_s2(d1_s2)
+        d3_s2 = self.down2_s2(d2_s2)
+        d4_s2 = self.down3_s2(d3_s2)
+        d5_s2 = self.down4_s2(d4_s2)
+        d6_s2 = self.down5_s2(d5_s2)
+        d7_s2 = self.down6_s2(d6_s2)
+        # Now we do the same for the Sentinel1
+        d1_s1 = self.s1_initial_down(s1)
+        d2_s1 = self.down1_s1(d1_s1)
+        d3_s1 = self.down2_s1(d2_s1)
+        d4_s1 = self.down3_s1(d3_s1)
+        d5_s1 = self.down4_s1(d4_s1)
+        d6_s1 = self.down5_s1(d5_s1)
+        d7_s1 = self.down6_s1(d6_s1)
+        # Now we fuse the two streams
+        d7 = torch.cat([d7_s2, d7_s1], 1)
+        # Channel Attention
+        d7 = self.ca(d7) # Channel Attention to learn the importance of each stream, before fusing them.
+        # Bottleneck
+        bottleneck = self.bottleneck(d7)
+        # Now we do the decoding part
+        up1 = self.up1(bottleneck)
+        up2 = self.up2(torch.cat([up1, d7], 1))
+        up3 = self.up3(torch.cat([up2, d6_s2, d6_s1], 1))
+        up4 = self.up4(torch.cat([up3, d5_s2, d5_s1], 1))
+        up5 = self.up5(torch.cat([up4, d4_s2, d4_s1], 1))
+        up6 = self.up6(torch.cat([up5, d3_s2, d3_s1], 1))
+        up7 = self.up7(torch.cat([up6, d2_s2, d2_s1], 1))
+        # Final upsampling which outputs the final image with only 1 channel.
+        return self.final_up(torch.cat([up7, d1_s2, d1_s1], 1))
 
 # class Generator(nn.Module):
 #     """
