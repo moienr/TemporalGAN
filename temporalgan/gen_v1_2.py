@@ -24,7 +24,7 @@ class Generator(nn.Module):
         super().__init__()
         # Initial downsampling layer for S2
         S1_IN_OUT_KSP = (3, 1, 1)#(5, 1, 2) # initial layer, and finalup layer kernel size, stride, padding, 
-        S2_IN_OUT_KSP = (3, 1, 1)
+        S2_IN_OUT_KSP = (5, 1, 2)
         OUTPUT_KSP = (3, 1, 1)
         # I still havn't decided whether to use 3x3 or 5x5, so I will leave it as a variable.
         # In case of 3x3, the padding will be 1, and the stride will be 1. so IN_OUT_KSP = (3, 1, 1)
