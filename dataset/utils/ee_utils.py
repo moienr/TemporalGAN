@@ -765,7 +765,7 @@ def get_s1(s2_collection,roi,max_snow = 10,priority_path = 'ASCENDING',
                     print("  RETRY: ALready more than 100days, Setting best_orbit to False")
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days ,month_span = month_span,snow_removal=snow_removal, best_orbit=False)
                 elif date_diffrence(start_date,end_date) < 120:
-                    print("  RETRY: Expanding date range by 15 days")
+                    print("  RETRY: Expanding date range by 16 days")
                     return get_s1(s2_collection,roi,max_snow = max_snow,priority_path=priority_path,check_second_priority_path=True,retry_days = retry_days + RETRY_ADD ,month_span = month_span,snow_removal=snow_removal, best_orbit=best_orbit)
                 else:
                     print(tc.FAIL,f'◍Nothing Else we can do, returning the collection with {col_size} images',tc.FAIL)
