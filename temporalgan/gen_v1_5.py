@@ -23,7 +23,7 @@ class Generator(nn.Module):
         out_channels (int, optional): Number of output channels. Defaults to 1.
         features (int, optional): Number of features in the first layer. Defaults to 64. after that the number of features will be doubled in each layer.
     """
-    def __init__(self, s2_in_channels=3,s1_in_channels = 1,out_channels=1, features=64):
+    def __init__(self, s2_in_channels=3,s1_in_channels = 1,out_channels=1, features=64, num_reduced_channels=1):
         super().__init__()
         # Initial downsampling layer for S2
         IN_OUT_KSP = (3, 1, 1) # initial layer, and finalup layer kernel size, stride, padding, 
@@ -45,7 +45,7 @@ class Generator(nn.Module):
         self.down3_s2 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
         self.down4_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
         self.down5_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
-        self.glam5_s2 = GLAM(in_channels=features * 8, num_reduced_channels=64, feature_map_size=8,kernel_size=5) 
+        self.glam5_s2 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=8,kernel_size=5) 
         self.down6_s2 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
         
         # Downsample blocks of Senitel-1
@@ -54,7 +54,7 @@ class Generator(nn.Module):
         self.down3_s1 = Block(features * 4, features * 8, down=True, act="leaky", use_dropout=False) # 32
         self.down4_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 16
         self.down5_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 8
-        self.glam5_s1 = GLAM(in_channels=features * 8, num_reduced_channels=64, feature_map_size=8,kernel_size=5) 
+        self.glam5_s1 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=8,kernel_size=5) 
         self.down6_s1 = Block(features * 8, features * 8, down=True, act="leaky", use_dropout=False) # 4 * 1024
         
         # Channel Attention Module
