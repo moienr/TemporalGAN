@@ -19,8 +19,8 @@ class Generator(Generator_v1_3):
         super().__init__(s2_in_channels, s1_in_channels, out_channels, features)
         # self.glam5_s2 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=8,kernel_size=5) 
         
-        self.glam5_s2 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=16,kernel_size=3) 
-        self.glam5_s1 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=16,kernel_size=3)
+        self.glam5_s2 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=8,kernel_size=3) 
+        self.glam5_s1 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=8,kernel_size=3)
         self.down5_s2 = nn.Sequential(self.down5_s2, self.glam5_s2)
         self.down5_s1 = nn.Sequential(self.down5_s1, self.glam5_s1)
         
