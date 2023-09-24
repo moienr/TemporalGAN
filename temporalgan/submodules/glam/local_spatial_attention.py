@@ -21,4 +21,4 @@ class LocalSpatialAttention(nn.Module):
         att = torch.cat((att, d1, d2, d3), dim=1)
         att = self.conv1x1_2(att)
         self.local_att_map = att # to access the attention map outside the module for visualization
-        return (local_channel_output * att) + local_channel_output
+        return (feature_maps * att) + local_channel_output
