@@ -41,10 +41,10 @@ class GLAM(nn.Module):
         self.fusion_weights = nn.Parameter(torch.Tensor([0.333, 0.333, 0.333])) # equal intial weights
         
     def forward(self, x):
-        #local_channel_att = self.local_channel_att(x) # local channel
-        local_att = self.local_spatial_att(x, 1) # local spatial
-        #global_channel_att = self.global_channel_att(x) # global channel
-        global_att = self.global_spatial_att(x, 1) # global spatial
+        local_channel_att = self.local_channel_att(x) # local channel
+        local_att = self.local_spatial_att(x, local_channel_att) # local spatial
+        global_channel_att = self.global_channel_att(x) # global channel
+        global_att = self.global_spatial_att(x, global_channel_att) # global spatial
         
         local_att = local_att.unsqueeze(1) # unsqueeze to prepare for concat
         global_att = global_att.unsqueeze(1) # unsqueeze to prepare for concat
@@ -55,19 +55,3 @@ class GLAM(nn.Module):
         fused_feature_maps = (all_feature_maps * weights).sum(1)
         
         return fused_feature_maps
-
-    # def forward(self, x):
-    #     local_channel_att = self.local_channel_att(x) # local channel
-    #     local_att = self.local_spatial_att(x, local_channel_att) # local spatial
-    #     global_channel_att = self.global_channel_att(x) # global channel
-    #     global_att = self.global_spatial_att(x, global_channel_att) # global spatial
-        
-    #     local_att = local_att.unsqueeze(1) # unsqueeze to prepare for concat
-    #     global_att = global_att.unsqueeze(1) # unsqueeze to prepare for concat
-    #     x = x.unsqueeze(1) # unsqueeze to prepare for concat
-        
-    #     all_feature_maps = torch.cat((local_att, x, global_att), dim=1)
-    #     weights = self.fusion_weights.softmax(-1).reshape(1, 3, 1, 1, 1)
-    #     fused_feature_maps = (all_feature_maps * weights).sum(1)
-        
-    #     return fused_feature_maps

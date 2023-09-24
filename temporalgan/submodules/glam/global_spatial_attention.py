@@ -24,4 +24,4 @@ class GlobalSpatialAttention(nn.Module):
         self.att = torch.bmm(value, self.query_key).reshape(N, C, H, W)
         self.att = self.conv1x1_att(self.att)
         
-        return (feature_maps * self.att) + global_channel_output
+        return (global_channel_output * self.att) + global_channel_output
