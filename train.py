@@ -37,37 +37,53 @@ wssim = ssim.WSSIM(data_range=1.0)
 
 from dataset.utils.utils import TextColors as TC
 from dataset.utils.plot_utils import plot_s1s2_tensors, save_s1s2_tensors_plot
-#from config import *
+
 from train_utils import *
+import argparse
 
 
-TWO_WAY_DATASET = True
-INPUT_CHANGE_MAP = True 
+parser = argparse.ArgumentParser(description='TemporalGAN Training')
+parser.add_argument('--two_way_dataset', '-tw', action='store_true', help='Use two-way dataset')
+parser.add_argument('--input_change_map', '-ic', action='store_true', help='Use input change map')
+parser.add_argument('--learning_rate', '-lr', type=float, default=1e-4, help='Learning rate')
+parser.add_argument('--batch_size', '-bs', type=int, default=4, help='Batch size')
+parser.add_argument('--num_workers', '-nw', type=int, default=2, help='Number of workers')
+parser.add_argument('--image_size', '-is', type=int, default=256, help='Image size')
+parser.add_argument('--weighted_loss', '-wl', action='store_true', help='Use weighted loss')
+parser.add_argument('--changed_l1_weight', '-clw', type=int, default=5, help='Changed L1 weight')
+parser.add_argument('--num_epochs', '-ne', type=int, default=10, help='Number of epochs')
+parser.add_argument('--load_model', '-lm', action='store_true', help='Load model')
+parser.add_argument('--save_model', '-sm', action='store_true', help='Save model')
+parser.add_argument('--save_model_every_epoch', '-sme', type=int, default=10, help='Save model every epoch')
+parser.add_argument('--run_test_every_epoch', '-rte', type=int, default=1, help='Run test every epoch')
+parser.add_argument('--save_example_plots', '-sep', action='store_true', help='Save example plots')
+parser.add_argument('--examples_to_plot', '-etp', nargs='+', type=int, default=[1, 2], help='Examples to plot after training is done - if you want to plot both FTS and BTS, add the size of the dataset to the index of desired image.')
+parser.add_argument('--random_seed', '-rs', type=int, default=None, help='Random seed - optional for reproducibility')
+parser.add_argument('--gen_version', '-gv', type=str, default='1.3', help='Generator Version')
+
+args = parser.parse_args()
+
+TWO_WAY_DATASET = args.two_way_dataset
+INPUT_CHANGE_MAP = args.input_change_map
+LEARNING_RATE = args.learning_rate
+BATCH_SIZE = args.batch_size
+NUM_WORKERS = args.num_workers
+IMAGE_SIZE = args.image_size
+WEIGHTED_LOSS = args.weighted_loss
+CHANGED_L1_WEIGHT = args.changed_l1_weight
+NUM_EPOCHS = args.num_epochs
+LOAD_MODEL = args.load_model
+SAVE_MODEL = args.save_model
+SAVE_MODEL_EVERY_EPOCH = args.save_model_every_epoch
+RUN_TEST_EVERY_EPOCH = args.run_test_every_epoch
+SAVE_EXAMPLE_PLOTS = args.save_example_plots
+EXAMPLES_TO_PLOT = args.examples_to_plot
+RANDOM_SEED = args.random_seed
+GEN_VERSION = args.gen_version
+
 S2_INCHANNELS = 12 if INPUT_CHANGE_MAP else 6
 S1_INCHANNELS = 7 if INPUT_CHANGE_MAP else 1
 
-LEARNING_RATE = 1e-4
-BATCH_SIZE = 2 
-NUM_WORKERS = 2 
-IMAGE_SIZE = 256
-WEIGHTED_LOSS = True
-L1_LAMBDA = 100
-CHANGED_L1_WEIGHT = 5
-NUM_EPOCHS = 3
-
-LOAD_MODEL = False
-SAVE_MODEL = False 
-SAVE_MODEL_EVERY_EPOCH = 10
-RUN_TEST_EVERY_EPOCH = 1
-SAVE_EXAMPLE_PLOTS = True
-EXAMPLES_TO_PLOT = [1,2]
-CHECKPOINT_DISC = "disc.pth.tar"
-CHECKPOINT_GEN = "gen.pth.tar"
-IMGS_TO_PLOT = [] # images to plot after training is done
-
-RANDOM_SEED = None
-
-GEN_VERSION = "1.3" # 1.1, 1.2, 1.3, 1.6
 
 if RANDOM_SEED is not None:
     torch.manual_seed(RANDOM_SEED)
@@ -276,8 +292,8 @@ def main():
                                 two_way=TWO_WAY_DATASET,
                                 binary_s1cm=False
                                 )
-    if IMGS_TO_PLOT is not None:
-        for indx in IMGS_TO_PLOT:
+    if EXAMPLES_TO_PLOT is not None:
+        for indx in EXAMPLES_TO_PLOT:
             save_some_examples(gen_model, test_dataset, NUM_EPOCHS,
                     folder="test_evaluation_plots",cm_input=INPUT_CHANGE_MAP,
                     img_indx=indx, just_show = True,save_raw_images_folder="raw_imgs/", fig_size=(20,20))

@@ -13,3 +13,7 @@ s1_t2_dir_test="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s1_imgs\
 s2_t2_dir_test="E:\\s1s2\\s1s2_patched_light\\s1s2_patched_light\\2019\\s2_imgs\\test"
 
 hard_test_csv_path = "D:\\python\\TemporalGAN\\changedetection\\changed_pairs_extra_light.csv"
+
+# Save and load checkpoints
+CHECKPOINT_DISC = "disc.pth.tar"
+CHECKPOINT_GEN = "gen.pth.tar"
