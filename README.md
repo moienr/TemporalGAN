@@ -71,7 +71,7 @@ In the [temporalgan](./temporalgan/) folder you can find the code for the most o
 
 Also GLAM has been used in both 8x8 and 16x16 levels of the model.
 
-Be carefull in deleting unwanted models, as subversion of each model inherits from the previous model. For example, if you delete the `v1.2` folder, you will corrupt the `v1.3`, `v1.5`, and `v1.6` models.
+Be carefull in deleting unwanted models, as **subversion of each model inherits from the previous model**. For example, if you delete the `v1.2` folder, you will corrupt the `v1.3`, `v1.5`, and `v1.6` models.
 
 So feel free to play around with the code and see what you can come up with.
 
