@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import cv2
 import torch.nn.functional as F
+from config import L1_LAMBDA
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 def save_some_examples(gen, val_dataset ,epoch, folder, cm_input, img_indx = 1, just_show = False, fig_size = (8,12), save_raw_images_folder = None):
