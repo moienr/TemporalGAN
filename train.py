@@ -43,23 +43,23 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='TemporalGAN Training')
-parser.add_argument('--two_way_dataset', '-tw', action='store_true', help='Use two-way dataset')
-parser.add_argument('--input_change_map', '-ic', action='store_true', help='Use input change map')
+parser.add_argument('--no_two_way_dataset', '-tw', action='store_false', help='Dont use two-way dataset')
+parser.add_argument('--no_input_change_map', '-ic', action='store_false', help='Dont use input change map')
 parser.add_argument('--learning_rate', '-lr', type=float, default=1e-4, help='Learning rate')
 parser.add_argument('--batch_size', '-bs', type=int, default=4, help='Batch size')
 parser.add_argument('--num_workers', '-nw', type=int, default=2, help='Number of workers')
 parser.add_argument('--image_size', '-is', type=int, default=256, help='Image size')
-parser.add_argument('--weighted_loss', '-wl', action='store_true', help='Use weighted loss')
+parser.add_argument('--no_weighted_loss', '-wl', action='store_false', help='Dont use weighted loss')
 parser.add_argument('--changed_l1_weight', '-clw', type=int, default=5, help='Changed L1 weight')
 parser.add_argument('--num_epochs', '-ne', type=int, default=10, help='Number of epochs')
 parser.add_argument('--load_model', '-lm', action='store_true', help='Load model')
 parser.add_argument('--save_model', '-sm', action='store_true', help='Save model')
 parser.add_argument('--save_model_every_epoch', '-sme', type=int, default=10, help='Save model every epoch')
 parser.add_argument('--run_test_every_epoch', '-rte', type=int, default=1, help='Run test every epoch')
-parser.add_argument('--save_example_plots', '-sep', action='store_true', help='Save example plots')
+parser.add_argument('--dont_save_example_plots', '-sep', action='store_false', help='Dont save example plots')
 parser.add_argument('--examples_to_plot', '-etp', nargs='+', type=int, default=[1, 2], help='Examples to plot after training is done - if you want to plot both FTS and BTS, add the size of the dataset to the index of desired image.')
 parser.add_argument('--random_seed', '-rs', type=int, default=None, help='Random seed - optional for reproducibility')
-parser.add_argument('--gen_version', '-gv', type=str, default='1.3', help='Generator Version')
+parser.add_argument('--gen_version', '-gv', type=str, default='1.3', help='Generator Version - Read each moduel in ./temporalgan/gen_v* for more info')
 
 args = parser.parse_args()
 
