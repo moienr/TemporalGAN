@@ -1,6 +1,6 @@
 # TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting
 
-This is the code implementation of the paper [TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting](https://arxiv.org/abs/2401.00440) by Moien Rangzan, Sara Attarchi, Richard Gloaguen and Seyed Kazem Alavipanah. The paper is submitted to ISPRS Journal of Photogrammetry and Remote Sensing.
+This is the code implementation of the paper [TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting](https://arxiv.org/abs/2401.00440) by Moien Rangzan, Dr. Sara Attarchi, Dr. Richard Gloaguen and Prof. Seyed Kazem Alavipanah. The paper is submitted to ISPRS Journal of Photogrammetry and Remote Sensing.
 
 Please feel free to contact me if you have any questions or problems with the code, and I'll be more than happy to help. You can reach me at [moienrangzan@gmail.com](mailto:moienrangzan@gmail.com)   
 
