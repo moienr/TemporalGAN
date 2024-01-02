@@ -21,17 +21,41 @@ To download the dataset you can simply run [this notebook](./dataset/Dataset_cre
 
 A detailed description of the dataset and how to add your own data can be found in [dataset](./dataset/) folder.
 
+## 1.1. Hard Evaluation
+In the paper, we mention that in order to evaluate the model, we have used a hard evaluation method. In this method, selected around 150 images from the test dataset, these images where showing dicernable urban changes. These images are listed in [this file](.\changedetection\changed_pairs.csv). 
+
+if you went on and build your own dataset, you can use the same method to evaluate your model.Follow [this notebook](./changedetection/tensor_cd.ipynb) to create a new `.csv` file containing the images you want to evaluate your model on.
 
 
 
 ## 2. Train the model
+To train the model run the [train.py](./train.py) file. 
 
+```bash
+> conda activate pytorch_env
+> python train.py --num_epoch <number of epochs> --changed_l1_weight <weight of the changed L1 loss> 
+```
 
+Example:
+```bash 
+> python train.py --num_epoch 10 --changed_l1_weight 5 --gen_version 1.3 --no_input_change_map 
+```
+
+Help:
+```bash
+> python train.py --help
+```
 
 
 
 
 ## Results
+You can find the results of the model in detain in the paper. 
+
+<!-- ![Results](readme_assests/example1.jpg) -->
+
+![More Results](readme_assests/more_examples.jpg)
+
 
 ![Removal](readme_assests/removal%2000_00_00-00_00_30.gif)
 
@@ -39,9 +63,17 @@ A detailed description of the dataset and how to add your own data can be found 
 
 ![Attention](readme_assests/att%2000_00_00-00_00_30.gif)
 
-# Model
 
-![Model](readme_assests/model.png)
+# There is more!
+The models you saw in the paper are only a handful of the models that have been tested. 
+
+In the [temporalgan](./temporalgan/) folder you can find the code for the most of the models that have been tested. I tested mupltiple attention mechanisms, at different levels of the model. CBAM, and PAM are the two attention mechanisms that didn't make it to the paper.
+
+Also GLAM has been used in both 8x8 and 16x16 levels of the model.
+
+Be carefull in deleting unwanted models, as subversion of each model inherits from the previous model. For example, if you delete the `v1.2` folder, you will corrupt the `v1.3`, `v1.5`, and `v1.6` models.
+
+Here is a buitifull sketch of my initial ideas for the model architecture.
 
 ![Model archi](readme_assests/model%20arch.png)
 
