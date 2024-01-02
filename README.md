@@ -49,7 +49,7 @@ Help:
 
 
 
-## Results
+## 3. Results
 You can find the results of the model in detain in the paper. 
 
 <!-- ![Results](readme_assests/example1.jpg) -->
@@ -64,7 +64,7 @@ You can find the results of the model in detain in the paper.
 ![Attention](readme_assests/att%2000_00_00-00_00_30.gif)
 
 
-# There is more!
+## There is more!
 The models you saw in the paper are only a handful of the models that have been tested. 
 
 In the [temporalgan](./temporalgan/) folder you can find the code for the most of the models that have been tested. I tested mupltiple attention mechanisms, at different levels of the model. CBAM, and PAM are the two attention mechanisms that didn't make it to the paper.
@@ -72,6 +72,8 @@ In the [temporalgan](./temporalgan/) folder you can find the code for the most o
 Also GLAM has been used in both 8x8 and 16x16 levels of the model.
 
 Be carefull in deleting unwanted models, as subversion of each model inherits from the previous model. For example, if you delete the `v1.2` folder, you will corrupt the `v1.3`, `v1.5`, and `v1.6` models.
+
+So feel free to play around with the code and see what you can come up with.
 
 Here is a buitifull sketch of my initial ideas for the model architecture.
 
@@ -82,13 +84,13 @@ Here is a buitifull sketch of my initial ideas for the model architecture.
 If you find this work useful, please consider citing:
 
 ```bibtex
-    @misc{rangzan2023tsgan,
-      title={TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting}, 
-      author={Moien Rangzan and Sara Attarchi and Richard Gloaguen and Seyed Kazem Alavipanah},
-      year={2023},
-      eprint={2401.00440},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2401.00440}}
+@misc{rangzan2023tsgan,
+    title={TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting}, 
+    author={Moien Rangzan and Sara Attarchi and Richard Gloaguen and Seyed Kazem Alavipanah},
+    year={2023},
+    eprint={2401.00440},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2401.00440}}
 
 ```
