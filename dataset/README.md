@@ -45,3 +45,8 @@ Each row in the `.xlsx` files represents an ROI. With the following columns:
 Make sure you have two `.xlsx` files. Each represneting a year.
 
 **Update**: I am working on making a python module instead of the need of all above steps. But you're gonna need a google cloud account to use it. I will update this section as soon as I finish it.
+
+
+
+
+![Spatial distribution of the dataset](../readme_assests/s1s2map.jpg)
