@@ -15,7 +15,7 @@ from submodules.glam.glam import GLAM
 from gen_v1_3 import Generator as Generator_v1_3
 
 class Generator(Generator_v1_3):
-    def __init__(self, s2_in_channels=3, s1_in_channels=1, out_channels=1, features=64, num_reduced_channels=1):
+    def __init__(self, s2_in_channels=3, s1_in_channels=1, out_channels=1, features=64, num_reduced_channels=32):
         super().__init__(s2_in_channels, s1_in_channels, out_channels, features)
         # self.glam5_s2 = GLAM(in_channels=features * 8, num_reduced_channels=num_reduced_channels, feature_map_size=8,kernel_size=5) 
         
