@@ -26,7 +26,6 @@ class Generator(Generator_v1_3):
         
 
 
-
 # class Generator(nn.Module):
 #     """
 #     A generator model for image-to-image translation using a U-Net architecture.
