@@ -43,13 +43,13 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='TemporalGAN Training')
-parser.add_argument('--no_two_way_dataset', '-tw', action='store_false', help='Dont use two-way dataset')
-parser.add_argument('--no_input_change_map', '-ic', action='store_false', help='Dont use input change map')
+parser.add_argument('--no_two_way_dataset', '-tw', action='store_false', help='Dont use two-way dataset - This modifies the dataloader to use the T1 and T2 dataset in both ways.')
+parser.add_argument('--no_input_change_map', '-ic', action='store_false', help='Dont use input change map. If this switch is on, the S2_change_map will not be a part of input.')
 parser.add_argument('--learning_rate', '-lr', type=float, default=1e-4, help='Learning rate')
 parser.add_argument('--batch_size', '-bs', type=int, default=4, help='Batch size')
 parser.add_argument('--num_workers', '-nw', type=int, default=2, help='Number of workers')
-parser.add_argument('--image_size', '-is', type=int, default=256, help='Image size')
-parser.add_argument('--no_weighted_loss', '-wl', action='store_false', help='Dont use weighted loss')
+parser.add_argument('--image_size', '-is', type=int, default=256, help='Image size - No effect on the code, just to be in the log file')
+parser.add_argument('--no_weighted_loss', '-wl', action='store_false', help='Dont use weighted loss. If this switch is on, the L1 loss will be used instead of the weighted L1 loss.')
 parser.add_argument('--changed_l1_weight', '-clw', type=int, default=5, help='Changed L1 weight')
 parser.add_argument('--num_epochs', '-ne', type=int, default=10, help='Number of epochs')
 parser.add_argument('--load_model', '-lm', action='store_true', help='Load model')
