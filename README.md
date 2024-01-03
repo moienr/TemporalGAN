@@ -79,7 +79,7 @@ Be carefull in deleting unwanted models, as **subversion of each model inherits 
 
 So feel free to play around with the code and see what you can come up with.
 
-Here is a buitifull sketch of my initial ideas for the model architecture.
+Here is a buitifull sketch of my initial ideas for the model architecture :)
 
 ![Model archi](readme_assests/model%20arch.png)
 
