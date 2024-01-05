@@ -79,7 +79,7 @@ Be careful in deleting unwanted models, as **subversion of each model inherits f
 
 So feel free to play around with the code and see what you can come up with.
 
-Here is a bountiful sketch of my initial ideas for the model architecture :)
+Here is a beautiful sketch of my initial ideas for the model architecture :)
 
 ![Model archi](readme_assests/model%20arch.png)
 
@@ -88,13 +88,13 @@ Here is a bountiful sketch of my initial ideas for the model architecture :)
 If you find this work useful, please consider citing:
 
 ```bibtex
-@misc{rangzan2023tsgan,
-    title={TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting}, 
-    author={Moien Rangzan and Sara Attarchi and Richard Gloaguen and Seyed Kazem Alavipanah},
-    year={2023},
-    eprint={2401.00440},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV},
-    url={https://arxiv.org/abs/2401.00440}}
+@misc{rangzan2024tsgan,
+      title={TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting}, 
+      author={Moien Rangzan and Sara Attarchi and Richard Gloaguen and Seyed Kazem Alavipanah},
+      year={2024},
+      eprint={2401.00440},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 
 ```
