@@ -61,10 +61,6 @@ You can find the results of the model in detail in the paper.
 ![More Results](readme_assests/more_examples.jpg)
 
 
-![Removal](readme_assests/removal%2000_00_00-00_00_30.gif)
-
-![Creation](readme_assests/creation%2000_00_00-00_00_30.gif)
-
 ![Attention](readme_assests/att%2000_00_00-00_00_30.gif)
 
 
