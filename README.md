@@ -21,7 +21,7 @@ The architecture of the proposed model is shown below. For detailed information,
 # How to use
 
 ## 1. Download the dataset
-To download the dataset you can simply run [this notebook](./Dataset_creator.ipynb) in on your local machine or
+To download the dataset you can simply run [this notebook](./dataset/Dataset_creator.ipynb) in on your local machine or
 <a target="_blank" href="https://colab.research.google.com/github/moienr/TemporalGAN/blob/main/dataset/Dataset_creator.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
