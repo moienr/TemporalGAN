@@ -21,12 +21,16 @@ The architecture of the proposed model is shown below. For detailed information,
 # How to use
 
 ## 1. Download the dataset
-To download the dataset, you can simply run [this notebook](./dataset/Dataset_creator.ipynb) on your local machine or on Google Colab. The notebook will download the dataset and preprocess it.
+To download the dataset you can simply run [this notebook](./Dataset_creator.ipynb) in on your local machine or
+<a target="_blank" href="https://colab.research.google.com/github/moienr/TemporalGAN/blob/main/dataset/Dataset_creator.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+. The notebook will download the dataset and preprocess it.
 
 A detailed description of the dataset and how to add your own data can be found in the [dataset](./dataset/) folder.
 
 ## 1.1. Hard Evaluation
-In the paper, we mention that in order to evaluate the model, we have used a hard evaluation method. In this method, around 150 images were selected from the test dataset, and these images showed discernable urban changes. These images are listed in [this file](.\changedetection\changed_pairs.csv). 
+In the paper, we mention that in order to evaluate the model, we have used a hard evaluation method. In this method, around 150 images were selected from the test dataset, and these images showed discernable urban changes. These images are listed in [this file](./changedetection/changed_pairs.csv). 
 
 If you went on and built your own dataset, you can use the same method to evaluate your model. Follow [this notebook](./changedetection/tensor_cd.ipynb) to create a new `.csv` file containing the images you want to evaluate your model on.
 
