@@ -2,7 +2,11 @@
 
 ## 1. Download the dataset
 
-To download the dataset you can simply run [this notebook](./Dataset_creator.ipynb) in on your local machine or on Google Colab. The notebook will download the dataset and preprocess it.
+To download the dataset you can simply run [this notebook](./Dataset_creator.ipynb) in on your local machine or
+<a target="_blank" href="https://colab.research.google.com/github/moienr/TemporalGAN/blob/main/dataset/Dataset_creator.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+. The notebook will download the dataset and preprocess it.
 
 This fellowchart shows the steps of the dataset creation process.
 
