@@ -14,7 +14,7 @@ from gen_v1_2 import Generator as Generator_v1_2
 from submodules.glam.glam import GLAM
 
 class Generator(Generator_v1_2):
-    def __init__(self, s2_in_channels=3, s1_in_channels=1, out_channels=1, features=64, num_reduced_channels=32):
+    def __init__(self, s2_in_channels=3, s1_in_channels=1, out_channels=1, features=64, num_reduced_channels=64):
         super().__init__(s2_in_channels, s1_in_channels, out_channels, features)
         # Channel Attention Module
         self.ca = ChannelAttention(features * 8 * 2) # The *2 is because we fuse the two streams.
