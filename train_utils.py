@@ -391,7 +391,10 @@ def train_fn(disc, gen, loader, opt_disc, opt_gen, l1_loss, bce, g_scaler, d_sca
                 L1 = l1_loss(s1t2_fake, s1t2, s1cm) * L1_LAMBDA
             else:
                 L1 = l1_loss(s1t2_fake, s1t2) * L1_LAMBDA
-            G_loss = G_fake_loss + L1
+            if NORMALIZE_GEN_LOSS: # Normalize the loss
+                G_loss = (G_fake_loss + L1) / (L1_LAMBDA + 1) # L1_LAMBDA + 1 is to normalize the loss which I belive not using it was causing glam vanishing gradients
+            else:
+                G_loss = G_fake_loss + L1
 
         opt_gen.zero_grad()
         g_scaler.scale(G_loss).backward()
