@@ -70,7 +70,9 @@ Help:
 
 
 ## 3. Results
-You can find the results of the model in detail in the paper. 
+This simple animation explains our approach.
+
+![Da Gameplay](readme_assests/results.gif)
 
 <!-- ![Results](readme_assests/example1.jpg) -->
 
