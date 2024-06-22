@@ -9,11 +9,16 @@ Thank you for your interest in our work!
 # Simplified Abstract
 Unlike the more extensively studied SAR-to-Optical translation, Optical-to-SAR translation has been less researched because generating a correct SAR representation from optical images with the appropriate SAR viewing geometry is inherently challenging.  To address this, we developed an algorithm to generate a bitemporal viewing geometry-consistent SAR/Optical dataset and a novel model to learn this translation. Our hypothesis posited that in datasets where landscape changes between two timestamps are imbalanced compared to regions of no change, models tend to overfit the input same-domain data. At the same time, traditional metrics might still indicate good results due to the averaging effect. To discern and address this issue, we introduced novel spatial metrics to first discern and prove this hypothesis and then an algorithm-level approach with a new cost function that balances training and prevents the model from overfitting on the input SAR data. The results demonstrate the superiority of our approach over naive bitemporal methods that do not account for dataset distribution. 
 
-Key contributions of our study include:
-  •	Novel Bitemporal Approach: Introducing the first viewing geometry consistent bitemporal methodology for Optical-to-SAR translation, significantly advancing this under-researched field.
-  •	Dataset Creation: Developing an open-source algorithm for generating a bitemporal viewing geometry-consistent SAR/Optical dataset.
-  •	New Spatial Metrics: Proposing new spatial metrics to detect overfitting problems inherent in traditional methods.
-  •	Change-Weighted Loss Function: Implementing a novel cost function to balance training and prevent overfitting on input data.
+**Key contributions of our study include:**
+
+  •	**Novel Bitemporal Approach:** Introducing the first viewing geometry consistent bitemporal methodology for Optical-to-SAR translation, significantly advancing this under-researched field.
+
+  •	**Dataset Creation:** Developing an open-source algorithm for generating a bitemporal viewing geometry-consistent SAR/Optical dataset.
+
+  •	**New Spatial Metrics:** Proposing new spatial metrics to detect overfitting problems inherent in traditional methods.
+
+  •	**Change-Weighted Loss Function:** Implementing a novel cost function to balance training and prevent overfitting on input data.
+
 
 
 
