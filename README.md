@@ -1,13 +1,20 @@
 # TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting
 
-This is the code implementation of the paper [TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical-based SAR Temporal Shifting](https://arxiv.org/abs/2401.00440) by Moien Rangzan, Sara Attarchi, Richard Gloaguen, and Seyed Kazem Alavipanah. The paper is submitted to the ISPRS Journal of Photogrammetry and Remote Sensing.
+This is the code implementation of the paper [TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical-based SAR Temporal Shifting](https://arxiv.org/abs/2401.00440) by Moien Rangzan, Sara Attarchi, Richard Gloaguen, and Seyed Kazem Alavipanah.
 
 Please feel free to contact me if you have any questions or problems with the code, and I'll be more than happy to help. You can reach me at [moienrangzan@gmail.com](mailto:moienrangzan@gmail.com)   
 
 Thank you for your interest in our work!
 
-# Abstract
-In contrast to the well-investigated field of SAR-to-Optical translation, this study explores the lesser-investigated domain of Optical-to-SAR translation, a challenging field due to the ill-posed nature of this translation. The complexity arises as a single optical data can have multiple SAR representations based on the SAR viewing geometry. We propose a novel approach, termed SAR Temporal Shifting, which inputs an optical data from the desired timestamp along with a SAR data from a different temporal point but with a consistent viewing geometry as the expected SAR data, both complemented with a change map of optical data during the intervening period. This model modifies the SAR data based on the changes observed in optical data to generate the SAR data for the desired timestamp. Our model, a dual conditional Generative Adversarial Network (GAN), named Temporal Shifting GAN (TSGAN), incorporates a siamese encoder in both the Generator and the Discriminator. To prevent the model from overfitting on the input SAR data, we employed a change weighted loss function. Our approach surpasses traditional translation methods by eliminating the GAN's fiction phenomenon, particularly in unchanged regions, resulting in higher SSIM and PSNR in these areas. Additionally, modifications to the Pix2Pix architecture and the inclusion of attention mechanisms have enhanced the model's performance on all regions of the data. This research paves the way for leveraging legacy optical datasets, the most abundant and longstanding source of Earth imagery data, extending their use to SAR domains and temporal analyses.
+# Simplified Abstract
+Unlike the more extensively studied SAR-to-Optical translation, Optical-to-SAR translation has been less researched because generating a correct SAR representation from optical images with the appropriate SAR viewing geometry is inherently challenging.  To address this, we developed an algorithm to generate a bitemporal viewing geometry-consistent SAR/Optical dataset and a novel model to learn this translation. Our hypothesis posited that in datasets where landscape changes between two timestamps are imbalanced compared to regions of no change, models tend to overfit the input same-domain data. At the same time, traditional metrics might still indicate good results due to the averaging effect. To discern and address this issue, we introduced novel spatial metrics to first discern and prove this hypothesis and then an algorithm-level approach with a new cost function that balances training and prevents the model from overfitting on the input SAR data. The results demonstrate the superiority of our approach over naive bitemporal methods that do not account for dataset distribution. 
+
+Key contributions of our study include:
+  •	Novel Bitemporal Approach: Introducing the first viewing geometry consistent bitemporal methodology for Optical-to-SAR translation, significantly advancing this under-researched field.
+  •	Dataset Creation: Developing an open-source algorithm for generating a bitemporal viewing geometry-consistent SAR/Optical dataset.
+  •	New Spatial Metrics: Proposing new spatial metrics to detect overfitting problems inherent in traditional methods.
+  •	Change-Weighted Loss Function: Implementing a novel cost function to balance training and prevent overfitting on input data.
+
 
 
 # Proposed Model
