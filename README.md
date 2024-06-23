@@ -76,11 +76,11 @@ This simple animation explains our approach.
 
 <!-- ![Results](readme_assests/example1.jpg) -->
 
-![More Results](readme_assests/more_examples.jpg)
+<!-- ![More Results](readme_assests/more_examples.jpg) -->
 
 
-![Attention](readme_assests/att%2000_00_00-00_00_30.gif)
-
+<!-- ![Attention](readme_assests/att%2000_00_00-00_00_30.gif) -->
+ 
 
 ## There is more!
 The models you saw in the paper are only a handful of the models that have been tested. 
