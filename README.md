@@ -1,6 +1,6 @@
-# TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting
+# SAR Temporal Shifting: A New Approach for Optical-to-SAR Translation with Consistent Viewing Geometry
 
-This is the code implementation of the paper [TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical-based SAR Temporal Shifting](https://arxiv.org/abs/2401.00440) by Moien Rangzan, Sara Attarchi, Richard Gloaguen, and Seyed Kazem Alavipanah.
+This is the code implementation of the paper [SAR Temporal Shifting: A New Approach for Optical-to-SAR Translation with Consistent Viewing Geometry](https://www.mdpi.com/2072-4292/16/16/2957) by Moien Rangzan, Sara Attarchi, Richard Gloaguen, and Seyed Kazem Alavipanah.
 
 Please feel free to contact me if you have any questions or problems with the code, and I'll be more than happy to help. You can reach me at [moienrangzan@gmail.com](mailto:moienrangzan@gmail.com)   
 
@@ -102,13 +102,17 @@ Here is a beautiful sketch of my initial ideas for the model architecture :)
 If you find this work useful, please consider citing:
 
 ```bibtex
-@misc{rangzan2024tsgan,
-      title={TSGAN: An Optical-to-SAR Dual Conditional GAN for Optical based SAR Temporal Shifting}, 
-      author={Moien Rangzan and Sara Attarchi and Richard Gloaguen and Seyed Kazem Alavipanah},
-      year={2024},
-      eprint={2401.00440},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@Article{rs16162957,
+AUTHOR = {Rangzan, Moien and Attarchi, Sara and Gloaguen, Richard and Alavipanah, Seyed Kazem},
+TITLE = {SAR Temporal Shifting: A New Approach for Optical-to-SAR Translation with Consistent Viewing Geometry},
+JOURNAL = {Remote Sensing},
+VOLUME = {16},
+YEAR = {2024},
+NUMBER = {16},
+ARTICLE-NUMBER = {2957},
+URL = {https://www.mdpi.com/2072-4292/16/16/2957},
+ISSN = {2072-4292},
+DOI = {10.3390/rs16162957}
 }
 
 ```
